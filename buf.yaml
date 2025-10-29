@@ -1,0 +1,10 @@
+version: v2
+deps:
+  - buf.build/bannote/user-service
+  - buf.build/bannote/token-service
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
