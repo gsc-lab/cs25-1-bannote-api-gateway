@@ -7,4 +7,7 @@ import (
 
 func SetupRoutes(router *gin.Engine) {
 	router.GET("/health", handlers.HealthCheck)
+
+	auth := router.Group("/auth")
+	auth.GET("/code/google", handlers.GoogleCallback)
 }
