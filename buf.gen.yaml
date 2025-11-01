@@ -1,0 +1,22 @@
+version: v2
+inputs:
+  - module: buf.build/bannote/user-service
+  - module: buf.build/bannote/token-service
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service
+      module: buf.build/bannote/user-service
+    - file_option: go_package_prefix
+      value: github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/token-service
+      module: buf.build/bannote/token-service
+plugins:
+  - remote: buf.build/protocolbuffers/go
+    out: .
+    opt:
+      - module=github.com/gsc-lab/cs25-1-bannote-api-gateway
+  - remote: buf.build/grpc/go
+    out: .
+    opt:
+      - module=github.com/gsc-lab/cs25-1-bannote-api-gateway
