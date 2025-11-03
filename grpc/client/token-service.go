@@ -3,6 +3,7 @@ package client
 import (
 	"fmt"
 
+	healthv1 "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/common-service/healthcheck"
 	tokenpb "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/token-service/token"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -11,7 +12,8 @@ import (
 type TokenServiceClient struct {
 	conn *grpc.ClientConn
 
-	Token tokenpb.TokenServiceClient
+	Token  tokenpb.TokenServiceClient
+	Health healthv1.HealthClient
 }
 
 func NewTokenServiceClient(address string) (*TokenServiceClient, error) {
@@ -21,11 +23,12 @@ func NewTokenServiceClient(address string) (*TokenServiceClient, error) {
 	}
 
 	client := &TokenServiceClient{
-		conn:  conn,
-		Token: tokenpb.NewTokenServiceClient(conn),
+		conn:   conn,
+		Token:  tokenpb.NewTokenServiceClient(conn),
+		Health: healthv1.NewHealthClient(conn),
 	}
 
-	fmt.Printf("✅ Connected to token-service at %s (all domains)\n", address)
+	fmt.Printf("✅ Connected to common-service at %s (all domains)\n", address)
 	return client, nil
 }
 
