@@ -5,14 +5,19 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/gsc-lab/cs25-1-bannote-api-gateway/config"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/grpc/client"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/routes"
 )
 
 func main() {
+	// 설정 로드
+	if err := config.LoadConfig(); err != nil {
+		log.Fatalf("Failed to load config: %v", err)
+	}
+
 	// gRPC clients container 초기화
-	//container, err := client.NewContainer("localhost:9090", "localhost:9091")
-	container, err := client.NewContainer("host.docker.internal:9090", "host.docker.internal:9091")
+	container, err := client.NewContainer(config.AppConfig.UserServiceAddr, config.AppConfig.TokenServiceAddr)
 	if err != nil {
 		log.Fatalf("Failed to initialize gRPC clients: %v", err)
 	}
@@ -22,7 +27,10 @@ func main() {
 	router.Use(cors.Default())
 	router.Use(container.Middleware()) // Context에 클라이언트 주입
 
-	routes.SetupRoutes(router)
+	// 모든 경로 앞에 "/api" 설정
+	api := router.Group("/api")
+	routes.SetupRoutes(api)
 
-	router.Run()
+	// 설정된 포트로 서버 시작
+	router.Run(":" + config.AppConfig.ServerPort)
 }
