@@ -2,6 +2,7 @@ version: v2
 inputs:
   - module: buf.build/bannote/user-service
   - module: buf.build/bannote/token-service
+  - module: buf.build/bannote/common-service
 managed:
   enabled: true
   override:
@@ -11,6 +12,9 @@ managed:
     - file_option: go_package_prefix
       value: github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/token-service
       module: buf.build/bannote/token-service
+    - file_option: go_package_prefix
+      value: github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/common-service
+      module: buf.build/bannote/common-service
 plugins:
   - remote: buf.build/protocolbuffers/go
     out: .
