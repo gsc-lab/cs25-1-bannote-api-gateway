@@ -12,8 +12,10 @@ type Config struct {
 	ServerPort string
 
 	// Services
-	UserServiceAddr  string
-	TokenServiceAddr string
+	UserServiceAddr      string
+	TokenServiceAddr     string
+	ScheduleServiceAddr  string
+	StudyroomServiceAddr string
 
 	// Google OAuth
 	GoogleClientID string
@@ -38,12 +40,14 @@ func LoadConfig() error {
 	}
 
 	config := &Config{
-		ServerPort:       getEnv("SERVER_PORT", ""),
-		UserServiceAddr:  getEnv("USER_SERVICE_ADDR", ""),
-		TokenServiceAddr: getEnv("TOKEN_SERVICE_ADDR", ""),
-		GoogleClientID:   getEnv("GOOGLE_CLIENT_ID", ""),
-		FrontendURL:      getEnv("FRONTEND_URL", ""),
-		CookieMaxAge:     getEnvAsInt("COOKIE_MAX_AGE", 900), // 15분 (900초)
+		ServerPort:           getEnv("SERVER_PORT", ""),
+		UserServiceAddr:      getEnv("USER_SERVICE_ADDR", ""),
+		TokenServiceAddr:     getEnv("TOKEN_SERVICE_ADDR", ""),
+		ScheduleServiceAddr:  getEnv("SCHEDULE_SERVICE_ADDR", ""),
+		StudyroomServiceAddr: getEnv("STUDYROOM_SERVICE_ADDR", ""),
+		GoogleClientID:       getEnv("GOOGLE_CLIENT_ID", ""),
+		FrontendURL:          getEnv("FRONTEND_URL", ""),
+		CookieMaxAge:         getEnvAsInt("COOKIE_MAX_AGE", 900), // 15분 (900초)
 	}
 
 	// 필수 환경변수 검증

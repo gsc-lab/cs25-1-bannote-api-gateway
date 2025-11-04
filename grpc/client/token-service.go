@@ -28,7 +28,7 @@ func NewTokenServiceClient(address string) (*TokenServiceClient, error) {
 		Health: healthv1.NewHealthClient(conn),
 	}
 
-	fmt.Printf("✅ Connected to common-service at %s (all domains)\n", address)
+	fmt.Printf("✅ Connected to token-service at %s (all domains)\n", address)
 	return client, nil
 }
 
