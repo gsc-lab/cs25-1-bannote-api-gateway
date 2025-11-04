@@ -17,8 +17,10 @@ func HealthCheck(c *gin.Context) {
 
 func ServiceHealthCheck(c *gin.Context) {
 	container := &client.Container{
-		UserService:  client.GetUserService(c),
-		TokenService: client.GetTokenService(c),
+		UserService:      client.GetUserService(c),
+		TokenService:     client.GetTokenService(c),
+		ScheduleService:  client.GetScheduleService(c),
+		StudyroomService: client.GetStudyroomService(c),
 	}
 
 	result := services.CheckAllServices(container)

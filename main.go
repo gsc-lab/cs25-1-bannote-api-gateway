@@ -17,7 +17,13 @@ func main() {
 	}
 
 	// gRPC clients container 초기화
-	container, err := client.NewContainer(config.AppConfig.UserServiceAddr, config.AppConfig.TokenServiceAddr)
+	container, err := client.NewContainer(
+		config.AppConfig.UserServiceAddr,
+		config.AppConfig.TokenServiceAddr,
+		config.AppConfig.ScheduleServiceAddr,
+		config.AppConfig.StudyroomServiceAddr,
+	)
+
 	if err != nil {
 		log.Fatalf("Failed to initialize gRPC clients: %v", err)
 	}

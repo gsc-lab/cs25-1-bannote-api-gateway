@@ -45,6 +45,20 @@ func CheckAllServices(container *client.Container) *HealthCheckResult {
 		allHealthy = false
 	}
 
+	// Check ScheduleService
+	scheduleStatus := checkService(ctx, container.ScheduleService.Health, "schedule-service")
+	result.Services = append(result.Services, scheduleStatus)
+	if scheduleStatus.Status != "SERVING" {
+		allHealthy = false
+	}
+
+	// Check StudyroomService
+	studyroomStatus := checkService(ctx, container.StudyroomService.Health, "studyroom-service")
+	result.Services = append(result.Services, studyroomStatus)
+	if studyroomStatus.Status != "SERVING" {
+		allHealthy = false
+	}
+
 	if allHealthy {
 		result.OverallStatus = "UP"
 	} else {
