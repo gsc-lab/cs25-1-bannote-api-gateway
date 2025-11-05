@@ -5,15 +5,13 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gsc-lab/cs25-1-bannote-api-gateway/config"
 	userpb "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/user"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/grpc/client"
 	"google.golang.org/api/idtoken"
 
 	tokenpb "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/token-service/token"
 )
-
-const googleClientID = "616869349585-5kkpb0gvqlaq3kl4l67n6tq1nt6fee32.apps.googleusercontent.com"
-const frontURL = "http://localhost:5173"
 
 func GoogleCallback(c *gin.Context) {
 	userClient := client.GetUserService(c)
@@ -24,7 +22,7 @@ func GoogleCallback(c *gin.Context) {
 		return
 	}
 
-	payload, err := idtoken.Validate(context.Background(), credential, googleClientID)
+	payload, err := idtoken.Validate(context.Background(), credential, config.AppConfig.GoogleClientID)
 	if err != nil {
 		c.JSON(401, gin.H{"error": "Invalid token", "details": err.Error()})
 		return
@@ -44,7 +42,7 @@ func GoogleCallback(c *gin.Context) {
 	}
 
 	if !resp.Exists {
-		c.Redirect(302, frontURL+"/register")
+		c.Redirect(302, config.AppConfig.FrontendURL+"/register")
 		return
 	}
 
@@ -80,12 +78,22 @@ func GoogleCallback(c *gin.Context) {
 		}
 	}
 
+	// 토큰을 쿠키로 설정
+	c.SetCookie(
+		"access_token",                // 쿠키 이름
+		token.GetAccessToken(),        // 토큰 값
+		config.AppConfig.CookieMaxAge, // 만료 시간 (환경변수에서 설정)
+		"/",                           // 경로
+		"",                            // 도메인
+		false,                         // Secure (HTTPS만 허용 여부, 개발 환경이므로 false)
+		true,                          // HttpOnly (JavaScript 접근 차단)
+	)
+
 	c.JSON(200, gin.H{
 		"message":   "User already exists",
 		"exists":    resp.Exists,
 		"can_login": resp.CanLogin,
 		"user":      userResponse,
-		"token":     token.GetAccessToken(),
 	})
 
 }

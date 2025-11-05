@@ -1,9 +1,12 @@
 package config
 
 import (
+	"crypto/rsa"
+	"encoding/base64"
 	"fmt"
 	"os"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/joho/godotenv"
 )
 
@@ -25,6 +28,9 @@ type Config struct {
 
 	// Cookie
 	CookieMaxAge int
+
+	// JWT
+	PublicKey *rsa.PublicKey
 }
 
 var AppConfig *Config
@@ -39,6 +45,14 @@ func LoadConfig() error {
 		fmt.Println("✓ Successfully loaded .env file")
 	}
 
+	publicKeyBase64 := os.Getenv("PUBLIC_KEY_BASE64")
+
+	publicKey, err := decodePublicKey(publicKeyBase64)
+
+	if err != nil {
+		return err
+	}
+
 	config := &Config{
 		ServerPort:           getEnv("SERVER_PORT", ""),
 		UserServiceAddr:      getEnv("USER_SERVICE_ADDR", ""),
@@ -48,6 +62,7 @@ func LoadConfig() error {
 		GoogleClientID:       getEnv("GOOGLE_CLIENT_ID", ""),
 		FrontendURL:          getEnv("FRONTEND_URL", ""),
 		CookieMaxAge:         getEnvAsInt("COOKIE_MAX_AGE", 900), // 15분 (900초)
+		PublicKey:            publicKey,
 	}
 
 	// 필수 환경변수 검증
@@ -80,4 +95,27 @@ func getEnvAsInt(key string, defaultValue int) int {
 		return defaultValue
 	}
 	return value
+}
+
+// decodePublicKey JWT 해석에 필요한 퍼블릭 키의 타입 변환
+func decodePublicKey(publicKeyBase64 string) (*rsa.PublicKey, error) {
+
+	if publicKeyBase64 == "" {
+		return nil, fmt.Errorf("PUBLIC_KEY_BASE64 environment variable is required")
+	}
+
+	publicKeyBytes, err := base64.StdEncoding.DecodeString(publicKeyBase64)
+
+	if err != nil {
+		return nil, err
+	}
+
+	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyBytes)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return publicKey, nil
+
 }

@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/handlers"
+	user_service "github.com/gsc-lab/cs25-1-bannote-api-gateway/routes/user-service"
 )
 
 func SetupRoutes(router *gin.RouterGroup) {
@@ -11,4 +12,6 @@ func SetupRoutes(router *gin.RouterGroup) {
 
 	auth := router.Group("/auth")
 	auth.GET("/code/google", handlers.GoogleCallback)
+
+	user_service.RegisterDepartmentRoutes(router)
 }
