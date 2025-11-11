@@ -8,9 +8,14 @@ import (
 
 func RegisterDepartmentRoutes(rg *gin.RouterGroup) {
 	departments := rg.Group("/departments")
-	departments.Use(middleware.GRPCMetadata())
+
 	{
 		departments.GET("", handlers.ListDepartments)
 		departments.GET(":id", handlers.GetDepartment)
+
+		departments.POST("", middleware.GRPCMetadata(), handlers.CreateDepartment)
+		departments.PATCH(":id", middleware.GRPCMetadata(), handlers.UpdateDepartments)
+		departments.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteDepartments)
+
 	}
 }

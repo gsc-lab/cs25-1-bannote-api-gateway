@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	departmentpb "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/department"
@@ -27,13 +29,54 @@ func GetDepartment(c *gin.Context) {
 	})
 }
 
-func ListDepartments(c *gin.Context) {
+type CreateDepartmentRequest struct {
+	DepartmentCode string `json:"department_code"`
+	DepartmentName string `json:"department_name"`
+}
+
+func CreateDepartment(c *gin.Context) {
+	var request CreateDepartmentRequest
 	userClient := client.GetUserService(c)
+
+	err := c.ShouldBind(&request)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter", "details": err.Error()})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := userClient.Department.CreateDepartment(ctx, &departmentpb.CreateDepartmentRequest{
+		DepartmentCode: request.DepartmentCode,
+		DepartmentName: request.DepartmentName,
+	})
+
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Failed to create departments", "details": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, resp)
+}
+
+type ListDepartmentsRequest struct {
+	Page int32 `form:"page"`
+	Size int32 `form:"size"`
+}
+
+func ListDepartments(c *gin.Context) {
+	var request ListDepartmentsRequest
+	userClient := client.GetUserService(c)
+	err := c.ShouldBind(&request)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter", "details": err.Error()})
+		return
+	}
 
 	ctx := utils.ContextWithMetadata(c)
 	resp, err := userClient.Department.ListDepartments(ctx, &departmentpb.ListDepartmentsRequest{
-		Page: 1,
-		Size: 2,
+		Page: request.Page,
+		Size: request.Size,
 	})
 
 	if err != nil {
@@ -47,4 +90,49 @@ func ListDepartments(c *gin.Context) {
 		"page":        resp.Page,
 		"size":        resp.Size,
 	})
+}
+
+type UpdateDepartmentRequest struct {
+	DepartmentName string `json:"department_name"`
+}
+
+func UpdateDepartments(c *gin.Context) {
+	userClient := client.GetUserService(c)
+	code := c.Param("id")
+
+	var request UpdateDepartmentRequest
+	if err := c.ShouldBind(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter", "details": err.Error()})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := userClient.Department.UpdateDepartment(ctx, &departmentpb.UpdateDepartmentRequest{
+		DepartmentCode: code,
+		Name:           &request.DepartmentName,
+	})
+
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Failed to update department", "details": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, resp)
+}
+
+func DeleteDepartments(c *gin.Context) {
+	userClient := client.GetUserService(c)
+	code := c.Param("id")
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := userClient.Department.DeleteDepartment(ctx, &departmentpb.DeleteDepartmentRequest{
+		DepartmentCode: code,
+	})
+
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Failed to get department", "details": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, resp)
 }
