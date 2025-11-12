@@ -14,4 +14,5 @@ func SetupRoutes(router *gin.RouterGroup) {
 	auth.GET("/code/google", handlers.GoogleCallback)
 
 	user_service.RegisterDepartmentRoutes(router)
+	user_service.RegisterStudentClassRoute(router)
 }
