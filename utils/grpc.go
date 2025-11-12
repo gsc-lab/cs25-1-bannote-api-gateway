@@ -2,11 +2,15 @@ package utils
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/constants"
+	commonv1 "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/common"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/middleware"
 )
 
@@ -32,4 +36,83 @@ func ContextWithMetadata(c *gin.Context) context.Context {
 	}
 
 	return metadata.NewOutgoingContext(context.Background(), md)
+}
+
+// ParseStudentClassStatus 문자열을 StudentClassStatus enum으로 변환
+func ParseStudentClassStatus(status string) *commonv1.StudentClassStatus {
+	switch status {
+	case "active":
+		return commonv1.StudentClassStatus_STUDENT_CLASS_STATUS_ACTIVE.Enum()
+	case "graduated":
+		return commonv1.StudentClassStatus_STUDENT_CLASS_STATUS_GRADUATED.Enum()
+	default:
+		return commonv1.StudentClassStatus_STUDENT_CLASS_STATUS_UNSPECIFIED.Enum()
+	}
+}
+
+// HandleGRPCError gRPC 에러를 HTTP 응답으로 변환
+func HandleGRPCError(c *gin.Context, err error) {
+	st, ok := status.FromError(err)
+	if !ok {
+		// gRPC 에러가 아닌 경우
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":   "Internal server error",
+			"details": err.Error(),
+		})
+		return
+	}
+
+	// gRPC 상태 코드를 HTTP 상태 코드로 변환
+	httpCode := grpcCodeToHTTP(st.Code())
+
+	// 상세한 에러 응답 구성
+	response := gin.H{
+		"error":   st.Message(),
+		"code":    st.Code().String(),
+		"details": st.Details(),
+	}
+
+	c.JSON(httpCode, response)
+}
+
+// grpcCodeToHTTP gRPC 상태 코드를 HTTP 상태 코드로 변환
+func grpcCodeToHTTP(code codes.Code) int {
+	switch code {
+	case codes.OK:
+		return http.StatusOK
+	case codes.Canceled:
+		return http.StatusRequestTimeout
+	case codes.Unknown:
+		return http.StatusInternalServerError
+	case codes.InvalidArgument:
+		return http.StatusBadRequest
+	case codes.DeadlineExceeded:
+		return http.StatusGatewayTimeout
+	case codes.NotFound:
+		return http.StatusNotFound
+	case codes.AlreadyExists:
+		return http.StatusConflict
+	case codes.PermissionDenied:
+		return http.StatusForbidden
+	case codes.ResourceExhausted:
+		return http.StatusTooManyRequests
+	case codes.FailedPrecondition:
+		return http.StatusBadRequest
+	case codes.Aborted:
+		return http.StatusConflict
+	case codes.OutOfRange:
+		return http.StatusBadRequest
+	case codes.Unimplemented:
+		return http.StatusNotImplemented
+	case codes.Internal:
+		return http.StatusInternalServerError
+	case codes.Unavailable:
+		return http.StatusServiceUnavailable
+	case codes.DataLoss:
+		return http.StatusInternalServerError
+	case codes.Unauthenticated:
+		return http.StatusUnauthorized
+	default:
+		return http.StatusInternalServerError
+	}
 }
