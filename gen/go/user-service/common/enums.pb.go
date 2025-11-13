@@ -200,6 +200,7 @@ const (
 	UserRole_USER_ROLE_TA          UserRole = 4 // 조교
 	UserRole_USER_ROLE_PROFESSOR   UserRole = 5 // 교수
 	UserRole_USER_ROLE_ADMIN       UserRole = 6 // 관리자
+	UserRole_USER_ROLE_DEFAULT     UserRole = 7 // 기본 역할
 )
 
 // Enum value maps for UserRole.
@@ -212,6 +213,7 @@ var (
 		4: "USER_ROLE_TA",
 		5: "USER_ROLE_PROFESSOR",
 		6: "USER_ROLE_ADMIN",
+		7: "USER_ROLE_DEFAULT",
 	}
 	UserRole_value = map[string]int32{
 		"USER_ROLE_UNSPECIFIED": 0,
@@ -221,6 +223,7 @@ var (
 		"USER_ROLE_TA":          4,
 		"USER_ROLE_PROFESSOR":   5,
 		"USER_ROLE_ADMIN":       6,
+		"USER_ROLE_DEFAULT":     7,
 	}
 )
 
@@ -275,7 +278,7 @@ const file_common_enums_proto_rawDesc = "" +
 	"\x12StudentClassStatus\x12$\n" +
 	" STUDENT_CLASS_STATUS_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bSTUDENT_CLASS_STATUS_ACTIVE\x10\x01\x12\"\n" +
-	"\x1eSTUDENT_CLASS_STATUS_GRADUATED\x10\x02*\xaf\x01\n" +
+	"\x1eSTUDENT_CLASS_STATUS_GRADUATED\x10\x02*\xc6\x01\n" +
 	"\bUserRole\x12\x19\n" +
 	"\x15USER_ROLE_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11USER_ROLE_STUDENT\x10\x01\x12\x18\n" +
@@ -283,7 +286,8 @@ const file_common_enums_proto_rawDesc = "" +
 	"\x13USER_ROLE_CLASS_REP\x10\x03\x12\x10\n" +
 	"\fUSER_ROLE_TA\x10\x04\x12\x17\n" +
 	"\x13USER_ROLE_PROFESSOR\x10\x05\x12\x13\n" +
-	"\x0fUSER_ROLE_ADMIN\x10\x06B\x99\x02\n" +
+	"\x0fUSER_ROLE_ADMIN\x10\x06\x12\x15\n" +
+	"\x11USER_ROLE_DEFAULT\x10\aB\x99\x02\n" +
 	"!com.bannote.userservice.common.v1B\n" +
 	"EnumsProtoP\x01ZQgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/common;commonv1\xa2\x02\x03BUC\xaa\x02\x1dBannote.Userservice.Common.V1\xca\x02\x1dBannote\\Userservice\\Common\\V1\xe2\x02)Bannote\\Userservice\\Common\\V1\\GPBMetadata\xea\x02 Bannote::Userservice::Common::V1b\x06proto3"
 

@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DepartmentService_GetDepartment_FullMethodName    = "/bannote.userservice.department.v1.DepartmentService/GetDepartment"
-	DepartmentService_CreateDepartment_FullMethodName = "/bannote.userservice.department.v1.DepartmentService/CreateDepartment"
-	DepartmentService_UpdateDepartment_FullMethodName = "/bannote.userservice.department.v1.DepartmentService/UpdateDepartment"
-	DepartmentService_DeleteDepartment_FullMethodName = "/bannote.userservice.department.v1.DepartmentService/DeleteDepartment"
-	DepartmentService_ListDepartments_FullMethodName  = "/bannote.userservice.department.v1.DepartmentService/ListDepartments"
+	DepartmentService_GetDepartment_FullMethodName      = "/bannote.userservice.department.v1.DepartmentService/GetDepartment"
+	DepartmentService_CreateDepartment_FullMethodName   = "/bannote.userservice.department.v1.DepartmentService/CreateDepartment"
+	DepartmentService_UpdateDepartment_FullMethodName   = "/bannote.userservice.department.v1.DepartmentService/UpdateDepartment"
+	DepartmentService_DeleteDepartment_FullMethodName   = "/bannote.userservice.department.v1.DepartmentService/DeleteDepartment"
+	DepartmentService_ListDepartments_FullMethodName    = "/bannote.userservice.department.v1.DepartmentService/ListDepartments"
+	DepartmentService_GetManyDepartments_FullMethodName = "/bannote.userservice.department.v1.DepartmentService/GetManyDepartments"
 )
 
 // DepartmentServiceClient is the client API for DepartmentService service.
@@ -32,16 +33,18 @@ const (
 //
 // The department service definition.
 type DepartmentServiceClient interface {
-	//  학과 ID로 학과 조회 API
+	// 학과 ID로 학과 조회 API
 	GetDepartment(ctx context.Context, in *GetDepartmentRequest, opts ...grpc.CallOption) (*GetDepartmentResponse, error)
-	//  학과 생성 API
+	// 학과 생성 API
 	CreateDepartment(ctx context.Context, in *CreateDepartmentRequest, opts ...grpc.CallOption) (*CreateDepartmentResponse, error)
-	//  학과 수정 API
+	// 학과 수정 API
 	UpdateDepartment(ctx context.Context, in *UpdateDepartmentRequest, opts ...grpc.CallOption) (*UpdateDepartmentResponse, error)
-	//  학과 삭제 API
+	// 학과 삭제 API
 	DeleteDepartment(ctx context.Context, in *DeleteDepartmentRequest, opts ...grpc.CallOption) (*DeleteDepartmentResponse, error)
-	//  학과 목록 조회 API
+	// 학과 목록 조회 API
 	ListDepartments(ctx context.Context, in *ListDepartmentsRequest, opts ...grpc.CallOption) (*ListDepartmentsResponse, error)
+	// 학과 ID 리스트로 학과 목록 조회 API (React Admin 지원)
+	GetManyDepartments(ctx context.Context, in *GetManyDepartmentsRequest, opts ...grpc.CallOption) (*GetManyDepartmentsResponse, error)
 }
 
 type departmentServiceClient struct {
@@ -102,22 +105,34 @@ func (c *departmentServiceClient) ListDepartments(ctx context.Context, in *ListD
 	return out, nil
 }
 
+func (c *departmentServiceClient) GetManyDepartments(ctx context.Context, in *GetManyDepartmentsRequest, opts ...grpc.CallOption) (*GetManyDepartmentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetManyDepartmentsResponse)
+	err := c.cc.Invoke(ctx, DepartmentService_GetManyDepartments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DepartmentServiceServer is the server API for DepartmentService service.
 // All implementations must embed UnimplementedDepartmentServiceServer
 // for forward compatibility.
 //
 // The department service definition.
 type DepartmentServiceServer interface {
-	//  학과 ID로 학과 조회 API
+	// 학과 ID로 학과 조회 API
 	GetDepartment(context.Context, *GetDepartmentRequest) (*GetDepartmentResponse, error)
-	//  학과 생성 API
+	// 학과 생성 API
 	CreateDepartment(context.Context, *CreateDepartmentRequest) (*CreateDepartmentResponse, error)
-	//  학과 수정 API
+	// 학과 수정 API
 	UpdateDepartment(context.Context, *UpdateDepartmentRequest) (*UpdateDepartmentResponse, error)
-	//  학과 삭제 API
+	// 학과 삭제 API
 	DeleteDepartment(context.Context, *DeleteDepartmentRequest) (*DeleteDepartmentResponse, error)
-	//  학과 목록 조회 API
+	// 학과 목록 조회 API
 	ListDepartments(context.Context, *ListDepartmentsRequest) (*ListDepartmentsResponse, error)
+	// 학과 ID 리스트로 학과 목록 조회 API (React Admin 지원)
+	GetManyDepartments(context.Context, *GetManyDepartmentsRequest) (*GetManyDepartmentsResponse, error)
 	mustEmbedUnimplementedDepartmentServiceServer()
 }
 
@@ -142,6 +157,9 @@ func (UnimplementedDepartmentServiceServer) DeleteDepartment(context.Context, *D
 }
 func (UnimplementedDepartmentServiceServer) ListDepartments(context.Context, *ListDepartmentsRequest) (*ListDepartmentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListDepartments not implemented")
+}
+func (UnimplementedDepartmentServiceServer) GetManyDepartments(context.Context, *GetManyDepartmentsRequest) (*GetManyDepartmentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetManyDepartments not implemented")
 }
 func (UnimplementedDepartmentServiceServer) mustEmbedUnimplementedDepartmentServiceServer() {}
 func (UnimplementedDepartmentServiceServer) testEmbeddedByValue()                           {}
@@ -254,6 +272,24 @@ func _DepartmentService_ListDepartments_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DepartmentService_GetManyDepartments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetManyDepartmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DepartmentServiceServer).GetManyDepartments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DepartmentService_GetManyDepartments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DepartmentServiceServer).GetManyDepartments(ctx, req.(*GetManyDepartmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DepartmentService_ServiceDesc is the grpc.ServiceDesc for DepartmentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -280,6 +316,10 @@ var DepartmentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListDepartments",
 			Handler:    _DepartmentService_ListDepartments_Handler,
+		},
+		{
+			MethodName: "GetManyDepartments",
+			Handler:    _DepartmentService_GetManyDepartments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

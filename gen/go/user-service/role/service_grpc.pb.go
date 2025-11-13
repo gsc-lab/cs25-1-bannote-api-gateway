@@ -31,13 +31,13 @@ const (
 //
 // The role service definition.
 type RoleServiceClient interface {
-	//  유저에게 권한 부여 API
+	// 유저에게 권한 부여 API
 	AssignRoleToUser(ctx context.Context, in *AssignRoleToUserRequest, opts ...grpc.CallOption) (*AssignRoleToUserResponse, error)
-	//  유저에게서 권한 제거 API
+	// 유저에게서 권한 제거 API
 	RemoveRoleFromUser(ctx context.Context, in *RemoveRoleFromUserRequest, opts ...grpc.CallOption) (*RemoveRoleFromUserResponse, error)
-	//  유저의 권한 목록 조회 API
+	// 유저의 권한 목록 조회 API
 	ListUserRoles(ctx context.Context, in *ListUserRolesRequest, opts ...grpc.CallOption) (*ListUserRolesResponse, error)
-	//  유저가 특정 권한 레벨을 충족하는지 확인 API (내부용)
+	// 유저가 특정 권한 레벨을 충족하는지 확인 API (내부용)
 	CheckUserHasAuthority(ctx context.Context, in *CheckUserHasAuthorityRequest, opts ...grpc.CallOption) (*CheckUserHasAuthorityResponse, error)
 }
 
@@ -95,13 +95,13 @@ func (c *roleServiceClient) CheckUserHasAuthority(ctx context.Context, in *Check
 //
 // The role service definition.
 type RoleServiceServer interface {
-	//  유저에게 권한 부여 API
+	// 유저에게 권한 부여 API
 	AssignRoleToUser(context.Context, *AssignRoleToUserRequest) (*AssignRoleToUserResponse, error)
-	//  유저에게서 권한 제거 API
+	// 유저에게서 권한 제거 API
 	RemoveRoleFromUser(context.Context, *RemoveRoleFromUserRequest) (*RemoveRoleFromUserResponse, error)
-	//  유저의 권한 목록 조회 API
+	// 유저의 권한 목록 조회 API
 	ListUserRoles(context.Context, *ListUserRolesRequest) (*ListUserRolesResponse, error)
-	//  유저가 특정 권한 레벨을 충족하는지 확인 API (내부용)
+	// 유저가 특정 권한 레벨을 충족하는지 확인 API (내부용)
 	CheckUserHasAuthority(context.Context, *CheckUserHasAuthorityRequest) (*CheckUserHasAuthorityResponse, error)
 	mustEmbedUnimplementedRoleServiceServer()
 }

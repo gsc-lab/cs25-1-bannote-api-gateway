@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	StudentClassService_GetStudentClass_FullMethodName    = "/bannote.userservice.studentclass.v1.StudentClassService/GetStudentClass"
-	StudentClassService_CreateStudentClass_FullMethodName = "/bannote.userservice.studentclass.v1.StudentClassService/CreateStudentClass"
-	StudentClassService_UpdateStudentClass_FullMethodName = "/bannote.userservice.studentclass.v1.StudentClassService/UpdateStudentClass"
-	StudentClassService_DeleteStudentClass_FullMethodName = "/bannote.userservice.studentclass.v1.StudentClassService/DeleteStudentClass"
-	StudentClassService_ListStudentClasses_FullMethodName = "/bannote.userservice.studentclass.v1.StudentClassService/ListStudentClasses"
+	StudentClassService_GetStudentClass_FullMethodName       = "/bannote.userservice.studentclass.v1.StudentClassService/GetStudentClass"
+	StudentClassService_CreateStudentClass_FullMethodName    = "/bannote.userservice.studentclass.v1.StudentClassService/CreateStudentClass"
+	StudentClassService_UpdateStudentClass_FullMethodName    = "/bannote.userservice.studentclass.v1.StudentClassService/UpdateStudentClass"
+	StudentClassService_DeleteStudentClass_FullMethodName    = "/bannote.userservice.studentclass.v1.StudentClassService/DeleteStudentClass"
+	StudentClassService_ListStudentClasses_FullMethodName    = "/bannote.userservice.studentclass.v1.StudentClassService/ListStudentClasses"
+	StudentClassService_GetManyStudentClasses_FullMethodName = "/bannote.userservice.studentclass.v1.StudentClassService/GetManyStudentClasses"
 )
 
 // StudentClassServiceClient is the client API for StudentClassService service.
@@ -32,16 +33,18 @@ const (
 //
 // The student class service definition.
 type StudentClassServiceClient interface {
-	//  학반 ID로 학반 조회 API
+	// 학반 ID로 학반 조회 API
 	GetStudentClass(ctx context.Context, in *GetStudentClassRequest, opts ...grpc.CallOption) (*GetStudentClassResponse, error)
-	//  학반 생성 API
+	// 학반 생성 API
 	CreateStudentClass(ctx context.Context, in *CreateStudentClassRequest, opts ...grpc.CallOption) (*CreateStudentClassResponse, error)
-	//  학반 수정 API
+	// 학반 수정 API
 	UpdateStudentClass(ctx context.Context, in *UpdateStudentClassRequest, opts ...grpc.CallOption) (*UpdateStudentClassResponse, error)
-	//  학반 삭제 API
+	// 학반 삭제 API
 	DeleteStudentClass(ctx context.Context, in *DeleteStudentClassRequest, opts ...grpc.CallOption) (*DeleteStudentClassResponse, error)
-	//  학반 목록 조회 API
+	// 학반 목록 조회 API
 	ListStudentClasses(ctx context.Context, in *ListStudentClassesRequest, opts ...grpc.CallOption) (*ListStudentClassesResponse, error)
+	// 학반 ID 리스트로 학반 목록 조회 API (React Admin 지원)
+	GetManyStudentClasses(ctx context.Context, in *GetManyStudentClassesRequest, opts ...grpc.CallOption) (*GetManyStudentClassesResponse, error)
 }
 
 type studentClassServiceClient struct {
@@ -102,22 +105,34 @@ func (c *studentClassServiceClient) ListStudentClasses(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *studentClassServiceClient) GetManyStudentClasses(ctx context.Context, in *GetManyStudentClassesRequest, opts ...grpc.CallOption) (*GetManyStudentClassesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetManyStudentClassesResponse)
+	err := c.cc.Invoke(ctx, StudentClassService_GetManyStudentClasses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StudentClassServiceServer is the server API for StudentClassService service.
 // All implementations must embed UnimplementedStudentClassServiceServer
 // for forward compatibility.
 //
 // The student class service definition.
 type StudentClassServiceServer interface {
-	//  학반 ID로 학반 조회 API
+	// 학반 ID로 학반 조회 API
 	GetStudentClass(context.Context, *GetStudentClassRequest) (*GetStudentClassResponse, error)
-	//  학반 생성 API
+	// 학반 생성 API
 	CreateStudentClass(context.Context, *CreateStudentClassRequest) (*CreateStudentClassResponse, error)
-	//  학반 수정 API
+	// 학반 수정 API
 	UpdateStudentClass(context.Context, *UpdateStudentClassRequest) (*UpdateStudentClassResponse, error)
-	//  학반 삭제 API
+	// 학반 삭제 API
 	DeleteStudentClass(context.Context, *DeleteStudentClassRequest) (*DeleteStudentClassResponse, error)
-	//  학반 목록 조회 API
+	// 학반 목록 조회 API
 	ListStudentClasses(context.Context, *ListStudentClassesRequest) (*ListStudentClassesResponse, error)
+	// 학반 ID 리스트로 학반 목록 조회 API (React Admin 지원)
+	GetManyStudentClasses(context.Context, *GetManyStudentClassesRequest) (*GetManyStudentClassesResponse, error)
 	mustEmbedUnimplementedStudentClassServiceServer()
 }
 
@@ -142,6 +157,9 @@ func (UnimplementedStudentClassServiceServer) DeleteStudentClass(context.Context
 }
 func (UnimplementedStudentClassServiceServer) ListStudentClasses(context.Context, *ListStudentClassesRequest) (*ListStudentClassesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListStudentClasses not implemented")
+}
+func (UnimplementedStudentClassServiceServer) GetManyStudentClasses(context.Context, *GetManyStudentClassesRequest) (*GetManyStudentClassesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetManyStudentClasses not implemented")
 }
 func (UnimplementedStudentClassServiceServer) mustEmbedUnimplementedStudentClassServiceServer() {}
 func (UnimplementedStudentClassServiceServer) testEmbeddedByValue()                             {}
@@ -254,6 +272,24 @@ func _StudentClassService_ListStudentClasses_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StudentClassService_GetManyStudentClasses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetManyStudentClassesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StudentClassServiceServer).GetManyStudentClasses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StudentClassService_GetManyStudentClasses_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StudentClassServiceServer).GetManyStudentClasses(ctx, req.(*GetManyStudentClassesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StudentClassService_ServiceDesc is the grpc.ServiceDesc for StudentClassService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -280,6 +316,10 @@ var StudentClassService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListStudentClasses",
 			Handler:    _StudentClassService_ListStudentClasses_Handler,
+		},
+		{
+			MethodName: "GetManyStudentClasses",
+			Handler:    _StudentClassService_GetManyStudentClasses_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

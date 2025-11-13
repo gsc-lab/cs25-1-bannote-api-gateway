@@ -175,6 +175,7 @@ type UserBasic struct {
 	ProfileImageUrl string                 `protobuf:"bytes,9,opt,name=profile_image_url,json=profileImageUrl,proto3" json:"profile_image_url,omitempty"`
 	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	DeletedAt       *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	UserRoles       []common.UserRole      `protobuf:"varint,12,rep,packed,name=user_roles,json=userRoles,proto3,enum=bannote.userservice.common.v1.UserRole" json:"user_roles,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -286,6 +287,13 @@ func (x *UserBasic) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *UserBasic) GetUserRoles() []common.UserRole {
+	if x != nil {
+		return x.UserRoles
+	}
+	return nil
+}
+
 // 유저 상세 정보
 type UserDetail struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -301,6 +309,7 @@ type UserDetail struct {
 	ProfileImageUrl string                 `protobuf:"bytes,9,opt,name=profile_image_url,json=profileImageUrl,proto3" json:"profile_image_url,omitempty"`
 	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	DeletedAt       *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	UserRoles       []common.UserRole      `protobuf:"varint,12,rep,packed,name=user_roles,json=userRoles,proto3,enum=bannote.userservice.common.v1.UserRole" json:"user_roles,omitempty"`
 	// 학생 전용 필드 (type이 STUDENT일 때만)
 	StudentClassCode *string `protobuf:"bytes,20,opt,name=student_class_code,json=studentClassCode,proto3,oneof" json:"student_class_code,omitempty"`
 	StudentClassName *string `protobuf:"bytes,21,opt,name=student_class_name,json=studentClassName,proto3,oneof" json:"student_class_name,omitempty"`
@@ -418,6 +427,13 @@ func (x *UserDetail) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *UserDetail) GetUserRoles() []common.UserRole {
+	if x != nil {
+		return x.UserRoles
+	}
+	return nil
+}
+
 func (x *UserDetail) GetStudentClassCode() string {
 	if x != nil && x.StudentClassCode != nil {
 		return *x.StudentClassCode
@@ -460,7 +476,7 @@ const file_user_user_proto_rawDesc = "" +
 	"\bEmployee\x12:\n" +
 	"\x04user\x18\x01 \x01(\v2&.bannote.userservice.user.v1.UserBasicR\x04user\x12'\n" +
 	"\x0fdepartment_code\x18\x02 \x01(\tR\x0edepartmentCode\x12'\n" +
-	"\x0fdepartment_name\x18\x03 \x01(\tR\x0edepartmentName\"\xec\x03\n" +
+	"\x0fdepartment_name\x18\x03 \x01(\tR\x0edepartmentName\"\xb4\x04\n" +
 	"\tUserBasic\x12\x1b\n" +
 	"\tuser_code\x18\x01 \x01(\tR\buserCode\x12\x1d\n" +
 	"\n" +
@@ -478,8 +494,10 @@ const file_user_user_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
 	"\n" +
-	"deleted_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01B\r\n" +
-	"\v_deleted_at\"\x97\x06\n" +
+	"deleted_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x12F\n" +
+	"\n" +
+	"user_roles\x18\f \x03(\x0e2'.bannote.userservice.common.v1.UserRoleR\tuserRolesB\r\n" +
+	"\v_deleted_at\"\xdf\x06\n" +
 	"\n" +
 	"UserDetail\x12\x1b\n" +
 	"\tuser_code\x18\x01 \x01(\tR\buserCode\x12\x1d\n" +
@@ -499,7 +517,9 @@ const file_user_user_proto_rawDesc = "" +
 	"created_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
 	"\n" +
-	"deleted_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x121\n" +
+	"deleted_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x12F\n" +
+	"\n" +
+	"user_roles\x18\f \x03(\x0e2'.bannote.userservice.common.v1.UserRoleR\tuserRoles\x121\n" +
 	"\x12student_class_code\x18\x14 \x01(\tH\x01R\x10studentClassCode\x88\x01\x01\x121\n" +
 	"\x12student_class_name\x18\x15 \x01(\tH\x02R\x10studentClassName\x88\x01\x01\x12,\n" +
 	"\x0fdepartment_code\x18\x1e \x01(\tH\x03R\x0edepartmentCode\x88\x01\x01\x12,\n" +
@@ -532,6 +552,7 @@ var file_user_user_proto_goTypes = []any{
 	(common.UserType)(0),          // 4: bannote.userservice.common.v1.UserType
 	(common.UserStatus)(0),        // 5: bannote.userservice.common.v1.UserStatus
 	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
+	(common.UserRole)(0),          // 7: bannote.userservice.common.v1.UserRole
 }
 var file_user_user_proto_depIdxs = []int32{
 	2,  // 0: bannote.userservice.user.v1.Student.user:type_name -> bannote.userservice.user.v1.UserBasic
@@ -540,15 +561,17 @@ var file_user_user_proto_depIdxs = []int32{
 	5,  // 3: bannote.userservice.user.v1.UserBasic.status:type_name -> bannote.userservice.common.v1.UserStatus
 	6,  // 4: bannote.userservice.user.v1.UserBasic.created_at:type_name -> google.protobuf.Timestamp
 	6,  // 5: bannote.userservice.user.v1.UserBasic.deleted_at:type_name -> google.protobuf.Timestamp
-	4,  // 6: bannote.userservice.user.v1.UserDetail.user_type:type_name -> bannote.userservice.common.v1.UserType
-	5,  // 7: bannote.userservice.user.v1.UserDetail.user_status:type_name -> bannote.userservice.common.v1.UserStatus
-	6,  // 8: bannote.userservice.user.v1.UserDetail.created_at:type_name -> google.protobuf.Timestamp
-	6,  // 9: bannote.userservice.user.v1.UserDetail.deleted_at:type_name -> google.protobuf.Timestamp
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	7,  // 6: bannote.userservice.user.v1.UserBasic.user_roles:type_name -> bannote.userservice.common.v1.UserRole
+	4,  // 7: bannote.userservice.user.v1.UserDetail.user_type:type_name -> bannote.userservice.common.v1.UserType
+	5,  // 8: bannote.userservice.user.v1.UserDetail.user_status:type_name -> bannote.userservice.common.v1.UserStatus
+	6,  // 9: bannote.userservice.user.v1.UserDetail.created_at:type_name -> google.protobuf.Timestamp
+	6,  // 10: bannote.userservice.user.v1.UserDetail.deleted_at:type_name -> google.protobuf.Timestamp
+	7,  // 11: bannote.userservice.user.v1.UserDetail.user_roles:type_name -> bannote.userservice.common.v1.UserRole
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_user_user_proto_init() }
