@@ -12,6 +12,7 @@ func RegisterDepartmentRoutes(rg *gin.RouterGroup) {
 	{
 		departments.GET("", handlers.ListDepartments)
 		departments.GET(":id", handlers.GetDepartment)
+		departments.GET("/many", handlers.GetManyDepartments)
 
 		departments.POST("", middleware.GRPCMetadata(), handlers.CreateDepartment)
 		departments.PATCH(":id", middleware.GRPCMetadata(), handlers.UpdateDepartments)

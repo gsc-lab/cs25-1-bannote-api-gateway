@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -57,6 +58,36 @@ func GetDepartment(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"department": convertDepartment(resp.Department),
 	})
+}
+
+func GetManyDepartments(c *gin.Context) {
+	userClient := client.GetUserService(c)
+	filterStr := c.Query("filter")
+
+	if filterStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "filter parameter is required"})
+		return
+	}
+
+	var filter struct {
+		ID []string `json:"id"` // ID 배열로 파싱
+	}
+
+	if err := json.Unmarshal([]byte(filterStr), &filter); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid filter format"})
+		return
+	}
+
+	resp, err := userClient.Department.GetManyDepartments(c, &departmentpb.GetManyDepartmentsRequest{
+		DepartmentCodes: filter.ID,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, convertDepartments(resp.Departments))
 }
 
 type CreateDepartmentRequest struct {
