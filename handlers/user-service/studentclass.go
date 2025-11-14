@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -35,10 +36,7 @@ func convertStudentClass(sc *studentclasspb.StudentClass) StudentClassResponse {
 		deletedAt = sc.DeletedAt.AsTime()
 	}
 
-	status := "active"
-	if sc.Status == common.StudentClassStatus_STUDENT_CLASS_STATUS_GRADUATED {
-		status = "graduated"
-	}
+	status := utils.StringFromStudentClassStatus(sc.Status)
 
 	return StudentClassResponse{
 		ID:             sc.StudentClassCode,
@@ -77,6 +75,36 @@ func GetStudentClass(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, convertStudentClass(resp.StudentClass))
+}
+
+func GetManyStudentClasses(c *gin.Context) {
+	userClient := client.GetUserService(c)
+	filterStr := c.Query("filter")
+
+	if filterStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "filter parameter is required"})
+		return
+	}
+
+	var filter struct {
+		ID []string `json:"id"` // ID 배열로 파싱
+	}
+
+	if err := json.Unmarshal([]byte(filterStr), &filter); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid filter format"})
+		return
+	}
+
+	resp, err := userClient.StudentClass.GetManyStudentClasses(c, &studentclasspb.GetManyStudentClassesRequest{
+		StudentClassesCode: filter.ID,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, convertStudentClasses(resp.StudentClasses))
 }
 
 type CreateStudentClassRequest struct {
@@ -178,10 +206,10 @@ func DeleteStudentClass(c *gin.Context) {
 }
 
 type ListStudentClassRequest struct {
-	Page             int32   `form:"page"`
-	Size             int32   `form:"size"`
-	DepartmentCode   *string `form:"department_code,omitempty"`
-	DepartmentStatus *string `form:"status,omitempty"`
+	Page               int32   `form:"page"`
+	Size               int32   `form:"size"`
+	DepartmentCode     *string `form:"department_code,omitempty"`
+	StudentClassStatus *string `form:"status,omitempty"`
 }
 
 func ListStudentClass(c *gin.Context) {
@@ -197,8 +225,8 @@ func ListStudentClass(c *gin.Context) {
 
 	// 문자열 status를 enum으로 변환
 	var status *common.StudentClassStatus
-	if request.DepartmentStatus != nil {
-		status = utils.ParseStudentClassStatus(*request.DepartmentStatus)
+	if request.StudentClassStatus != nil {
+		status = utils.ParseStudentClassStatus(*request.StudentClassStatus)
 		if status == nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status value. Use 'active' or 'graduated'"})
 			return
