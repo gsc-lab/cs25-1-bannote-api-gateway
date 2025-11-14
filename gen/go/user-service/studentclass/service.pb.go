@@ -588,6 +588,94 @@ func (x *ListStudentClassesResponse) GetSize() int32 {
 	return 0
 }
 
+type GetManyStudentClassesRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	StudentClassesCode []string               `protobuf:"bytes,1,rep,name=student_classes_code,json=studentClassesCode,proto3" json:"student_classes_code,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *GetManyStudentClassesRequest) Reset() {
+	*x = GetManyStudentClassesRequest{}
+	mi := &file_studentclass_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyStudentClassesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyStudentClassesRequest) ProtoMessage() {}
+
+func (x *GetManyStudentClassesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_studentclass_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyStudentClassesRequest.ProtoReflect.Descriptor instead.
+func (*GetManyStudentClassesRequest) Descriptor() ([]byte, []int) {
+	return file_studentclass_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetManyStudentClassesRequest) GetStudentClassesCode() []string {
+	if x != nil {
+		return x.StudentClassesCode
+	}
+	return nil
+}
+
+type GetManyStudentClassesResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	StudentClasses []*StudentClass        `protobuf:"bytes,1,rep,name=student_classes,json=studentClasses,proto3" json:"student_classes,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetManyStudentClassesResponse) Reset() {
+	*x = GetManyStudentClassesResponse{}
+	mi := &file_studentclass_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyStudentClassesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyStudentClassesResponse) ProtoMessage() {}
+
+func (x *GetManyStudentClassesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_studentclass_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyStudentClassesResponse.ProtoReflect.Descriptor instead.
+func (*GetManyStudentClassesResponse) Descriptor() ([]byte, []int) {
+	return file_studentclass_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetManyStudentClassesResponse) GetStudentClasses() []*StudentClass {
+	if x != nil {
+		return x.StudentClasses
+	}
+	return nil
+}
+
 var File_studentclass_service_proto protoreflect.FileDescriptor
 
 const file_studentclass_service_proto_rawDesc = "" +
@@ -635,13 +723,18 @@ const file_studentclass_service_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size2\x8e\x06\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"P\n" +
+	"\x1cGetManyStudentClassesRequest\x120\n" +
+	"\x14student_classes_code\x18\x01 \x03(\tR\x12studentClassesCode\"{\n" +
+	"\x1dGetManyStudentClassesResponse\x12Z\n" +
+	"\x0fstudent_classes\x18\x01 \x03(\v21.bannote.userservice.studentclass.v1.StudentClassR\x0estudentClasses2\xb1\a\n" +
 	"\x13StudentClassService\x12\x8e\x01\n" +
 	"\x0fGetStudentClass\x12;.bannote.userservice.studentclass.v1.GetStudentClassRequest\x1a<.bannote.userservice.studentclass.v1.GetStudentClassResponse\"\x00\x12\x97\x01\n" +
 	"\x12CreateStudentClass\x12>.bannote.userservice.studentclass.v1.CreateStudentClassRequest\x1a?.bannote.userservice.studentclass.v1.CreateStudentClassResponse\"\x00\x12\x97\x01\n" +
 	"\x12UpdateStudentClass\x12>.bannote.userservice.studentclass.v1.UpdateStudentClassRequest\x1a?.bannote.userservice.studentclass.v1.UpdateStudentClassResponse\"\x00\x12\x97\x01\n" +
 	"\x12DeleteStudentClass\x12>.bannote.userservice.studentclass.v1.DeleteStudentClassRequest\x1a?.bannote.userservice.studentclass.v1.DeleteStudentClassResponse\"\x00\x12\x97\x01\n" +
-	"\x12ListStudentClasses\x12>.bannote.userservice.studentclass.v1.ListStudentClassesRequest\x1a?.bannote.userservice.studentclass.v1.ListStudentClassesResponse\"\x00B\xc5\x02\n" +
+	"\x12ListStudentClasses\x12>.bannote.userservice.studentclass.v1.ListStudentClassesRequest\x1a?.bannote.userservice.studentclass.v1.ListStudentClassesResponse\"\x00\x12\xa0\x01\n" +
+	"\x15GetManyStudentClasses\x12A.bannote.userservice.studentclass.v1.GetManyStudentClassesRequest\x1aB.bannote.userservice.studentclass.v1.GetManyStudentClassesResponse\"\x00B\xc5\x02\n" +
 	"'com.bannote.userservice.studentclass.v1B\fServiceProtoP\x01Z]github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/studentclass;studentclassv1\xa2\x02\x03BUS\xaa\x02#Bannote.Userservice.Studentclass.V1\xca\x02#Bannote\\Userservice\\Studentclass\\V1\xe2\x02/Bannote\\Userservice\\Studentclass\\V1\\GPBMetadata\xea\x02&Bannote::Userservice::Studentclass::V1b\x06proto3"
 
 var (
@@ -656,44 +749,49 @@ func file_studentclass_service_proto_rawDescGZIP() []byte {
 	return file_studentclass_service_proto_rawDescData
 }
 
-var file_studentclass_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_studentclass_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_studentclass_service_proto_goTypes = []any{
-	(*GetStudentClassRequest)(nil),     // 0: bannote.userservice.studentclass.v1.GetStudentClassRequest
-	(*GetStudentClassResponse)(nil),    // 1: bannote.userservice.studentclass.v1.GetStudentClassResponse
-	(*CreateStudentClassRequest)(nil),  // 2: bannote.userservice.studentclass.v1.CreateStudentClassRequest
-	(*CreateStudentClassResponse)(nil), // 3: bannote.userservice.studentclass.v1.CreateStudentClassResponse
-	(*UpdateStudentClassRequest)(nil),  // 4: bannote.userservice.studentclass.v1.UpdateStudentClassRequest
-	(*UpdateStudentClassResponse)(nil), // 5: bannote.userservice.studentclass.v1.UpdateStudentClassResponse
-	(*DeleteStudentClassRequest)(nil),  // 6: bannote.userservice.studentclass.v1.DeleteStudentClassRequest
-	(*DeleteStudentClassResponse)(nil), // 7: bannote.userservice.studentclass.v1.DeleteStudentClassResponse
-	(*ListStudentClassesRequest)(nil),  // 8: bannote.userservice.studentclass.v1.ListStudentClassesRequest
-	(*ListStudentClassesResponse)(nil), // 9: bannote.userservice.studentclass.v1.ListStudentClassesResponse
-	(*StudentClass)(nil),               // 10: bannote.userservice.studentclass.v1.StudentClass
-	(common.StudentClassStatus)(0),     // 11: bannote.userservice.common.v1.StudentClassStatus
+	(*GetStudentClassRequest)(nil),        // 0: bannote.userservice.studentclass.v1.GetStudentClassRequest
+	(*GetStudentClassResponse)(nil),       // 1: bannote.userservice.studentclass.v1.GetStudentClassResponse
+	(*CreateStudentClassRequest)(nil),     // 2: bannote.userservice.studentclass.v1.CreateStudentClassRequest
+	(*CreateStudentClassResponse)(nil),    // 3: bannote.userservice.studentclass.v1.CreateStudentClassResponse
+	(*UpdateStudentClassRequest)(nil),     // 4: bannote.userservice.studentclass.v1.UpdateStudentClassRequest
+	(*UpdateStudentClassResponse)(nil),    // 5: bannote.userservice.studentclass.v1.UpdateStudentClassResponse
+	(*DeleteStudentClassRequest)(nil),     // 6: bannote.userservice.studentclass.v1.DeleteStudentClassRequest
+	(*DeleteStudentClassResponse)(nil),    // 7: bannote.userservice.studentclass.v1.DeleteStudentClassResponse
+	(*ListStudentClassesRequest)(nil),     // 8: bannote.userservice.studentclass.v1.ListStudentClassesRequest
+	(*ListStudentClassesResponse)(nil),    // 9: bannote.userservice.studentclass.v1.ListStudentClassesResponse
+	(*GetManyStudentClassesRequest)(nil),  // 10: bannote.userservice.studentclass.v1.GetManyStudentClassesRequest
+	(*GetManyStudentClassesResponse)(nil), // 11: bannote.userservice.studentclass.v1.GetManyStudentClassesResponse
+	(*StudentClass)(nil),                  // 12: bannote.userservice.studentclass.v1.StudentClass
+	(common.StudentClassStatus)(0),        // 13: bannote.userservice.common.v1.StudentClassStatus
 }
 var file_studentclass_service_proto_depIdxs = []int32{
-	10, // 0: bannote.userservice.studentclass.v1.GetStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
-	10, // 1: bannote.userservice.studentclass.v1.CreateStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
-	11, // 2: bannote.userservice.studentclass.v1.UpdateStudentClassRequest.status:type_name -> bannote.userservice.common.v1.StudentClassStatus
-	10, // 3: bannote.userservice.studentclass.v1.UpdateStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
-	10, // 4: bannote.userservice.studentclass.v1.DeleteStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
-	11, // 5: bannote.userservice.studentclass.v1.ListStudentClassesRequest.status:type_name -> bannote.userservice.common.v1.StudentClassStatus
-	10, // 6: bannote.userservice.studentclass.v1.ListStudentClassesResponse.student_classes:type_name -> bannote.userservice.studentclass.v1.StudentClass
-	0,  // 7: bannote.userservice.studentclass.v1.StudentClassService.GetStudentClass:input_type -> bannote.userservice.studentclass.v1.GetStudentClassRequest
-	2,  // 8: bannote.userservice.studentclass.v1.StudentClassService.CreateStudentClass:input_type -> bannote.userservice.studentclass.v1.CreateStudentClassRequest
-	4,  // 9: bannote.userservice.studentclass.v1.StudentClassService.UpdateStudentClass:input_type -> bannote.userservice.studentclass.v1.UpdateStudentClassRequest
-	6,  // 10: bannote.userservice.studentclass.v1.StudentClassService.DeleteStudentClass:input_type -> bannote.userservice.studentclass.v1.DeleteStudentClassRequest
-	8,  // 11: bannote.userservice.studentclass.v1.StudentClassService.ListStudentClasses:input_type -> bannote.userservice.studentclass.v1.ListStudentClassesRequest
-	1,  // 12: bannote.userservice.studentclass.v1.StudentClassService.GetStudentClass:output_type -> bannote.userservice.studentclass.v1.GetStudentClassResponse
-	3,  // 13: bannote.userservice.studentclass.v1.StudentClassService.CreateStudentClass:output_type -> bannote.userservice.studentclass.v1.CreateStudentClassResponse
-	5,  // 14: bannote.userservice.studentclass.v1.StudentClassService.UpdateStudentClass:output_type -> bannote.userservice.studentclass.v1.UpdateStudentClassResponse
-	7,  // 15: bannote.userservice.studentclass.v1.StudentClassService.DeleteStudentClass:output_type -> bannote.userservice.studentclass.v1.DeleteStudentClassResponse
-	9,  // 16: bannote.userservice.studentclass.v1.StudentClassService.ListStudentClasses:output_type -> bannote.userservice.studentclass.v1.ListStudentClassesResponse
-	12, // [12:17] is the sub-list for method output_type
-	7,  // [7:12] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	12, // 0: bannote.userservice.studentclass.v1.GetStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
+	12, // 1: bannote.userservice.studentclass.v1.CreateStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
+	13, // 2: bannote.userservice.studentclass.v1.UpdateStudentClassRequest.status:type_name -> bannote.userservice.common.v1.StudentClassStatus
+	12, // 3: bannote.userservice.studentclass.v1.UpdateStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
+	12, // 4: bannote.userservice.studentclass.v1.DeleteStudentClassResponse.student_class:type_name -> bannote.userservice.studentclass.v1.StudentClass
+	13, // 5: bannote.userservice.studentclass.v1.ListStudentClassesRequest.status:type_name -> bannote.userservice.common.v1.StudentClassStatus
+	12, // 6: bannote.userservice.studentclass.v1.ListStudentClassesResponse.student_classes:type_name -> bannote.userservice.studentclass.v1.StudentClass
+	12, // 7: bannote.userservice.studentclass.v1.GetManyStudentClassesResponse.student_classes:type_name -> bannote.userservice.studentclass.v1.StudentClass
+	0,  // 8: bannote.userservice.studentclass.v1.StudentClassService.GetStudentClass:input_type -> bannote.userservice.studentclass.v1.GetStudentClassRequest
+	2,  // 9: bannote.userservice.studentclass.v1.StudentClassService.CreateStudentClass:input_type -> bannote.userservice.studentclass.v1.CreateStudentClassRequest
+	4,  // 10: bannote.userservice.studentclass.v1.StudentClassService.UpdateStudentClass:input_type -> bannote.userservice.studentclass.v1.UpdateStudentClassRequest
+	6,  // 11: bannote.userservice.studentclass.v1.StudentClassService.DeleteStudentClass:input_type -> bannote.userservice.studentclass.v1.DeleteStudentClassRequest
+	8,  // 12: bannote.userservice.studentclass.v1.StudentClassService.ListStudentClasses:input_type -> bannote.userservice.studentclass.v1.ListStudentClassesRequest
+	10, // 13: bannote.userservice.studentclass.v1.StudentClassService.GetManyStudentClasses:input_type -> bannote.userservice.studentclass.v1.GetManyStudentClassesRequest
+	1,  // 14: bannote.userservice.studentclass.v1.StudentClassService.GetStudentClass:output_type -> bannote.userservice.studentclass.v1.GetStudentClassResponse
+	3,  // 15: bannote.userservice.studentclass.v1.StudentClassService.CreateStudentClass:output_type -> bannote.userservice.studentclass.v1.CreateStudentClassResponse
+	5,  // 16: bannote.userservice.studentclass.v1.StudentClassService.UpdateStudentClass:output_type -> bannote.userservice.studentclass.v1.UpdateStudentClassResponse
+	7,  // 17: bannote.userservice.studentclass.v1.StudentClassService.DeleteStudentClass:output_type -> bannote.userservice.studentclass.v1.DeleteStudentClassResponse
+	9,  // 18: bannote.userservice.studentclass.v1.StudentClassService.ListStudentClasses:output_type -> bannote.userservice.studentclass.v1.ListStudentClassesResponse
+	11, // 19: bannote.userservice.studentclass.v1.StudentClassService.GetManyStudentClasses:output_type -> bannote.userservice.studentclass.v1.GetManyStudentClassesResponse
+	14, // [14:20] is the sub-list for method output_type
+	8,  // [8:14] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_studentclass_service_proto_init() }
@@ -710,7 +808,7 @@ func file_studentclass_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_studentclass_service_proto_rawDesc), len(file_studentclass_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

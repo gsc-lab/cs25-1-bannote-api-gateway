@@ -12,6 +12,7 @@ func RegisterStudentClassRoute(rg *gin.RouterGroup) {
 	{
 		studentClass.GET(":id", handlers.GetStudentClass)
 		studentClass.GET("", handlers.ListStudentClass)
+		studentClass.GET("/many", handlers.GetManyStudentClasses)
 
 		studentClass.POST("", middleware.GRPCMetadata(), handlers.CreateStudentClass)
 		studentClass.PATCH(":id", middleware.GRPCMetadata(), handlers.UpdateStudentClass)

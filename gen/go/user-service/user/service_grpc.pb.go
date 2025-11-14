@@ -34,15 +34,15 @@ const (
 //
 // The user service definition.
 type UserServiceClient interface {
-	//  이메일로 로그인 요청 API
+	// 이메일로 로그인 요청 API
 	UserLogin(ctx context.Context, in *UserLoginRequest, opts ...grpc.CallOption) (*UserLoginResponse, error)
-	//  회원 가입 API (성공 시 프론트에서 로그인 요청)
+	// 회원 가입 API (성공 시 프론트에서 로그인 요청)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
-	//  본인이 스스로 변경 가능한 정보를 변경하는 API
+	// 본인이 스스로 변경 가능한 정보를 변경하는 API
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
-	//  이름으로 유저 검색 API (부분 일치)
+	// 이름으로 유저 검색 API (부분 일치)
 	SearchUsersByName(ctx context.Context, in *SearchUsersByNameRequest, opts ...grpc.CallOption) (*SearchUsersByNameResponse, error)
-	//  유저 목록 조회 API (다양한 필터 지원)
+	// 유저 목록 조회 API (다양한 필터 지원)
 	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
 }
 
@@ -110,15 +110,15 @@ func (c *userServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest,
 //
 // The user service definition.
 type UserServiceServer interface {
-	//  이메일로 로그인 요청 API
+	// 이메일로 로그인 요청 API
 	UserLogin(context.Context, *UserLoginRequest) (*UserLoginResponse, error)
-	//  회원 가입 API (성공 시 프론트에서 로그인 요청)
+	// 회원 가입 API (성공 시 프론트에서 로그인 요청)
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
-	//  본인이 스스로 변경 가능한 정보를 변경하는 API
+	// 본인이 스스로 변경 가능한 정보를 변경하는 API
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
-	//  이름으로 유저 검색 API (부분 일치)
+	// 이름으로 유저 검색 API (부분 일치)
 	SearchUsersByName(context.Context, *SearchUsersByNameRequest) (*SearchUsersByNameResponse, error)
-	//  유저 목록 조회 API (다양한 필터 지원)
+	// 유저 목록 조회 API (다양한 필터 지원)
 	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }

@@ -242,10 +242,13 @@ func (x *CreateUserRequest) GetDepartmentCode() string {
 
 // 회원 가입 응답
 type CreateUserResponse struct {
-	state   protoimpl.MessageState `protogen:"open.v1"`
-	Success bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Success  bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	CanLogin bool                   `protobuf:"varint,2,opt,name=can_login,json=canLogin,proto3" json:"can_login,omitempty"`
 	// 실패 사유
-	Reason        *string `protobuf:"bytes,2,opt,name=reason,proto3,oneof" json:"reason,omitempty"`
+	Reason *string `protobuf:"bytes,3,opt,name=reason,proto3,oneof" json:"reason,omitempty"`
+	// 회원가입 성공 시
+	User          *UserDetail `protobuf:"bytes,4,opt,name=user,proto3,oneof" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -287,11 +290,25 @@ func (x *CreateUserResponse) GetSuccess() bool {
 	return false
 }
 
+func (x *CreateUserResponse) GetCanLogin() bool {
+	if x != nil {
+		return x.CanLogin
+	}
+	return false
+}
+
 func (x *CreateUserResponse) GetReason() string {
 	if x != nil && x.Reason != nil {
 		return *x.Reason
 	}
 	return ""
+}
+
+func (x *CreateUserResponse) GetUser() *UserDetail {
+	if x != nil {
+		return x.User
+	}
+	return nil
 }
 
 // 학생 생성 시 필요한 정보
@@ -840,11 +857,14 @@ const file_user_service_proto_rawDesc = "" +
 	"\x12student_class_code\x18\a \x01(\tH\x00R\x10studentClassCode\x88\x01\x01\x12,\n" +
 	"\x0fdepartment_code\x18\b \x01(\tH\x01R\x0edepartmentCode\x88\x01\x01B\x15\n" +
 	"\x13_student_class_codeB\x12\n" +
-	"\x10_department_code\"V\n" +
+	"\x10_department_code\"\xbe\x01\n" +
 	"\x12CreateUserResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x1b\n" +
-	"\x06reason\x18\x02 \x01(\tH\x00R\x06reason\x88\x01\x01B\t\n" +
-	"\a_reason\"7\n" +
+	"\tcan_login\x18\x02 \x01(\bR\bcanLogin\x12\x1b\n" +
+	"\x06reason\x18\x03 \x01(\tH\x00R\x06reason\x88\x01\x01\x12@\n" +
+	"\x04user\x18\x04 \x01(\v2'.bannote.userservice.user.v1.UserDetailH\x01R\x04user\x88\x01\x01B\t\n" +
+	"\a_reasonB\a\n" +
+	"\x05_user\"7\n" +
 	"\vStudentInfo\x12(\n" +
 	"\x10student_class_id\x18\x01 \x01(\x03R\x0estudentClassId\"3\n" +
 	"\fEmployeeInfo\x12#\n" +
@@ -942,28 +962,29 @@ var file_user_service_proto_goTypes = []any{
 var file_user_service_proto_depIdxs = []int32{
 	12, // 0: bannote.userservice.user.v1.UserLoginResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
 	13, // 1: bannote.userservice.user.v1.CreateUserRequest.user_type:type_name -> bannote.userservice.common.v1.UserType
-	12, // 2: bannote.userservice.user.v1.UpdateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	13, // 3: bannote.userservice.user.v1.SearchUsersByNameRequest.type:type_name -> bannote.userservice.common.v1.UserType
-	14, // 4: bannote.userservice.user.v1.SearchUsersByNameRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
-	15, // 5: bannote.userservice.user.v1.SearchUsersByNameResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
-	13, // 6: bannote.userservice.user.v1.ListUsersRequest.type:type_name -> bannote.userservice.common.v1.UserType
-	14, // 7: bannote.userservice.user.v1.ListUsersRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
-	15, // 8: bannote.userservice.user.v1.ListUsersResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
-	0,  // 9: bannote.userservice.user.v1.UserService.UserLogin:input_type -> bannote.userservice.user.v1.UserLoginRequest
-	2,  // 10: bannote.userservice.user.v1.UserService.CreateUser:input_type -> bannote.userservice.user.v1.CreateUserRequest
-	6,  // 11: bannote.userservice.user.v1.UserService.UpdateUser:input_type -> bannote.userservice.user.v1.UpdateUserRequest
-	8,  // 12: bannote.userservice.user.v1.UserService.SearchUsersByName:input_type -> bannote.userservice.user.v1.SearchUsersByNameRequest
-	10, // 13: bannote.userservice.user.v1.UserService.ListUsers:input_type -> bannote.userservice.user.v1.ListUsersRequest
-	1,  // 14: bannote.userservice.user.v1.UserService.UserLogin:output_type -> bannote.userservice.user.v1.UserLoginResponse
-	3,  // 15: bannote.userservice.user.v1.UserService.CreateUser:output_type -> bannote.userservice.user.v1.CreateUserResponse
-	7,  // 16: bannote.userservice.user.v1.UserService.UpdateUser:output_type -> bannote.userservice.user.v1.UpdateUserResponse
-	9,  // 17: bannote.userservice.user.v1.UserService.SearchUsersByName:output_type -> bannote.userservice.user.v1.SearchUsersByNameResponse
-	11, // 18: bannote.userservice.user.v1.UserService.ListUsers:output_type -> bannote.userservice.user.v1.ListUsersResponse
-	14, // [14:19] is the sub-list for method output_type
-	9,  // [9:14] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	12, // 2: bannote.userservice.user.v1.CreateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	12, // 3: bannote.userservice.user.v1.UpdateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	13, // 4: bannote.userservice.user.v1.SearchUsersByNameRequest.type:type_name -> bannote.userservice.common.v1.UserType
+	14, // 5: bannote.userservice.user.v1.SearchUsersByNameRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
+	15, // 6: bannote.userservice.user.v1.SearchUsersByNameResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
+	13, // 7: bannote.userservice.user.v1.ListUsersRequest.type:type_name -> bannote.userservice.common.v1.UserType
+	14, // 8: bannote.userservice.user.v1.ListUsersRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
+	15, // 9: bannote.userservice.user.v1.ListUsersResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
+	0,  // 10: bannote.userservice.user.v1.UserService.UserLogin:input_type -> bannote.userservice.user.v1.UserLoginRequest
+	2,  // 11: bannote.userservice.user.v1.UserService.CreateUser:input_type -> bannote.userservice.user.v1.CreateUserRequest
+	6,  // 12: bannote.userservice.user.v1.UserService.UpdateUser:input_type -> bannote.userservice.user.v1.UpdateUserRequest
+	8,  // 13: bannote.userservice.user.v1.UserService.SearchUsersByName:input_type -> bannote.userservice.user.v1.SearchUsersByNameRequest
+	10, // 14: bannote.userservice.user.v1.UserService.ListUsers:input_type -> bannote.userservice.user.v1.ListUsersRequest
+	1,  // 15: bannote.userservice.user.v1.UserService.UserLogin:output_type -> bannote.userservice.user.v1.UserLoginResponse
+	3,  // 16: bannote.userservice.user.v1.UserService.CreateUser:output_type -> bannote.userservice.user.v1.CreateUserResponse
+	7,  // 17: bannote.userservice.user.v1.UserService.UpdateUser:output_type -> bannote.userservice.user.v1.UpdateUserResponse
+	9,  // 18: bannote.userservice.user.v1.UserService.SearchUsersByName:output_type -> bannote.userservice.user.v1.SearchUsersByNameResponse
+	11, // 19: bannote.userservice.user.v1.UserService.ListUsers:output_type -> bannote.userservice.user.v1.ListUsersResponse
+	15, // [15:20] is the sub-list for method output_type
+	10, // [10:15] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_user_service_proto_init() }

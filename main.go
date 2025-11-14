@@ -30,7 +30,16 @@ func main() {
 	defer container.Close()
 
 	router := gin.Default()
-	router.Use(cors.Default())
+
+	// CORS 설정
+	corsConfig := cors.Config{
+		AllowOrigins:     []string{"http://localhost:5174"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}
+	router.Use(cors.New(corsConfig))
 	router.Use(container.Middleware()) // Context에 클라이언트 주입
 
 	// 모든 경로 앞에 "/api" 설정

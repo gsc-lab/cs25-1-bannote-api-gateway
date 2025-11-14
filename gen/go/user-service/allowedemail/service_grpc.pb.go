@@ -30,11 +30,11 @@ const (
 //
 // The email allowlist service definition.
 type AllowedEmailServiceClient interface {
-	//  이메일 허용 목록 추가 API
+	// 이메일 허용 목록 추가 API
 	AddAllowedEmail(ctx context.Context, in *AddAllowedEmailRequest, opts ...grpc.CallOption) (*AddAllowedEmailResponse, error)
-	//  이메일 허용 목록 삭제 API
+	// 이메일 허용 목록 삭제 API
 	RemoveAllowedEmail(ctx context.Context, in *RemoveAllowedEmailRequest, opts ...grpc.CallOption) (*RemoveAllowedEmailResponse, error)
-	//  이메일 허용 목록 전체 조회 API
+	// 이메일 허용 목록 전체 조회 API
 	ListAllowedEmail(ctx context.Context, in *ListAllowedEmailRequest, opts ...grpc.CallOption) (*ListAllowedEmailResponse, error)
 }
 
@@ -82,11 +82,11 @@ func (c *allowedEmailServiceClient) ListAllowedEmail(ctx context.Context, in *Li
 //
 // The email allowlist service definition.
 type AllowedEmailServiceServer interface {
-	//  이메일 허용 목록 추가 API
+	// 이메일 허용 목록 추가 API
 	AddAllowedEmail(context.Context, *AddAllowedEmailRequest) (*AddAllowedEmailResponse, error)
-	//  이메일 허용 목록 삭제 API
+	// 이메일 허용 목록 삭제 API
 	RemoveAllowedEmail(context.Context, *RemoveAllowedEmailRequest) (*RemoveAllowedEmailResponse, error)
-	//  이메일 허용 목록 전체 조회 API
+	// 이메일 허용 목록 전체 조회 API
 	ListAllowedEmail(context.Context, *ListAllowedEmailRequest) (*ListAllowedEmailResponse, error)
 	mustEmbedUnimplementedAllowedEmailServiceServer()
 }

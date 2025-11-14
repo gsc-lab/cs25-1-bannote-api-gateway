@@ -515,6 +515,94 @@ func (x *ListDepartmentsResponse) GetSize() int32 {
 	return 0
 }
 
+type GetManyDepartmentsRequest struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	DepartmentCodes []string               `protobuf:"bytes,1,rep,name=department_codes,json=departmentCodes,proto3" json:"department_codes,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetManyDepartmentsRequest) Reset() {
+	*x = GetManyDepartmentsRequest{}
+	mi := &file_department_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyDepartmentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyDepartmentsRequest) ProtoMessage() {}
+
+func (x *GetManyDepartmentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_department_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyDepartmentsRequest.ProtoReflect.Descriptor instead.
+func (*GetManyDepartmentsRequest) Descriptor() ([]byte, []int) {
+	return file_department_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetManyDepartmentsRequest) GetDepartmentCodes() []string {
+	if x != nil {
+		return x.DepartmentCodes
+	}
+	return nil
+}
+
+type GetManyDepartmentsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Departments   []*Department          `protobuf:"bytes,1,rep,name=departments,proto3" json:"departments,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManyDepartmentsResponse) Reset() {
+	*x = GetManyDepartmentsResponse{}
+	mi := &file_department_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyDepartmentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyDepartmentsResponse) ProtoMessage() {}
+
+func (x *GetManyDepartmentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_department_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyDepartmentsResponse.ProtoReflect.Descriptor instead.
+func (*GetManyDepartmentsResponse) Descriptor() ([]byte, []int) {
+	return file_department_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetManyDepartmentsResponse) GetDepartments() []*Department {
+	if x != nil {
+		return x.Departments
+	}
+	return nil
+}
+
 var File_department_service_proto protoreflect.FileDescriptor
 
 const file_department_service_proto_rawDesc = "" +
@@ -555,13 +643,18 @@ const file_department_service_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size2\xd7\x05\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"F\n" +
+	"\x19GetManyDepartmentsRequest\x12)\n" +
+	"\x10department_codes\x18\x01 \x03(\tR\x0fdepartmentCodes\"m\n" +
+	"\x1aGetManyDepartmentsResponse\x12O\n" +
+	"\vdepartments\x18\x01 \x03(\v2-.bannote.userservice.department.v1.DepartmentR\vdepartments2\xed\x06\n" +
 	"\x11DepartmentService\x12\x84\x01\n" +
 	"\rGetDepartment\x127.bannote.userservice.department.v1.GetDepartmentRequest\x1a8.bannote.userservice.department.v1.GetDepartmentResponse\"\x00\x12\x8d\x01\n" +
 	"\x10CreateDepartment\x12:.bannote.userservice.department.v1.CreateDepartmentRequest\x1a;.bannote.userservice.department.v1.CreateDepartmentResponse\"\x00\x12\x8d\x01\n" +
 	"\x10UpdateDepartment\x12:.bannote.userservice.department.v1.UpdateDepartmentRequest\x1a;.bannote.userservice.department.v1.UpdateDepartmentResponse\"\x00\x12\x8d\x01\n" +
 	"\x10DeleteDepartment\x12:.bannote.userservice.department.v1.DeleteDepartmentRequest\x1a;.bannote.userservice.department.v1.DeleteDepartmentResponse\"\x00\x12\x8a\x01\n" +
-	"\x0fListDepartments\x129.bannote.userservice.department.v1.ListDepartmentsRequest\x1a:.bannote.userservice.department.v1.ListDepartmentsResponse\"\x00B\xb7\x02\n" +
+	"\x0fListDepartments\x129.bannote.userservice.department.v1.ListDepartmentsRequest\x1a:.bannote.userservice.department.v1.ListDepartmentsResponse\"\x00\x12\x93\x01\n" +
+	"\x12GetManyDepartments\x12<.bannote.userservice.department.v1.GetManyDepartmentsRequest\x1a=.bannote.userservice.department.v1.GetManyDepartmentsResponse\"\x00B\xb7\x02\n" +
 	"%com.bannote.userservice.department.v1B\fServiceProtoP\x01ZYgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/department;departmentv1\xa2\x02\x03BUD\xaa\x02!Bannote.Userservice.Department.V1\xca\x02!Bannote\\Userservice\\Department\\V1\xe2\x02-Bannote\\Userservice\\Department\\V1\\GPBMetadata\xea\x02$Bannote::Userservice::Department::V1b\x06proto3"
 
 var (
@@ -576,41 +669,46 @@ func file_department_service_proto_rawDescGZIP() []byte {
 	return file_department_service_proto_rawDescData
 }
 
-var file_department_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_department_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_department_service_proto_goTypes = []any{
-	(*GetDepartmentRequest)(nil),     // 0: bannote.userservice.department.v1.GetDepartmentRequest
-	(*GetDepartmentResponse)(nil),    // 1: bannote.userservice.department.v1.GetDepartmentResponse
-	(*CreateDepartmentRequest)(nil),  // 2: bannote.userservice.department.v1.CreateDepartmentRequest
-	(*CreateDepartmentResponse)(nil), // 3: bannote.userservice.department.v1.CreateDepartmentResponse
-	(*UpdateDepartmentRequest)(nil),  // 4: bannote.userservice.department.v1.UpdateDepartmentRequest
-	(*UpdateDepartmentResponse)(nil), // 5: bannote.userservice.department.v1.UpdateDepartmentResponse
-	(*DeleteDepartmentRequest)(nil),  // 6: bannote.userservice.department.v1.DeleteDepartmentRequest
-	(*DeleteDepartmentResponse)(nil), // 7: bannote.userservice.department.v1.DeleteDepartmentResponse
-	(*ListDepartmentsRequest)(nil),   // 8: bannote.userservice.department.v1.ListDepartmentsRequest
-	(*ListDepartmentsResponse)(nil),  // 9: bannote.userservice.department.v1.ListDepartmentsResponse
-	(*Department)(nil),               // 10: bannote.userservice.department.v1.Department
+	(*GetDepartmentRequest)(nil),       // 0: bannote.userservice.department.v1.GetDepartmentRequest
+	(*GetDepartmentResponse)(nil),      // 1: bannote.userservice.department.v1.GetDepartmentResponse
+	(*CreateDepartmentRequest)(nil),    // 2: bannote.userservice.department.v1.CreateDepartmentRequest
+	(*CreateDepartmentResponse)(nil),   // 3: bannote.userservice.department.v1.CreateDepartmentResponse
+	(*UpdateDepartmentRequest)(nil),    // 4: bannote.userservice.department.v1.UpdateDepartmentRequest
+	(*UpdateDepartmentResponse)(nil),   // 5: bannote.userservice.department.v1.UpdateDepartmentResponse
+	(*DeleteDepartmentRequest)(nil),    // 6: bannote.userservice.department.v1.DeleteDepartmentRequest
+	(*DeleteDepartmentResponse)(nil),   // 7: bannote.userservice.department.v1.DeleteDepartmentResponse
+	(*ListDepartmentsRequest)(nil),     // 8: bannote.userservice.department.v1.ListDepartmentsRequest
+	(*ListDepartmentsResponse)(nil),    // 9: bannote.userservice.department.v1.ListDepartmentsResponse
+	(*GetManyDepartmentsRequest)(nil),  // 10: bannote.userservice.department.v1.GetManyDepartmentsRequest
+	(*GetManyDepartmentsResponse)(nil), // 11: bannote.userservice.department.v1.GetManyDepartmentsResponse
+	(*Department)(nil),                 // 12: bannote.userservice.department.v1.Department
 }
 var file_department_service_proto_depIdxs = []int32{
-	10, // 0: bannote.userservice.department.v1.GetDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
-	10, // 1: bannote.userservice.department.v1.CreateDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
-	10, // 2: bannote.userservice.department.v1.UpdateDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
-	10, // 3: bannote.userservice.department.v1.DeleteDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
-	10, // 4: bannote.userservice.department.v1.ListDepartmentsResponse.departments:type_name -> bannote.userservice.department.v1.Department
-	0,  // 5: bannote.userservice.department.v1.DepartmentService.GetDepartment:input_type -> bannote.userservice.department.v1.GetDepartmentRequest
-	2,  // 6: bannote.userservice.department.v1.DepartmentService.CreateDepartment:input_type -> bannote.userservice.department.v1.CreateDepartmentRequest
-	4,  // 7: bannote.userservice.department.v1.DepartmentService.UpdateDepartment:input_type -> bannote.userservice.department.v1.UpdateDepartmentRequest
-	6,  // 8: bannote.userservice.department.v1.DepartmentService.DeleteDepartment:input_type -> bannote.userservice.department.v1.DeleteDepartmentRequest
-	8,  // 9: bannote.userservice.department.v1.DepartmentService.ListDepartments:input_type -> bannote.userservice.department.v1.ListDepartmentsRequest
-	1,  // 10: bannote.userservice.department.v1.DepartmentService.GetDepartment:output_type -> bannote.userservice.department.v1.GetDepartmentResponse
-	3,  // 11: bannote.userservice.department.v1.DepartmentService.CreateDepartment:output_type -> bannote.userservice.department.v1.CreateDepartmentResponse
-	5,  // 12: bannote.userservice.department.v1.DepartmentService.UpdateDepartment:output_type -> bannote.userservice.department.v1.UpdateDepartmentResponse
-	7,  // 13: bannote.userservice.department.v1.DepartmentService.DeleteDepartment:output_type -> bannote.userservice.department.v1.DeleteDepartmentResponse
-	9,  // 14: bannote.userservice.department.v1.DepartmentService.ListDepartments:output_type -> bannote.userservice.department.v1.ListDepartmentsResponse
-	10, // [10:15] is the sub-list for method output_type
-	5,  // [5:10] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	12, // 0: bannote.userservice.department.v1.GetDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
+	12, // 1: bannote.userservice.department.v1.CreateDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
+	12, // 2: bannote.userservice.department.v1.UpdateDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
+	12, // 3: bannote.userservice.department.v1.DeleteDepartmentResponse.department:type_name -> bannote.userservice.department.v1.Department
+	12, // 4: bannote.userservice.department.v1.ListDepartmentsResponse.departments:type_name -> bannote.userservice.department.v1.Department
+	12, // 5: bannote.userservice.department.v1.GetManyDepartmentsResponse.departments:type_name -> bannote.userservice.department.v1.Department
+	0,  // 6: bannote.userservice.department.v1.DepartmentService.GetDepartment:input_type -> bannote.userservice.department.v1.GetDepartmentRequest
+	2,  // 7: bannote.userservice.department.v1.DepartmentService.CreateDepartment:input_type -> bannote.userservice.department.v1.CreateDepartmentRequest
+	4,  // 8: bannote.userservice.department.v1.DepartmentService.UpdateDepartment:input_type -> bannote.userservice.department.v1.UpdateDepartmentRequest
+	6,  // 9: bannote.userservice.department.v1.DepartmentService.DeleteDepartment:input_type -> bannote.userservice.department.v1.DeleteDepartmentRequest
+	8,  // 10: bannote.userservice.department.v1.DepartmentService.ListDepartments:input_type -> bannote.userservice.department.v1.ListDepartmentsRequest
+	10, // 11: bannote.userservice.department.v1.DepartmentService.GetManyDepartments:input_type -> bannote.userservice.department.v1.GetManyDepartmentsRequest
+	1,  // 12: bannote.userservice.department.v1.DepartmentService.GetDepartment:output_type -> bannote.userservice.department.v1.GetDepartmentResponse
+	3,  // 13: bannote.userservice.department.v1.DepartmentService.CreateDepartment:output_type -> bannote.userservice.department.v1.CreateDepartmentResponse
+	5,  // 14: bannote.userservice.department.v1.DepartmentService.UpdateDepartment:output_type -> bannote.userservice.department.v1.UpdateDepartmentResponse
+	7,  // 15: bannote.userservice.department.v1.DepartmentService.DeleteDepartment:output_type -> bannote.userservice.department.v1.DeleteDepartmentResponse
+	9,  // 16: bannote.userservice.department.v1.DepartmentService.ListDepartments:output_type -> bannote.userservice.department.v1.ListDepartmentsResponse
+	11, // 17: bannote.userservice.department.v1.DepartmentService.GetManyDepartments:output_type -> bannote.userservice.department.v1.GetManyDepartmentsResponse
+	12, // [12:18] is the sub-list for method output_type
+	6,  // [6:12] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_department_service_proto_init() }
@@ -626,7 +724,7 @@ func file_department_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_department_service_proto_rawDesc), len(file_department_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
