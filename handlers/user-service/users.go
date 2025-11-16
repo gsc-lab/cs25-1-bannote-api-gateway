@@ -1,14 +1,17 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gsc-lab/cs25-1-bannote-api-gateway/config"
 	common "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/common"
 	userpb "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/user"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/grpc/client"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/utils"
+	"google.golang.org/api/idtoken"
 )
 
 type UserResponse struct {
@@ -129,5 +132,79 @@ func ListUsers(c *gin.Context) {
 		"total": resp.TotalCount,
 		"page":  resp.Page,
 		"size":  resp.Size,
+	})
+}
+
+type createUserRequest struct {
+	UserCode         string  `json:"user_code"`
+	UserEmail        string  `json:"user_email"`
+	FamilyName       string  `json:"family_name"`
+	GivenName        string  `json:"given_name"`
+	UserType         string  `json:"user_type"`
+	ProfileImageUrl  string  `json:"profile_image_url"`
+	StudentClassCode *string `json:"student_class_code"`
+	DepartmentCode   *string `json:"department_code"`
+	Credential       string  `json:"credential"`
+}
+
+func CreateUser(c *gin.Context) {
+	var request createUserRequest
+	userClient := client.GetUserService(c)
+
+	if err := c.ShouldBind(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request", "details": err.Error()})
+		return
+	}
+
+	if request.Credential == "" {
+		c.JSON(400, gin.H{"error": "Missing credential"})
+		return
+	}
+
+	payload, err := idtoken.Validate(context.Background(), request.Credential, config.AppConfig.GoogleClientID)
+	if err != nil {
+		c.JSON(401, gin.H{"error": "Invalid token", "details": err.Error()})
+		return
+	}
+
+	email, _ := payload.Claims["email"].(string)
+
+	if email != request.UserEmail {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid Credential", "details": "Invalid Email"})
+		return
+	}
+
+	var userType *common.UserType
+	userType = utils.ParseUserType(request.UserType)
+	if userType == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user_type value"})
+		return
+	}
+
+	resp, err := userClient.User.CreateUser(c, &userpb.CreateUserRequest{
+		UserCode:         request.UserCode,
+		UserEmail:        request.UserEmail,
+		FamilyName:       request.FamilyName,
+		GivenName:        request.GivenName,
+		UserType:         *userType,
+		ProfileImageUrl:  request.ProfileImageUrl,
+		StudentClassCode: request.StudentClassCode,
+		DepartmentCode:   request.DepartmentCode,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	if !resp.Success {
+		c.JSON(http.StatusBadRequest, gin.H{"error": resp.Reason})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"success":   resp.Success,
+		"can_login": resp.CanLogin,
+		"data":      convertUser(resp.User),
 	})
 }
