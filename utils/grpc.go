@@ -10,7 +10,6 @@ import (
 	"google.golang.org/grpc/status"
 
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/constants"
-	commonv1 "github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/common"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/middleware"
 )
 
@@ -36,18 +35,6 @@ func ContextWithMetadata(c *gin.Context) context.Context {
 	}
 
 	return metadata.NewOutgoingContext(context.Background(), md)
-}
-
-// ParseStudentClassStatus 문자열을 StudentClassStatus enum으로 변환
-func ParseStudentClassStatus(status string) *commonv1.StudentClassStatus {
-	switch status {
-	case "active":
-		return commonv1.StudentClassStatus_STUDENT_CLASS_STATUS_ACTIVE.Enum()
-	case "graduated":
-		return commonv1.StudentClassStatus_STUDENT_CLASS_STATUS_GRADUATED.Enum()
-	default:
-		return commonv1.StudentClassStatus_STUDENT_CLASS_STATUS_UNSPECIFIED.Enum()
-	}
 }
 
 // HandleGRPCError gRPC 에러를 HTTP 응답으로 변환

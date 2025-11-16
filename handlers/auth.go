@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/config"
@@ -42,20 +43,27 @@ func GoogleCallback(c *gin.Context) {
 	}
 
 	if !resp.Exists {
-		c.Redirect(302, config.AppConfig.FrontendURL+"/register")
+		c.JSON(200, gin.H{"data": resp})
 		return
 	}
 
-	if resp.CanLogin == false {
-		c.JSON(401, gin.H{"error": "Invalid token", "details": err.Error()})
+	if !resp.CanLogin {
+		c.JSON(401, gin.H{"error": "User is not allowed to login"})
 		return
 	}
 
 	tokenClient := client.GetTokenService(c)
 
+	// UserRole enum을 콤마로 구분된 문자열로 변환 (USER_ROLE_ 제거)
+	roleStrings := make([]string, len(resp.User.GetUserRoles()))
+	for i, role := range resp.User.GetUserRoles() {
+		roleStrings[i] = strings.TrimPrefix(role.String(), "USER_ROLE_")
+	}
+	rolesStr := strings.Join(roleStrings, ",")
+
 	token, err := tokenClient.Token.GenerateAccessToken(context.Background(), &tokenpb.GenerateAccessTokenRequest{
 		UserId: resp.User.GetUserCode(),
-		Roles:  resp.User.GetGivenName(),
+		Roles:  rolesStr,
 	})
 
 	if err != nil {
