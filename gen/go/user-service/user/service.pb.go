@@ -311,96 +311,6 @@ func (x *CreateUserResponse) GetUser() *UserDetail {
 	return nil
 }
 
-// 학생 생성 시 필요한 정보
-type StudentInfo struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	StudentClassId int64                  `protobuf:"varint,1,opt,name=student_class_id,json=studentClassId,proto3" json:"student_class_id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *StudentInfo) Reset() {
-	*x = StudentInfo{}
-	mi := &file_user_service_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *StudentInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*StudentInfo) ProtoMessage() {}
-
-func (x *StudentInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use StudentInfo.ProtoReflect.Descriptor instead.
-func (*StudentInfo) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *StudentInfo) GetStudentClassId() int64 {
-	if x != nil {
-		return x.StudentClassId
-	}
-	return 0
-}
-
-// 직원 생성 시 필요한 정보
-type EmployeeInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DepartmentId  int64                  `protobuf:"varint,1,opt,name=department_id,json=departmentId,proto3" json:"department_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *EmployeeInfo) Reset() {
-	*x = EmployeeInfo{}
-	mi := &file_user_service_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *EmployeeInfo) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*EmployeeInfo) ProtoMessage() {}
-
-func (x *EmployeeInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use EmployeeInfo.ProtoReflect.Descriptor instead.
-func (*EmployeeInfo) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *EmployeeInfo) GetDepartmentId() int64 {
-	if x != nil {
-		return x.DepartmentId
-	}
-	return 0
-}
-
 // 본인이 스스로 변경 가능한 정보
 type UpdateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -416,7 +326,7 @@ type UpdateUserRequest struct {
 
 func (x *UpdateUserRequest) Reset() {
 	*x = UpdateUserRequest{}
-	mi := &file_user_service_proto_msgTypes[6]
+	mi := &file_user_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -428,7 +338,7 @@ func (x *UpdateUserRequest) String() string {
 func (*UpdateUserRequest) ProtoMessage() {}
 
 func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[6]
+	mi := &file_user_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -441,7 +351,7 @@ func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{6}
+	return file_user_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateUserRequest) GetUserNumber() string {
@@ -495,7 +405,7 @@ type UpdateUserResponse struct {
 
 func (x *UpdateUserResponse) Reset() {
 	*x = UpdateUserResponse{}
-	mi := &file_user_service_proto_msgTypes[7]
+	mi := &file_user_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -507,7 +417,7 @@ func (x *UpdateUserResponse) String() string {
 func (*UpdateUserResponse) ProtoMessage() {}
 
 func (x *UpdateUserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[7]
+	mi := &file_user_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -520,7 +430,7 @@ func (x *UpdateUserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserResponse.ProtoReflect.Descriptor instead.
 func (*UpdateUserResponse) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{7}
+	return file_user_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateUserResponse) GetUser() *UserDetail {
@@ -544,7 +454,7 @@ type SearchUsersByNameRequest struct {
 
 func (x *SearchUsersByNameRequest) Reset() {
 	*x = SearchUsersByNameRequest{}
-	mi := &file_user_service_proto_msgTypes[8]
+	mi := &file_user_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -556,7 +466,7 @@ func (x *SearchUsersByNameRequest) String() string {
 func (*SearchUsersByNameRequest) ProtoMessage() {}
 
 func (x *SearchUsersByNameRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[8]
+	mi := &file_user_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -569,7 +479,7 @@ func (x *SearchUsersByNameRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchUsersByNameRequest.ProtoReflect.Descriptor instead.
 func (*SearchUsersByNameRequest) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{8}
+	return file_user_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SearchUsersByNameRequest) GetName() string {
@@ -620,7 +530,7 @@ type SearchUsersByNameResponse struct {
 
 func (x *SearchUsersByNameResponse) Reset() {
 	*x = SearchUsersByNameResponse{}
-	mi := &file_user_service_proto_msgTypes[9]
+	mi := &file_user_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -632,7 +542,7 @@ func (x *SearchUsersByNameResponse) String() string {
 func (*SearchUsersByNameResponse) ProtoMessage() {}
 
 func (x *SearchUsersByNameResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[9]
+	mi := &file_user_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -645,7 +555,7 @@ func (x *SearchUsersByNameResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SearchUsersByNameResponse.ProtoReflect.Descriptor instead.
 func (*SearchUsersByNameResponse) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{9}
+	return file_user_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SearchUsersByNameResponse) GetUsers() []*UserBasic {
@@ -678,20 +588,20 @@ func (x *SearchUsersByNameResponse) GetSize() int32 {
 
 // 유저 목록 조회 시 필요한 정보
 type ListUsersRequest struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Type           *common.UserType       `protobuf:"varint,1,opt,name=type,proto3,enum=bannote.userservice.common.v1.UserType,oneof" json:"type,omitempty"`       // 유저 타입 필터 (선택)
-	Status         *common.UserStatus     `protobuf:"varint,2,opt,name=status,proto3,enum=bannote.userservice.common.v1.UserStatus,oneof" json:"status,omitempty"` // 유저 상태 필터 (선택)
-	StudentClassId *int64                 `protobuf:"varint,3,opt,name=student_class_id,json=studentClassId,proto3,oneof" json:"student_class_id,omitempty"`       // 학반 ID 필터 (선택)
-	DepartmentId   *int64                 `protobuf:"varint,4,opt,name=department_id,json=departmentId,proto3,oneof" json:"department_id,omitempty"`               // 학과 ID 필터 (선택)
-	Page           int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page,omitempty"`
-	Size           int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Type             *common.UserType       `protobuf:"varint,1,opt,name=type,proto3,enum=bannote.userservice.common.v1.UserType,oneof" json:"type,omitempty"`       // 유저 타입 필터 (선택)
+	Status           *common.UserStatus     `protobuf:"varint,2,opt,name=status,proto3,enum=bannote.userservice.common.v1.UserStatus,oneof" json:"status,omitempty"` // 유저 상태 필터 (선택)
+	StudentClassCode *string                `protobuf:"bytes,3,opt,name=student_class_code,json=studentClassCode,proto3,oneof" json:"student_class_code,omitempty"`  // 학반 ID 필터 (선택)
+	DepartmentCode   *string                `protobuf:"bytes,4,opt,name=department_code,json=departmentCode,proto3,oneof" json:"department_code,omitempty"`          // 학과 ID 필터 (선택)
+	Page             int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page,omitempty"`
+	Size             int32                  `protobuf:"varint,6,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *ListUsersRequest) Reset() {
 	*x = ListUsersRequest{}
-	mi := &file_user_service_proto_msgTypes[10]
+	mi := &file_user_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -703,7 +613,7 @@ func (x *ListUsersRequest) String() string {
 func (*ListUsersRequest) ProtoMessage() {}
 
 func (x *ListUsersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[10]
+	mi := &file_user_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -716,7 +626,7 @@ func (x *ListUsersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersRequest.ProtoReflect.Descriptor instead.
 func (*ListUsersRequest) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{10}
+	return file_user_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListUsersRequest) GetType() common.UserType {
@@ -733,18 +643,18 @@ func (x *ListUsersRequest) GetStatus() common.UserStatus {
 	return common.UserStatus(0)
 }
 
-func (x *ListUsersRequest) GetStudentClassId() int64 {
-	if x != nil && x.StudentClassId != nil {
-		return *x.StudentClassId
+func (x *ListUsersRequest) GetStudentClassCode() string {
+	if x != nil && x.StudentClassCode != nil {
+		return *x.StudentClassCode
 	}
-	return 0
+	return ""
 }
 
-func (x *ListUsersRequest) GetDepartmentId() int64 {
-	if x != nil && x.DepartmentId != nil {
-		return *x.DepartmentId
+func (x *ListUsersRequest) GetDepartmentCode() string {
+	if x != nil && x.DepartmentCode != nil {
+		return *x.DepartmentCode
 	}
-	return 0
+	return ""
 }
 
 func (x *ListUsersRequest) GetPage() int32 {
@@ -764,7 +674,7 @@ func (x *ListUsersRequest) GetSize() int32 {
 // 유저 목록 조회 응답
 type ListUsersResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Users         []*UserBasic           `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	Users         []*UserDetail          `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
 	TotalCount    int32                  `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
 	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
 	Size          int32                  `protobuf:"varint,4,opt,name=size,proto3" json:"size,omitempty"`
@@ -774,7 +684,7 @@ type ListUsersResponse struct {
 
 func (x *ListUsersResponse) Reset() {
 	*x = ListUsersResponse{}
-	mi := &file_user_service_proto_msgTypes[11]
+	mi := &file_user_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -786,7 +696,7 @@ func (x *ListUsersResponse) String() string {
 func (*ListUsersResponse) ProtoMessage() {}
 
 func (x *ListUsersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_service_proto_msgTypes[11]
+	mi := &file_user_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -799,10 +709,10 @@ func (x *ListUsersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListUsersResponse.ProtoReflect.Descriptor instead.
 func (*ListUsersResponse) Descriptor() ([]byte, []int) {
-	return file_user_service_proto_rawDescGZIP(), []int{11}
+	return file_user_service_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ListUsersResponse) GetUsers() []*UserBasic {
+func (x *ListUsersResponse) GetUsers() []*UserDetail {
 	if x != nil {
 		return x.Users
 	}
@@ -864,11 +774,7 @@ const file_user_service_proto_rawDesc = "" +
 	"\x06reason\x18\x03 \x01(\tH\x00R\x06reason\x88\x01\x01\x12@\n" +
 	"\x04user\x18\x04 \x01(\v2'.bannote.userservice.user.v1.UserDetailH\x01R\x04user\x88\x01\x01B\t\n" +
 	"\a_reasonB\a\n" +
-	"\x05_user\"7\n" +
-	"\vStudentInfo\x12(\n" +
-	"\x10student_class_id\x18\x01 \x01(\x03R\x0estudentClassId\"3\n" +
-	"\fEmployeeInfo\x12#\n" +
-	"\rdepartment_id\x18\x01 \x01(\x03R\fdepartmentId\"\x8c\x02\n" +
+	"\x05_user\"\x8c\x02\n" +
 	"\x11UpdateUserRequest\x12\x1f\n" +
 	"\vuser_number\x18\x01 \x01(\tR\n" +
 	"userNumber\x12\x19\n" +
@@ -900,20 +806,20 @@ const file_user_service_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size\"\xd8\x02\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\xe4\x02\n" +
 	"\x10ListUsersRequest\x12@\n" +
 	"\x04type\x18\x01 \x01(\x0e2'.bannote.userservice.common.v1.UserTypeH\x00R\x04type\x88\x01\x01\x12F\n" +
-	"\x06status\x18\x02 \x01(\x0e2).bannote.userservice.common.v1.UserStatusH\x01R\x06status\x88\x01\x01\x12-\n" +
-	"\x10student_class_id\x18\x03 \x01(\x03H\x02R\x0estudentClassId\x88\x01\x01\x12(\n" +
-	"\rdepartment_id\x18\x04 \x01(\x03H\x03R\fdepartmentId\x88\x01\x01\x12\x12\n" +
+	"\x06status\x18\x02 \x01(\x0e2).bannote.userservice.common.v1.UserStatusH\x01R\x06status\x88\x01\x01\x121\n" +
+	"\x12student_class_code\x18\x03 \x01(\tH\x02R\x10studentClassCode\x88\x01\x01\x12,\n" +
+	"\x0fdepartment_code\x18\x04 \x01(\tH\x03R\x0edepartmentCode\x88\x01\x01\x12\x12\n" +
 	"\x04page\x18\x05 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x06 \x01(\x05R\x04sizeB\a\n" +
 	"\x05_typeB\t\n" +
-	"\a_statusB\x13\n" +
-	"\x11_student_class_idB\x10\n" +
-	"\x0e_department_id\"\x9a\x01\n" +
-	"\x11ListUsersResponse\x12<\n" +
-	"\x05users\x18\x01 \x03(\v2&.bannote.userservice.user.v1.UserBasicR\x05users\x12\x1f\n" +
+	"\a_statusB\x15\n" +
+	"\x13_student_class_codeB\x12\n" +
+	"\x10_department_code\"\x9b\x01\n" +
+	"\x11ListUsersResponse\x12=\n" +
+	"\x05users\x18\x01 \x03(\v2'.bannote.userservice.user.v1.UserDetailR\x05users\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
@@ -940,46 +846,44 @@ func file_user_service_proto_rawDescGZIP() []byte {
 	return file_user_service_proto_rawDescData
 }
 
-var file_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_user_service_proto_goTypes = []any{
 	(*UserLoginRequest)(nil),          // 0: bannote.userservice.user.v1.UserLoginRequest
 	(*UserLoginResponse)(nil),         // 1: bannote.userservice.user.v1.UserLoginResponse
 	(*CreateUserRequest)(nil),         // 2: bannote.userservice.user.v1.CreateUserRequest
 	(*CreateUserResponse)(nil),        // 3: bannote.userservice.user.v1.CreateUserResponse
-	(*StudentInfo)(nil),               // 4: bannote.userservice.user.v1.StudentInfo
-	(*EmployeeInfo)(nil),              // 5: bannote.userservice.user.v1.EmployeeInfo
-	(*UpdateUserRequest)(nil),         // 6: bannote.userservice.user.v1.UpdateUserRequest
-	(*UpdateUserResponse)(nil),        // 7: bannote.userservice.user.v1.UpdateUserResponse
-	(*SearchUsersByNameRequest)(nil),  // 8: bannote.userservice.user.v1.SearchUsersByNameRequest
-	(*SearchUsersByNameResponse)(nil), // 9: bannote.userservice.user.v1.SearchUsersByNameResponse
-	(*ListUsersRequest)(nil),          // 10: bannote.userservice.user.v1.ListUsersRequest
-	(*ListUsersResponse)(nil),         // 11: bannote.userservice.user.v1.ListUsersResponse
-	(*UserDetail)(nil),                // 12: bannote.userservice.user.v1.UserDetail
-	(common.UserType)(0),              // 13: bannote.userservice.common.v1.UserType
-	(common.UserStatus)(0),            // 14: bannote.userservice.common.v1.UserStatus
-	(*UserBasic)(nil),                 // 15: bannote.userservice.user.v1.UserBasic
+	(*UpdateUserRequest)(nil),         // 4: bannote.userservice.user.v1.UpdateUserRequest
+	(*UpdateUserResponse)(nil),        // 5: bannote.userservice.user.v1.UpdateUserResponse
+	(*SearchUsersByNameRequest)(nil),  // 6: bannote.userservice.user.v1.SearchUsersByNameRequest
+	(*SearchUsersByNameResponse)(nil), // 7: bannote.userservice.user.v1.SearchUsersByNameResponse
+	(*ListUsersRequest)(nil),          // 8: bannote.userservice.user.v1.ListUsersRequest
+	(*ListUsersResponse)(nil),         // 9: bannote.userservice.user.v1.ListUsersResponse
+	(*UserDetail)(nil),                // 10: bannote.userservice.user.v1.UserDetail
+	(common.UserType)(0),              // 11: bannote.userservice.common.v1.UserType
+	(common.UserStatus)(0),            // 12: bannote.userservice.common.v1.UserStatus
+	(*UserBasic)(nil),                 // 13: bannote.userservice.user.v1.UserBasic
 }
 var file_user_service_proto_depIdxs = []int32{
-	12, // 0: bannote.userservice.user.v1.UserLoginResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	13, // 1: bannote.userservice.user.v1.CreateUserRequest.user_type:type_name -> bannote.userservice.common.v1.UserType
-	12, // 2: bannote.userservice.user.v1.CreateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	12, // 3: bannote.userservice.user.v1.UpdateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	13, // 4: bannote.userservice.user.v1.SearchUsersByNameRequest.type:type_name -> bannote.userservice.common.v1.UserType
-	14, // 5: bannote.userservice.user.v1.SearchUsersByNameRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
-	15, // 6: bannote.userservice.user.v1.SearchUsersByNameResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
-	13, // 7: bannote.userservice.user.v1.ListUsersRequest.type:type_name -> bannote.userservice.common.v1.UserType
-	14, // 8: bannote.userservice.user.v1.ListUsersRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
-	15, // 9: bannote.userservice.user.v1.ListUsersResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
+	10, // 0: bannote.userservice.user.v1.UserLoginResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	11, // 1: bannote.userservice.user.v1.CreateUserRequest.user_type:type_name -> bannote.userservice.common.v1.UserType
+	10, // 2: bannote.userservice.user.v1.CreateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	10, // 3: bannote.userservice.user.v1.UpdateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	11, // 4: bannote.userservice.user.v1.SearchUsersByNameRequest.type:type_name -> bannote.userservice.common.v1.UserType
+	12, // 5: bannote.userservice.user.v1.SearchUsersByNameRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
+	13, // 6: bannote.userservice.user.v1.SearchUsersByNameResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
+	11, // 7: bannote.userservice.user.v1.ListUsersRequest.type:type_name -> bannote.userservice.common.v1.UserType
+	12, // 8: bannote.userservice.user.v1.ListUsersRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
+	10, // 9: bannote.userservice.user.v1.ListUsersResponse.users:type_name -> bannote.userservice.user.v1.UserDetail
 	0,  // 10: bannote.userservice.user.v1.UserService.UserLogin:input_type -> bannote.userservice.user.v1.UserLoginRequest
 	2,  // 11: bannote.userservice.user.v1.UserService.CreateUser:input_type -> bannote.userservice.user.v1.CreateUserRequest
-	6,  // 12: bannote.userservice.user.v1.UserService.UpdateUser:input_type -> bannote.userservice.user.v1.UpdateUserRequest
-	8,  // 13: bannote.userservice.user.v1.UserService.SearchUsersByName:input_type -> bannote.userservice.user.v1.SearchUsersByNameRequest
-	10, // 14: bannote.userservice.user.v1.UserService.ListUsers:input_type -> bannote.userservice.user.v1.ListUsersRequest
+	4,  // 12: bannote.userservice.user.v1.UserService.UpdateUser:input_type -> bannote.userservice.user.v1.UpdateUserRequest
+	6,  // 13: bannote.userservice.user.v1.UserService.SearchUsersByName:input_type -> bannote.userservice.user.v1.SearchUsersByNameRequest
+	8,  // 14: bannote.userservice.user.v1.UserService.ListUsers:input_type -> bannote.userservice.user.v1.ListUsersRequest
 	1,  // 15: bannote.userservice.user.v1.UserService.UserLogin:output_type -> bannote.userservice.user.v1.UserLoginResponse
 	3,  // 16: bannote.userservice.user.v1.UserService.CreateUser:output_type -> bannote.userservice.user.v1.CreateUserResponse
-	7,  // 17: bannote.userservice.user.v1.UserService.UpdateUser:output_type -> bannote.userservice.user.v1.UpdateUserResponse
-	9,  // 18: bannote.userservice.user.v1.UserService.SearchUsersByName:output_type -> bannote.userservice.user.v1.SearchUsersByNameResponse
-	11, // 19: bannote.userservice.user.v1.UserService.ListUsers:output_type -> bannote.userservice.user.v1.ListUsersResponse
+	5,  // 17: bannote.userservice.user.v1.UserService.UpdateUser:output_type -> bannote.userservice.user.v1.UpdateUserResponse
+	7,  // 18: bannote.userservice.user.v1.UserService.SearchUsersByName:output_type -> bannote.userservice.user.v1.SearchUsersByNameResponse
+	9,  // 19: bannote.userservice.user.v1.UserService.ListUsers:output_type -> bannote.userservice.user.v1.ListUsersResponse
 	15, // [15:20] is the sub-list for method output_type
 	10, // [10:15] is the sub-list for method input_type
 	10, // [10:10] is the sub-list for extension type_name
@@ -996,16 +900,16 @@ func file_user_service_proto_init() {
 	file_user_service_proto_msgTypes[1].OneofWrappers = []any{}
 	file_user_service_proto_msgTypes[2].OneofWrappers = []any{}
 	file_user_service_proto_msgTypes[3].OneofWrappers = []any{}
+	file_user_service_proto_msgTypes[4].OneofWrappers = []any{}
 	file_user_service_proto_msgTypes[6].OneofWrappers = []any{}
 	file_user_service_proto_msgTypes[8].OneofWrappers = []any{}
-	file_user_service_proto_msgTypes[10].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_service_proto_rawDesc), len(file_user_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

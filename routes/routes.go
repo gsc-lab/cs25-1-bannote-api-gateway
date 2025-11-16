@@ -15,4 +15,5 @@ func SetupRoutes(router *gin.RouterGroup) {
 
 	user_service.RegisterDepartmentRoutes(router)
 	user_service.RegisterStudentClassRoute(router)
+	user_service.RegisterUserRoute(router)
 }
