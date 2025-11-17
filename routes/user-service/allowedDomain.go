@@ -10,6 +10,8 @@ func RegisterAllowedDomainRoutes(rg *gin.RouterGroup) {
 	alloweddomains := rg.Group("/alloweddomains")
 
 	{
+		alloweddomains.GET("/check", handlers.CheckAllowedDomain)
+
 		alloweddomains.GET("", middleware.GRPCMetadata(), handlers.ListAllowedDomain)
 		alloweddomains.POST("", middleware.GRPCMetadata(), handlers.CreateAllowedDomain)
 		alloweddomains.DELETE("/*id", middleware.GRPCMetadata(), handlers.DeleteAllowedDomain)

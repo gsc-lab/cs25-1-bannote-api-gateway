@@ -22,6 +22,7 @@ const (
 	AllowedDomainService_AddAllowedDomain_FullMethodName    = "/bannote.userservice.alloweddomain.v1.AllowedDomainService/AddAllowedDomain"
 	AllowedDomainService_RemoveAllowedDomain_FullMethodName = "/bannote.userservice.alloweddomain.v1.AllowedDomainService/RemoveAllowedDomain"
 	AllowedDomainService_ListAllowedDomain_FullMethodName   = "/bannote.userservice.alloweddomain.v1.AllowedDomainService/ListAllowedDomain"
+	AllowedDomainService_CheckAllowedDomain_FullMethodName  = "/bannote.userservice.alloweddomain.v1.AllowedDomainService/CheckAllowedDomain"
 )
 
 // AllowedDomainServiceClient is the client API for AllowedDomainService service.
@@ -36,6 +37,8 @@ type AllowedDomainServiceClient interface {
 	RemoveAllowedDomain(ctx context.Context, in *RemoveAllowedDomainRequest, opts ...grpc.CallOption) (*RemoveAllowedDomainResponse, error)
 	// 도메인 허용 목록 전체 조회 API
 	ListAllowedDomain(ctx context.Context, in *ListAllowedDomainRequest, opts ...grpc.CallOption) (*ListAllowedDomainResponse, error)
+	// 이메일을 이용하여 허용된 도메인인지 검증 API
+	CheckAllowedDomain(ctx context.Context, in *CheckAllowedDomainRequest, opts ...grpc.CallOption) (*CheckAllowedDomainResponse, error)
 }
 
 type allowedDomainServiceClient struct {
@@ -76,6 +79,16 @@ func (c *allowedDomainServiceClient) ListAllowedDomain(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *allowedDomainServiceClient) CheckAllowedDomain(ctx context.Context, in *CheckAllowedDomainRequest, opts ...grpc.CallOption) (*CheckAllowedDomainResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckAllowedDomainResponse)
+	err := c.cc.Invoke(ctx, AllowedDomainService_CheckAllowedDomain_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AllowedDomainServiceServer is the server API for AllowedDomainService service.
 // All implementations must embed UnimplementedAllowedDomainServiceServer
 // for forward compatibility.
@@ -88,6 +101,8 @@ type AllowedDomainServiceServer interface {
 	RemoveAllowedDomain(context.Context, *RemoveAllowedDomainRequest) (*RemoveAllowedDomainResponse, error)
 	// 도메인 허용 목록 전체 조회 API
 	ListAllowedDomain(context.Context, *ListAllowedDomainRequest) (*ListAllowedDomainResponse, error)
+	// 이메일을 이용하여 허용된 도메인인지 검증 API
+	CheckAllowedDomain(context.Context, *CheckAllowedDomainRequest) (*CheckAllowedDomainResponse, error)
 	mustEmbedUnimplementedAllowedDomainServiceServer()
 }
 
@@ -106,6 +121,9 @@ func (UnimplementedAllowedDomainServiceServer) RemoveAllowedDomain(context.Conte
 }
 func (UnimplementedAllowedDomainServiceServer) ListAllowedDomain(context.Context, *ListAllowedDomainRequest) (*ListAllowedDomainResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAllowedDomain not implemented")
+}
+func (UnimplementedAllowedDomainServiceServer) CheckAllowedDomain(context.Context, *CheckAllowedDomainRequest) (*CheckAllowedDomainResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAllowedDomain not implemented")
 }
 func (UnimplementedAllowedDomainServiceServer) mustEmbedUnimplementedAllowedDomainServiceServer() {}
 func (UnimplementedAllowedDomainServiceServer) testEmbeddedByValue()                              {}
@@ -182,6 +200,24 @@ func _AllowedDomainService_ListAllowedDomain_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AllowedDomainService_CheckAllowedDomain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAllowedDomainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AllowedDomainServiceServer).CheckAllowedDomain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AllowedDomainService_CheckAllowedDomain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AllowedDomainServiceServer).CheckAllowedDomain(ctx, req.(*CheckAllowedDomainRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AllowedDomainService_ServiceDesc is the grpc.ServiceDesc for AllowedDomainService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -200,6 +236,10 @@ var AllowedDomainService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAllowedDomain",
 			Handler:    _AllowedDomainService_ListAllowedDomain_Handler,
+		},
+		{
+			MethodName: "CheckAllowedDomain",
+			Handler:    _AllowedDomainService_CheckAllowedDomain_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -321,6 +321,102 @@ func (x *ListAllowedDomainResponse) GetSize() int32 {
 	return 0
 }
 
+type CheckAllowedDomainRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckAllowedDomainRequest) Reset() {
+	*x = CheckAllowedDomainRequest{}
+	mi := &file_alloweddomain_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAllowedDomainRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAllowedDomainRequest) ProtoMessage() {}
+
+func (x *CheckAllowedDomainRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_alloweddomain_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAllowedDomainRequest.ProtoReflect.Descriptor instead.
+func (*CheckAllowedDomainRequest) Descriptor() ([]byte, []int) {
+	return file_alloweddomain_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CheckAllowedDomainRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+type CheckAllowedDomainResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsAllowed     bool                   `protobuf:"varint,1,opt,name=is_allowed,json=isAllowed,proto3" json:"is_allowed,omitempty"`
+	Domain        string                 `protobuf:"bytes,2,opt,name=domain,proto3" json:"domain,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckAllowedDomainResponse) Reset() {
+	*x = CheckAllowedDomainResponse{}
+	mi := &file_alloweddomain_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAllowedDomainResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAllowedDomainResponse) ProtoMessage() {}
+
+func (x *CheckAllowedDomainResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_alloweddomain_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAllowedDomainResponse.ProtoReflect.Descriptor instead.
+func (*CheckAllowedDomainResponse) Descriptor() ([]byte, []int) {
+	return file_alloweddomain_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CheckAllowedDomainResponse) GetIsAllowed() bool {
+	if x != nil {
+		return x.IsAllowed
+	}
+	return false
+}
+
+func (x *CheckAllowedDomainResponse) GetDomain() string {
+	if x != nil {
+		return x.Domain
+	}
+	return ""
+}
+
 var File_alloweddomain_service_proto protoreflect.FileDescriptor
 
 const file_alloweddomain_service_proto_rawDesc = "" +
@@ -342,11 +438,18 @@ const file_alloweddomain_service_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size2\xe4\x03\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"1\n" +
+	"\x19CheckAllowedDomainRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\"S\n" +
+	"\x1aCheckAllowedDomainResponse\x12\x1d\n" +
+	"\n" +
+	"is_allowed\x18\x01 \x01(\bR\tisAllowed\x12\x16\n" +
+	"\x06domain\x18\x02 \x01(\tR\x06domain2\x80\x05\n" +
 	"\x14AllowedDomainService\x12\x93\x01\n" +
 	"\x10AddAllowedDomain\x12=.bannote.userservice.alloweddomain.v1.AddAllowedDomainRequest\x1a>.bannote.userservice.alloweddomain.v1.AddAllowedDomainResponse\"\x00\x12\x9c\x01\n" +
 	"\x13RemoveAllowedDomain\x12@.bannote.userservice.alloweddomain.v1.RemoveAllowedDomainRequest\x1aA.bannote.userservice.alloweddomain.v1.RemoveAllowedDomainResponse\"\x00\x12\x96\x01\n" +
-	"\x11ListAllowedDomain\x12>.bannote.userservice.alloweddomain.v1.ListAllowedDomainRequest\x1a?.bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse\"\x00B\xcc\x02\n" +
+	"\x11ListAllowedDomain\x12>.bannote.userservice.alloweddomain.v1.ListAllowedDomainRequest\x1a?.bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse\"\x00\x12\x99\x01\n" +
+	"\x12CheckAllowedDomain\x12?.bannote.userservice.alloweddomain.v1.CheckAllowedDomainRequest\x1a@.bannote.userservice.alloweddomain.v1.CheckAllowedDomainResponse\"\x00B\xcc\x02\n" +
 	"(com.bannote.userservice.alloweddomain.v1B\fServiceProtoP\x01Z_github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/alloweddomain;alloweddomainv1\xa2\x02\x03BUA\xaa\x02$Bannote.Userservice.Alloweddomain.V1\xca\x02$Bannote\\Userservice\\Alloweddomain\\V1\xe2\x020Bannote\\Userservice\\Alloweddomain\\V1\\GPBMetadata\xea\x02'Bannote::Userservice::Alloweddomain::V1b\x06proto3"
 
 var (
@@ -361,7 +464,7 @@ func file_alloweddomain_service_proto_rawDescGZIP() []byte {
 	return file_alloweddomain_service_proto_rawDescData
 }
 
-var file_alloweddomain_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_alloweddomain_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_alloweddomain_service_proto_goTypes = []any{
 	(*AddAllowedDomainRequest)(nil),     // 0: bannote.userservice.alloweddomain.v1.AddAllowedDomainRequest
 	(*AddAllowedDomainResponse)(nil),    // 1: bannote.userservice.alloweddomain.v1.AddAllowedDomainResponse
@@ -369,20 +472,24 @@ var file_alloweddomain_service_proto_goTypes = []any{
 	(*RemoveAllowedDomainResponse)(nil), // 3: bannote.userservice.alloweddomain.v1.RemoveAllowedDomainResponse
 	(*ListAllowedDomainRequest)(nil),    // 4: bannote.userservice.alloweddomain.v1.ListAllowedDomainRequest
 	(*ListAllowedDomainResponse)(nil),   // 5: bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse
-	(*AllowedDomain)(nil),               // 6: bannote.userservice.alloweddomain.v1.AllowedDomain
+	(*CheckAllowedDomainRequest)(nil),   // 6: bannote.userservice.alloweddomain.v1.CheckAllowedDomainRequest
+	(*CheckAllowedDomainResponse)(nil),  // 7: bannote.userservice.alloweddomain.v1.CheckAllowedDomainResponse
+	(*AllowedDomain)(nil),               // 8: bannote.userservice.alloweddomain.v1.AllowedDomain
 }
 var file_alloweddomain_service_proto_depIdxs = []int32{
-	6, // 0: bannote.userservice.alloweddomain.v1.AddAllowedDomainResponse.allowed_domain:type_name -> bannote.userservice.alloweddomain.v1.AllowedDomain
-	6, // 1: bannote.userservice.alloweddomain.v1.RemoveAllowedDomainResponse.allowed_domain:type_name -> bannote.userservice.alloweddomain.v1.AllowedDomain
-	6, // 2: bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse.allowed_domain:type_name -> bannote.userservice.alloweddomain.v1.AllowedDomain
+	8, // 0: bannote.userservice.alloweddomain.v1.AddAllowedDomainResponse.allowed_domain:type_name -> bannote.userservice.alloweddomain.v1.AllowedDomain
+	8, // 1: bannote.userservice.alloweddomain.v1.RemoveAllowedDomainResponse.allowed_domain:type_name -> bannote.userservice.alloweddomain.v1.AllowedDomain
+	8, // 2: bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse.allowed_domain:type_name -> bannote.userservice.alloweddomain.v1.AllowedDomain
 	0, // 3: bannote.userservice.alloweddomain.v1.AllowedDomainService.AddAllowedDomain:input_type -> bannote.userservice.alloweddomain.v1.AddAllowedDomainRequest
 	2, // 4: bannote.userservice.alloweddomain.v1.AllowedDomainService.RemoveAllowedDomain:input_type -> bannote.userservice.alloweddomain.v1.RemoveAllowedDomainRequest
 	4, // 5: bannote.userservice.alloweddomain.v1.AllowedDomainService.ListAllowedDomain:input_type -> bannote.userservice.alloweddomain.v1.ListAllowedDomainRequest
-	1, // 6: bannote.userservice.alloweddomain.v1.AllowedDomainService.AddAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.AddAllowedDomainResponse
-	3, // 7: bannote.userservice.alloweddomain.v1.AllowedDomainService.RemoveAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.RemoveAllowedDomainResponse
-	5, // 8: bannote.userservice.alloweddomain.v1.AllowedDomainService.ListAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
+	6, // 6: bannote.userservice.alloweddomain.v1.AllowedDomainService.CheckAllowedDomain:input_type -> bannote.userservice.alloweddomain.v1.CheckAllowedDomainRequest
+	1, // 7: bannote.userservice.alloweddomain.v1.AllowedDomainService.AddAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.AddAllowedDomainResponse
+	3, // 8: bannote.userservice.alloweddomain.v1.AllowedDomainService.RemoveAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.RemoveAllowedDomainResponse
+	5, // 9: bannote.userservice.alloweddomain.v1.AllowedDomainService.ListAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.ListAllowedDomainResponse
+	7, // 10: bannote.userservice.alloweddomain.v1.AllowedDomainService.CheckAllowedDomain:output_type -> bannote.userservice.alloweddomain.v1.CheckAllowedDomainResponse
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -400,7 +507,7 @@ func file_alloweddomain_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_alloweddomain_service_proto_rawDesc), len(file_alloweddomain_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -85,6 +85,32 @@ func DeleteAllowedDomain(c *gin.Context) {
 	})
 }
 
+func CheckAllowedDomain(c *gin.Context) {
+	userClient := client.GetUserService(c)
+
+	// Get email from query parameter
+	email := c.Query("email")
+	if email == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email parameter required"})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := userClient.AllowedDomain.CheckAllowedDomain(ctx, &alloweddomainpb.CheckAllowedDomainRequest{
+		Email: email,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"allowed": resp.GetIsAllowed(),
+		"domain":  resp.GetDomain(),
+	})
+}
+
 type listAllowedDomainRequest struct {
 	Page int32 `form:"page"`
 	Size int32 `form:"size"`
