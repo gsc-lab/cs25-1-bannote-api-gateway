@@ -12,7 +12,10 @@ RUN go build -trimpath -ldflags "-w -s" -o app .
 # 배포
 FROM debian:bullseye-slim AS deploy
 
-RUN apt-get update
+# TLS 인증서 이용
+RUN apt-get update && \
+    apt-get install -y ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=deploy-builder /app/app .
 
