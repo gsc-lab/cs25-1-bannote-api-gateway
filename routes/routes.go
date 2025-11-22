@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/handlers"
+	studyroom_service "github.com/gsc-lab/cs25-1-bannote-api-gateway/routes/studyroom-service"
 	user_service "github.com/gsc-lab/cs25-1-bannote-api-gateway/routes/user-service"
 )
 
@@ -17,4 +18,6 @@ func SetupRoutes(router *gin.RouterGroup) {
 	user_service.RegisterStudentClassRoute(router)
 	user_service.RegisterUserRoute(router)
 	user_service.RegisterAllowedDomainRoutes(router)
+
+	studyroom_service.RegisterRoomRoutes(router)
 }
