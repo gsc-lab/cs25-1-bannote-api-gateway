@@ -11,6 +11,9 @@ func RegisterRoomRoutes(rg *gin.RouterGroup) {
 
 	{
 		rooms.GET("", middleware.GRPCMetadata(), handlers.ListRoom)
+		rooms.GET(":id", middleware.GRPCMetadata(), handlers.GetRoom)
+
+		rooms.PATCH(":id", middleware.GRPCMetadata(), handlers.UpdateRoom)
 		rooms.POST("", middleware.GRPCMetadata(), handlers.CreateRoom)
 		rooms.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteRoom)
 	}

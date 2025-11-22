@@ -106,3 +106,82 @@ func DeleteRoom(c *gin.Context) {
 		"message": "Room deleted successfully",
 	})
 }
+
+func GetRoom(c *gin.Context) {
+	studyroomClient := client.GetStudyroomService(c)
+
+	idStr := c.Param("id")
+
+	if idStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter"})
+		return
+	}
+
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format", "details": err.Error()})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := studyroomClient.Room.GetRoom(ctx, &roompb.GetRoomRequest{
+		Id: id,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": resp.Room,
+		"id":   resp.Room.Id,
+	})
+}
+
+type updateRoomRequest struct {
+	DepartmentCode string `json:"department_code"`
+	Name           string `json:"name"`
+	MaximumMember  int32  `json:"maximum_member"`
+}
+
+func UpdateRoom(c *gin.Context) {
+	studyroomClient := client.GetStudyroomService(c)
+
+	idStr := c.Param("id")
+
+	if idStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter"})
+		return
+	}
+
+	id, err := strconv.ParseInt(idStr, 10, 64)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID format", "details": err.Error()})
+		return
+	}
+
+	var request *updateRoomRequest
+	if err := c.ShouldBind(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter", "details": err.Error()})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := studyroomClient.Room.UpdateRoom(ctx, &roompb.UpdateRoomRequest{
+		Id:             id,
+		Name:           request.Name,
+		DepartmentCode: request.DepartmentCode,
+		MaximumMember:  request.MaximumMember,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": resp.Room,
+		"id":   resp.Room.Id,
+	})
+}
