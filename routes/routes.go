@@ -23,4 +23,5 @@ func SetupRoutes(router *gin.RouterGroup) {
 	studyroom_service.RegisterRoomRoutes(router)
 
 	schedule_service.RegisterTagsRoutes(router)
+	schedule_service.RegisterGroupRoutes(router)
 }
