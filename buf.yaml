@@ -4,6 +4,7 @@ deps:
   - buf.build/bannote/token-service
   - buf.build/bannote/common-service
   - buf.build/bannote/studyroom-service
+  - buf.build/bannote/schedule-service
 breaking:
   use:
     - FILE

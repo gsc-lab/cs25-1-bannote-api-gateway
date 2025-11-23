@@ -4,6 +4,7 @@ inputs:
   - module: buf.build/bannote/token-service
   - module: buf.build/bannote/common-service
   - module: buf.build/bannote/studyroom-service
+  - module: buf.build/bannote/schedule-service
 managed:
   enabled: true
   override:
@@ -19,6 +20,9 @@ managed:
     - file_option: go_package_prefix
       value: github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/studyroom-service
       module: buf.build/bannote/studyroom-service
+    - file_option: go_package_prefix
+      value: github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/schedule-service
+      module: buf.build/bannote/schedule-service
 plugins:
   - remote: buf.build/protocolbuffers/go
     out: .
