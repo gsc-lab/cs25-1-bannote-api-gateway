@@ -208,3 +208,40 @@ func CreateUser(c *gin.Context) {
 		"data":      convertUser(resp.User),
 	})
 }
+
+func UpdateUser(c *gin.Context) {
+	userClient := client.GetUserService(c)
+	userCode := c.Param("user_code")
+
+	var body struct {
+		FamilyName      *string `json:"family_name"`
+		GivenName       *string `json:"given_name"`
+		ProfileImageUrl *string `json:"profile_image_url"`
+		Bio             *string `json:"bio"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request", "details": err.Error()})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+
+	resp, err := userClient.User.UpdateUser(ctx, &userpb.UpdateUserRequest{
+		UserCode:        userCode,
+		FamilyName:      body.FamilyName,
+		GivenName:       body.GivenName,
+		ProfileImageUrl: body.ProfileImageUrl,
+		Bio:             body.Bio,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": resp.User,
+	})
+
+}

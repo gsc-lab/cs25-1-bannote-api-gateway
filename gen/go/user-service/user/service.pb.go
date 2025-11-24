@@ -313,15 +313,15 @@ func (x *CreateUserResponse) GetUser() *UserDetail {
 
 // 본인이 스스로 변경 가능한 정보
 type UpdateUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserNumber    string                 `protobuf:"bytes,1,opt,name=user_number,json=userNumber,proto3" json:"user_number,omitempty"`
-	Email         *string                `protobuf:"bytes,2,opt,name=email,proto3,oneof" json:"email,omitempty"`
-	FamilyName    *string                `protobuf:"bytes,3,opt,name=family_name,json=familyName,proto3,oneof" json:"family_name,omitempty"`
-	GivenName     *string                `protobuf:"bytes,4,opt,name=given_name,json=givenName,proto3,oneof" json:"given_name,omitempty"`
-	Bio           *string                `protobuf:"bytes,5,opt,name=bio,proto3,oneof" json:"bio,omitempty"`
-	Profile       *string                `protobuf:"bytes,6,opt,name=profile,proto3,oneof" json:"profile,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	UserCode        string                 `protobuf:"bytes,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	Email           *string                `protobuf:"bytes,2,opt,name=email,proto3,oneof" json:"email,omitempty"`
+	FamilyName      *string                `protobuf:"bytes,3,opt,name=family_name,json=familyName,proto3,oneof" json:"family_name,omitempty"`
+	GivenName       *string                `protobuf:"bytes,4,opt,name=given_name,json=givenName,proto3,oneof" json:"given_name,omitempty"`
+	Bio             *string                `protobuf:"bytes,5,opt,name=bio,proto3,oneof" json:"bio,omitempty"`
+	ProfileImageUrl *string                `protobuf:"bytes,6,opt,name=profile_image_url,json=profileImageUrl,proto3,oneof" json:"profile_image_url,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *UpdateUserRequest) Reset() {
@@ -354,9 +354,9 @@ func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
 	return file_user_service_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdateUserRequest) GetUserNumber() string {
+func (x *UpdateUserRequest) GetUserCode() string {
 	if x != nil {
-		return x.UserNumber
+		return x.UserCode
 	}
 	return ""
 }
@@ -389,9 +389,9 @@ func (x *UpdateUserRequest) GetBio() string {
 	return ""
 }
 
-func (x *UpdateUserRequest) GetProfile() string {
-	if x != nil && x.Profile != nil {
-		return *x.Profile
+func (x *UpdateUserRequest) GetProfileImageUrl() string {
+	if x != nil && x.ProfileImageUrl != nil {
+		return *x.ProfileImageUrl
 	}
 	return ""
 }
@@ -774,23 +774,21 @@ const file_user_service_proto_rawDesc = "" +
 	"\x06reason\x18\x03 \x01(\tH\x00R\x06reason\x88\x01\x01\x12@\n" +
 	"\x04user\x18\x04 \x01(\v2'.bannote.userservice.user.v1.UserDetailH\x01R\x04user\x88\x01\x01B\t\n" +
 	"\a_reasonB\a\n" +
-	"\x05_user\"\x8c\x02\n" +
-	"\x11UpdateUserRequest\x12\x1f\n" +
-	"\vuser_number\x18\x01 \x01(\tR\n" +
-	"userNumber\x12\x19\n" +
+	"\x05_user\"\xa4\x02\n" +
+	"\x11UpdateUserRequest\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\tR\buserCode\x12\x19\n" +
 	"\x05email\x18\x02 \x01(\tH\x00R\x05email\x88\x01\x01\x12$\n" +
 	"\vfamily_name\x18\x03 \x01(\tH\x01R\n" +
 	"familyName\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"given_name\x18\x04 \x01(\tH\x02R\tgivenName\x88\x01\x01\x12\x15\n" +
-	"\x03bio\x18\x05 \x01(\tH\x03R\x03bio\x88\x01\x01\x12\x1d\n" +
-	"\aprofile\x18\x06 \x01(\tH\x04R\aprofile\x88\x01\x01B\b\n" +
+	"\x03bio\x18\x05 \x01(\tH\x03R\x03bio\x88\x01\x01\x12/\n" +
+	"\x11profile_image_url\x18\x06 \x01(\tH\x04R\x0fprofileImageUrl\x88\x01\x01B\b\n" +
 	"\x06_emailB\x0e\n" +
 	"\f_family_nameB\r\n" +
 	"\v_given_nameB\x06\n" +
-	"\x04_bioB\n" +
-	"\n" +
-	"\b_profile\"Q\n" +
+	"\x04_bioB\x14\n" +
+	"\x12_profile_image_url\"Q\n" +
 	"\x12UpdateUserResponse\x12;\n" +
 	"\x04user\x18\x01 \x01(\v2'.bannote.userservice.user.v1.UserDetailR\x04user\"\xf4\x01\n" +
 	"\x18SearchUsersByNameRequest\x12\x12\n" +
