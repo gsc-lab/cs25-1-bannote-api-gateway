@@ -133,6 +133,7 @@ func (x *RoomException) GetUpdatedAt() *timestamppb.Timestamp {
 type GetRoomExceptionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	FromDate      string                 `protobuf:"bytes,2,opt,name=from_date,json=fromDate,proto3" json:"from_date,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -172,6 +173,13 @@ func (x *GetRoomExceptionsRequest) GetRoomId() int64 {
 		return x.RoomId
 	}
 	return 0
+}
+
+func (x *GetRoomExceptionsRequest) GetFromDate() string {
+	if x != nil {
+		return x.FromDate
+	}
+	return ""
 }
 
 type GetRoomExceptionsResponse struct {
@@ -363,9 +371,10 @@ const file_room_exception_room_exception_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"3\n" +
+	"updated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"P\n" +
 	"\x18GetRoomExceptionsRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\"~\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12\x1b\n" +
+	"\tfrom_date\x18\x02 \x01(\tR\bfromDate\"~\n" +
 	"\x19GetRoomExceptionsResponse\x12a\n" +
 	"\x0froom_exceptions\x18\x01 \x03(\v28.bannote.studyroomservice.roomexception.v1.RoomExceptionR\x0eroomExceptions\"\xaa\x01\n" +
 	"\x17RoomExceptionUpdateItem\x12\x0e\n" +
