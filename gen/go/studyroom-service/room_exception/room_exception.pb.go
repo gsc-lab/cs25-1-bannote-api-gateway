@@ -22,18 +22,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 스터디룸 예외 메시지 구조
 type RoomException struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                     // 예외 ID
-	RoomId        int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`               // 스터디룸 ID
-	HolidayDate   string                 `protobuf:"bytes,3,opt,name=holiday_date,json=holidayDate,proto3" json:"holiday_date,omitempty"` // 휴일 날짜 (YYYY-MM-DD)
-	Reason        string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`                              // 휴일 사유
-	OpeningTime   string                 `protobuf:"bytes,5,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"` // 임시 개방 시간 (HH:MM)
-	ClosingTime   string                 `protobuf:"bytes,6,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"` // 임시 폐쇄 시간 (HH:MM)
-	CreatedBy     int64                  `protobuf:"varint,7,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`      // 생성자 ID (외부 서비스 참조)
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`       // 생성 시각
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`       // 수정 시각
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	RoomId        int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	HolidayDate   string                 `protobuf:"bytes,3,opt,name=holiday_date,json=holidayDate,proto3" json:"holiday_date,omitempty"`
+	Reason        string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
+	OpeningTime   string                 `protobuf:"bytes,5,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
+	ClosingTime   string                 `protobuf:"bytes,6,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
+	CreatedBy     int64                  `protobuf:"varint,7,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -131,33 +130,27 @@ func (x *RoomException) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-// 생성 요청 / 응답
-type CreateRoomExceptionRequest struct {
+type GetRoomExceptionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	HolidayDate   string                 `protobuf:"bytes,2,opt,name=holiday_date,json=holidayDate,proto3" json:"holiday_date,omitempty"`
-	Reason        string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
-	OpeningTime   string                 `protobuf:"bytes,4,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
-	ClosingTime   string                 `protobuf:"bytes,5,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
-	CreatedBy     int64                  `protobuf:"varint,6,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *CreateRoomExceptionRequest) Reset() {
-	*x = CreateRoomExceptionRequest{}
+func (x *GetRoomExceptionsRequest) Reset() {
+	*x = GetRoomExceptionsRequest{}
 	mi := &file_room_exception_room_exception_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateRoomExceptionRequest) String() string {
+func (x *GetRoomExceptionsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateRoomExceptionRequest) ProtoMessage() {}
+func (*GetRoomExceptionsRequest) ProtoMessage() {}
 
-func (x *CreateRoomExceptionRequest) ProtoReflect() protoreflect.Message {
+func (x *GetRoomExceptionsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_room_exception_room_exception_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -169,261 +162,40 @@ func (x *CreateRoomExceptionRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateRoomExceptionRequest.ProtoReflect.Descriptor instead.
-func (*CreateRoomExceptionRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetRoomExceptionsRequest.ProtoReflect.Descriptor instead.
+func (*GetRoomExceptionsRequest) Descriptor() ([]byte, []int) {
 	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateRoomExceptionRequest) GetRoomId() int64 {
+func (x *GetRoomExceptionsRequest) GetRoomId() int64 {
 	if x != nil {
 		return x.RoomId
 	}
 	return 0
 }
 
-func (x *CreateRoomExceptionRequest) GetHolidayDate() string {
-	if x != nil {
-		return x.HolidayDate
-	}
-	return ""
-}
-
-func (x *CreateRoomExceptionRequest) GetReason() string {
-	if x != nil {
-		return x.Reason
-	}
-	return ""
-}
-
-func (x *CreateRoomExceptionRequest) GetOpeningTime() string {
-	if x != nil {
-		return x.OpeningTime
-	}
-	return ""
-}
-
-func (x *CreateRoomExceptionRequest) GetClosingTime() string {
-	if x != nil {
-		return x.ClosingTime
-	}
-	return ""
-}
-
-func (x *CreateRoomExceptionRequest) GetCreatedBy() int64 {
-	if x != nil {
-		return x.CreatedBy
-	}
-	return 0
-}
-
-type CreateRoomExceptionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoomException *RoomException         `protobuf:"bytes,1,opt,name=room_exception,json=roomException,proto3" json:"room_exception,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateRoomExceptionResponse) Reset() {
-	*x = CreateRoomExceptionResponse{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateRoomExceptionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateRoomExceptionResponse) ProtoMessage() {}
-
-func (x *CreateRoomExceptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateRoomExceptionResponse.ProtoReflect.Descriptor instead.
-func (*CreateRoomExceptionResponse) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *CreateRoomExceptionResponse) GetRoomException() *RoomException {
-	if x != nil {
-		return x.RoomException
-	}
-	return nil
-}
-
-// 단건 조회 요청 / 응답
-type GetRoomExceptionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRoomExceptionRequest) Reset() {
-	*x = GetRoomExceptionRequest{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRoomExceptionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRoomExceptionRequest) ProtoMessage() {}
-
-func (x *GetRoomExceptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRoomExceptionRequest.ProtoReflect.Descriptor instead.
-func (*GetRoomExceptionRequest) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *GetRoomExceptionRequest) GetId() int64 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
-type GetRoomExceptionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoomException *RoomException         `protobuf:"bytes,1,opt,name=room_exception,json=roomException,proto3" json:"room_exception,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRoomExceptionResponse) Reset() {
-	*x = GetRoomExceptionResponse{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRoomExceptionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRoomExceptionResponse) ProtoMessage() {}
-
-func (x *GetRoomExceptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRoomExceptionResponse.ProtoReflect.Descriptor instead.
-func (*GetRoomExceptionResponse) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *GetRoomExceptionResponse) GetRoomException() *RoomException {
-	if x != nil {
-		return x.RoomException
-	}
-	return nil
-}
-
-// 목록 조회 요청 / 응답
-type ListRoomExceptionsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`               // 스터디룸 ID 필터
-	HolidayDate   string                 `protobuf:"bytes,2,opt,name=holiday_date,json=holidayDate,proto3" json:"holiday_date,omitempty"` // 특정 날짜 필터
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListRoomExceptionsRequest) Reset() {
-	*x = ListRoomExceptionsRequest{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListRoomExceptionsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListRoomExceptionsRequest) ProtoMessage() {}
-
-func (x *ListRoomExceptionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListRoomExceptionsRequest.ProtoReflect.Descriptor instead.
-func (*ListRoomExceptionsRequest) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ListRoomExceptionsRequest) GetRoomId() int64 {
-	if x != nil {
-		return x.RoomId
-	}
-	return 0
-}
-
-func (x *ListRoomExceptionsRequest) GetHolidayDate() string {
-	if x != nil {
-		return x.HolidayDate
-	}
-	return ""
-}
-
-type ListRoomExceptionsResponse struct {
+type GetRoomExceptionsResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	RoomExceptions []*RoomException       `protobuf:"bytes,1,rep,name=room_exceptions,json=roomExceptions,proto3" json:"room_exceptions,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *ListRoomExceptionsResponse) Reset() {
-	*x = ListRoomExceptionsResponse{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[6]
+func (x *GetRoomExceptionsResponse) Reset() {
+	*x = GetRoomExceptionsResponse{}
+	mi := &file_room_exception_room_exception_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListRoomExceptionsResponse) String() string {
+func (x *GetRoomExceptionsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListRoomExceptionsResponse) ProtoMessage() {}
+func (*GetRoomExceptionsResponse) ProtoMessage() {}
 
-func (x *ListRoomExceptionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[6]
+func (x *GetRoomExceptionsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_room_exception_room_exception_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -434,46 +206,44 @@ func (x *ListRoomExceptionsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListRoomExceptionsResponse.ProtoReflect.Descriptor instead.
-func (*ListRoomExceptionsResponse) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{6}
+// Deprecated: Use GetRoomExceptionsResponse.ProtoReflect.Descriptor instead.
+func (*GetRoomExceptionsResponse) Descriptor() ([]byte, []int) {
+	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListRoomExceptionsResponse) GetRoomExceptions() []*RoomException {
+func (x *GetRoomExceptionsResponse) GetRoomExceptions() []*RoomException {
 	if x != nil {
 		return x.RoomExceptions
 	}
 	return nil
 }
 
-// 수정 요청 / 응답
-type UpdateRoomExceptionRequest struct {
+type RoomExceptionUpdateItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	RoomId        int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	HolidayDate   string                 `protobuf:"bytes,3,opt,name=holiday_date,json=holidayDate,proto3" json:"holiday_date,omitempty"`
-	Reason        string                 `protobuf:"bytes,4,opt,name=reason,proto3" json:"reason,omitempty"`
-	OpeningTime   string                 `protobuf:"bytes,5,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
-	ClosingTime   string                 `protobuf:"bytes,6,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
+	HolidayDate   string                 `protobuf:"bytes,2,opt,name=holiday_date,json=holidayDate,proto3" json:"holiday_date,omitempty"`
+	Reason        string                 `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
+	OpeningTime   string                 `protobuf:"bytes,4,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
+	ClosingTime   string                 `protobuf:"bytes,5,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateRoomExceptionRequest) Reset() {
-	*x = UpdateRoomExceptionRequest{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[7]
+func (x *RoomExceptionUpdateItem) Reset() {
+	*x = RoomExceptionUpdateItem{}
+	mi := &file_room_exception_room_exception_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateRoomExceptionRequest) String() string {
+func (x *RoomExceptionUpdateItem) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateRoomExceptionRequest) ProtoMessage() {}
+func (*RoomExceptionUpdateItem) ProtoMessage() {}
 
-func (x *UpdateRoomExceptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[7]
+func (x *RoomExceptionUpdateItem) ProtoReflect() protoreflect.Message {
+	mi := &file_room_exception_room_exception_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -484,75 +254,69 @@ func (x *UpdateRoomExceptionRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateRoomExceptionRequest.ProtoReflect.Descriptor instead.
-func (*UpdateRoomExceptionRequest) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{7}
+// Deprecated: Use RoomExceptionUpdateItem.ProtoReflect.Descriptor instead.
+func (*RoomExceptionUpdateItem) Descriptor() ([]byte, []int) {
+	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *UpdateRoomExceptionRequest) GetId() int64 {
+func (x *RoomExceptionUpdateItem) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-func (x *UpdateRoomExceptionRequest) GetRoomId() int64 {
-	if x != nil {
-		return x.RoomId
-	}
-	return 0
-}
-
-func (x *UpdateRoomExceptionRequest) GetHolidayDate() string {
+func (x *RoomExceptionUpdateItem) GetHolidayDate() string {
 	if x != nil {
 		return x.HolidayDate
 	}
 	return ""
 }
 
-func (x *UpdateRoomExceptionRequest) GetReason() string {
+func (x *RoomExceptionUpdateItem) GetReason() string {
 	if x != nil {
 		return x.Reason
 	}
 	return ""
 }
 
-func (x *UpdateRoomExceptionRequest) GetOpeningTime() string {
+func (x *RoomExceptionUpdateItem) GetOpeningTime() string {
 	if x != nil {
 		return x.OpeningTime
 	}
 	return ""
 }
 
-func (x *UpdateRoomExceptionRequest) GetClosingTime() string {
+func (x *RoomExceptionUpdateItem) GetClosingTime() string {
 	if x != nil {
 		return x.ClosingTime
 	}
 	return ""
 }
 
-type UpdateRoomExceptionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoomException *RoomException         `protobuf:"bytes,1,opt,name=room_exception,json=roomException,proto3" json:"room_exception,omitempty"`
+type UpdateRoomExceptionsRequest struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	RoomId        int64                      `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	Exceptions    []*RoomExceptionUpdateItem `protobuf:"bytes,2,rep,name=exceptions,proto3" json:"exceptions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *UpdateRoomExceptionResponse) Reset() {
-	*x = UpdateRoomExceptionResponse{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[8]
+func (x *UpdateRoomExceptionsRequest) Reset() {
+	*x = UpdateRoomExceptionsRequest{}
+	mi := &file_room_exception_room_exception_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *UpdateRoomExceptionResponse) String() string {
+func (x *UpdateRoomExceptionsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateRoomExceptionResponse) ProtoMessage() {}
+func (*UpdateRoomExceptionsRequest) ProtoMessage() {}
 
-func (x *UpdateRoomExceptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[8]
+func (x *UpdateRoomExceptionsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_room_exception_room_exception_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -563,113 +327,23 @@ func (x *UpdateRoomExceptionResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateRoomExceptionResponse.ProtoReflect.Descriptor instead.
-func (*UpdateRoomExceptionResponse) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{8}
+// Deprecated: Use UpdateRoomExceptionsRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRoomExceptionsRequest) Descriptor() ([]byte, []int) {
+	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdateRoomExceptionResponse) GetRoomException() *RoomException {
+func (x *UpdateRoomExceptionsRequest) GetRoomId() int64 {
 	if x != nil {
-		return x.RoomException
-	}
-	return nil
-}
-
-// 삭제 요청 / 응답
-type DeleteRoomExceptionRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRoomExceptionRequest) Reset() {
-	*x = DeleteRoomExceptionRequest{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRoomExceptionRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRoomExceptionRequest) ProtoMessage() {}
-
-func (x *DeleteRoomExceptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRoomExceptionRequest.ProtoReflect.Descriptor instead.
-func (*DeleteRoomExceptionRequest) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *DeleteRoomExceptionRequest) GetId() int64 {
-	if x != nil {
-		return x.Id
+		return x.RoomId
 	}
 	return 0
 }
 
-type DeleteRoomExceptionResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRoomExceptionResponse) Reset() {
-	*x = DeleteRoomExceptionResponse{}
-	mi := &file_room_exception_room_exception_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRoomExceptionResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRoomExceptionResponse) ProtoMessage() {}
-
-func (x *DeleteRoomExceptionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_exception_room_exception_proto_msgTypes[10]
+func (x *UpdateRoomExceptionsRequest) GetExceptions() []*RoomExceptionUpdateItem {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
+		return x.Exceptions
 	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRoomExceptionResponse.ProtoReflect.Descriptor instead.
-func (*DeleteRoomExceptionResponse) Descriptor() ([]byte, []int) {
-	return file_room_exception_room_exception_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *DeleteRoomExceptionResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
-func (x *DeleteRoomExceptionResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
+	return nil
 }
 
 var File_room_exception_room_exception_proto protoreflect.FileDescriptor
@@ -689,40 +363,22 @@ const file_room_exception_room_exception_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xd5\x01\n" +
-	"\x1aCreateRoomExceptionRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12!\n" +
+	"updated_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"3\n" +
+	"\x18GetRoomExceptionsRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\"~\n" +
+	"\x19GetRoomExceptionsResponse\x12a\n" +
+	"\x0froom_exceptions\x18\x01 \x03(\v28.bannote.studyroomservice.roomexception.v1.RoomExceptionR\x0eroomExceptions\"\xaa\x01\n" +
+	"\x17RoomExceptionUpdateItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12!\n" +
 	"\fholiday_date\x18\x02 \x01(\tR\vholidayDate\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\x12!\n" +
 	"\fopening_time\x18\x04 \x01(\tR\vopeningTime\x12!\n" +
-	"\fclosing_time\x18\x05 \x01(\tR\vclosingTime\x12\x1d\n" +
+	"\fclosing_time\x18\x05 \x01(\tR\vclosingTime\"\x9a\x01\n" +
+	"\x1bUpdateRoomExceptionsRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12b\n" +
 	"\n" +
-	"created_by\x18\x06 \x01(\x03R\tcreatedBy\"~\n" +
-	"\x1bCreateRoomExceptionResponse\x12_\n" +
-	"\x0eroom_exception\x18\x01 \x01(\v28.bannote.studyroomservice.roomexception.v1.RoomExceptionR\rroomException\")\n" +
-	"\x17GetRoomExceptionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"{\n" +
-	"\x18GetRoomExceptionResponse\x12_\n" +
-	"\x0eroom_exception\x18\x01 \x01(\v28.bannote.studyroomservice.roomexception.v1.RoomExceptionR\rroomException\"W\n" +
-	"\x19ListRoomExceptionsRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12!\n" +
-	"\fholiday_date\x18\x02 \x01(\tR\vholidayDate\"\x7f\n" +
-	"\x1aListRoomExceptionsResponse\x12a\n" +
-	"\x0froom_exceptions\x18\x01 \x03(\v28.bannote.studyroomservice.roomexception.v1.RoomExceptionR\x0eroomExceptions\"\xc6\x01\n" +
-	"\x1aUpdateRoomExceptionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
-	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x12!\n" +
-	"\fholiday_date\x18\x03 \x01(\tR\vholidayDate\x12\x16\n" +
-	"\x06reason\x18\x04 \x01(\tR\x06reason\x12!\n" +
-	"\fopening_time\x18\x05 \x01(\tR\vopeningTime\x12!\n" +
-	"\fclosing_time\x18\x06 \x01(\tR\vclosingTime\"~\n" +
-	"\x1bUpdateRoomExceptionResponse\x12_\n" +
-	"\x0eroom_exception\x18\x01 \x01(\v28.bannote.studyroomservice.roomexception.v1.RoomExceptionR\rroomException\",\n" +
-	"\x1aDeleteRoomExceptionRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"Q\n" +
-	"\x1bDeleteRoomExceptionResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessageB\xf1\x02\n" +
+	"exceptions\x18\x02 \x03(\v2B.bannote.studyroomservice.roomexception.v1.RoomExceptionUpdateItemR\n" +
+	"exceptionsB\xf1\x02\n" +
 	"-com.bannote.studyroomservice.roomexception.v1B\x12RoomExceptionProtoP\x01Zegithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/studyroom-service/room_exception;roomexceptionv1\xa2\x02\x03BSR\xaa\x02)Bannote.Studyroomservice.Roomexception.V1\xca\x02)Bannote\\Studyroomservice\\Roomexception\\V1\xe2\x025Bannote\\Studyroomservice\\Roomexception\\V1\\GPBMetadata\xea\x02,Bannote::Studyroomservice::Roomexception::V1b\x06proto3"
 
 var (
@@ -737,33 +393,25 @@ func file_room_exception_room_exception_proto_rawDescGZIP() []byte {
 	return file_room_exception_room_exception_proto_rawDescData
 }
 
-var file_room_exception_room_exception_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_room_exception_room_exception_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_room_exception_room_exception_proto_goTypes = []any{
 	(*RoomException)(nil),               // 0: bannote.studyroomservice.roomexception.v1.RoomException
-	(*CreateRoomExceptionRequest)(nil),  // 1: bannote.studyroomservice.roomexception.v1.CreateRoomExceptionRequest
-	(*CreateRoomExceptionResponse)(nil), // 2: bannote.studyroomservice.roomexception.v1.CreateRoomExceptionResponse
-	(*GetRoomExceptionRequest)(nil),     // 3: bannote.studyroomservice.roomexception.v1.GetRoomExceptionRequest
-	(*GetRoomExceptionResponse)(nil),    // 4: bannote.studyroomservice.roomexception.v1.GetRoomExceptionResponse
-	(*ListRoomExceptionsRequest)(nil),   // 5: bannote.studyroomservice.roomexception.v1.ListRoomExceptionsRequest
-	(*ListRoomExceptionsResponse)(nil),  // 6: bannote.studyroomservice.roomexception.v1.ListRoomExceptionsResponse
-	(*UpdateRoomExceptionRequest)(nil),  // 7: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionRequest
-	(*UpdateRoomExceptionResponse)(nil), // 8: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionResponse
-	(*DeleteRoomExceptionRequest)(nil),  // 9: bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionRequest
-	(*DeleteRoomExceptionResponse)(nil), // 10: bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionResponse
-	(*timestamppb.Timestamp)(nil),       // 11: google.protobuf.Timestamp
+	(*GetRoomExceptionsRequest)(nil),    // 1: bannote.studyroomservice.roomexception.v1.GetRoomExceptionsRequest
+	(*GetRoomExceptionsResponse)(nil),   // 2: bannote.studyroomservice.roomexception.v1.GetRoomExceptionsResponse
+	(*RoomExceptionUpdateItem)(nil),     // 3: bannote.studyroomservice.roomexception.v1.RoomExceptionUpdateItem
+	(*UpdateRoomExceptionsRequest)(nil), // 4: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionsRequest
+	(*timestamppb.Timestamp)(nil),       // 5: google.protobuf.Timestamp
 }
 var file_room_exception_room_exception_proto_depIdxs = []int32{
-	11, // 0: bannote.studyroomservice.roomexception.v1.RoomException.created_at:type_name -> google.protobuf.Timestamp
-	11, // 1: bannote.studyroomservice.roomexception.v1.RoomException.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 2: bannote.studyroomservice.roomexception.v1.CreateRoomExceptionResponse.room_exception:type_name -> bannote.studyroomservice.roomexception.v1.RoomException
-	0,  // 3: bannote.studyroomservice.roomexception.v1.GetRoomExceptionResponse.room_exception:type_name -> bannote.studyroomservice.roomexception.v1.RoomException
-	0,  // 4: bannote.studyroomservice.roomexception.v1.ListRoomExceptionsResponse.room_exceptions:type_name -> bannote.studyroomservice.roomexception.v1.RoomException
-	0,  // 5: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionResponse.room_exception:type_name -> bannote.studyroomservice.roomexception.v1.RoomException
-	6,  // [6:6] is the sub-list for method output_type
-	6,  // [6:6] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	5, // 0: bannote.studyroomservice.roomexception.v1.RoomException.created_at:type_name -> google.protobuf.Timestamp
+	5, // 1: bannote.studyroomservice.roomexception.v1.RoomException.updated_at:type_name -> google.protobuf.Timestamp
+	0, // 2: bannote.studyroomservice.roomexception.v1.GetRoomExceptionsResponse.room_exceptions:type_name -> bannote.studyroomservice.roomexception.v1.RoomException
+	3, // 3: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionsRequest.exceptions:type_name -> bannote.studyroomservice.roomexception.v1.RoomExceptionUpdateItem
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_room_exception_room_exception_proto_init() }
@@ -777,7 +425,7 @@ func file_room_exception_room_exception_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_room_exception_room_exception_proto_rawDesc), len(file_room_exception_room_exception_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

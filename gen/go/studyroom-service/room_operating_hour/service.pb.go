@@ -9,6 +9,7 @@ package roomoperatinghourv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	unsafe "unsafe"
 )
@@ -24,40 +25,25 @@ var File_room_operating_hour_service_proto protoreflect.FileDescriptor
 
 const file_room_operating_hour_service_proto_rawDesc = "" +
 	"\n" +
-	"!room_operating_hour/service.proto\x12-bannote.studyroomservice.roomoperatinghour.v1\x1a-room_operating_hour/room_operating_hour.proto2\xb5\a\n" +
-	"\x18RoomOperatingHourService\x12\xb8\x01\n" +
-	"\x17CreateRoomOperatingHour\x12M.bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourRequest\x1aN.bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourResponse\x12\xaf\x01\n" +
-	"\x14GetRoomOperatingHour\x12J.bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourRequest\x1aK.bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourResponse\x12\xb5\x01\n" +
-	"\x16ListRoomOperatingHours\x12L.bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursRequest\x1aM.bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursResponse\x12\xb8\x01\n" +
-	"\x17UpdateRoomOperatingHour\x12M.bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourRequest\x1aN.bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourResponse\x12\xb8\x01\n" +
-	"\x17DeleteRoomOperatingHour\x12M.bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourRequest\x1aN.bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourResponseB\x88\x03\n" +
+	"!room_operating_hour/service.proto\x12-bannote.studyroomservice.roomoperatinghour.v1\x1a\x1bgoogle/protobuf/empty.proto\x1a-room_operating_hour/room_operating_hour.proto2\xd4\x02\n" +
+	"\x18RoomOperatingHourService\x12\xb2\x01\n" +
+	"\x15GetRoomOperatingHours\x12K.bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursRequest\x1aL.bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursResponse\x12\x82\x01\n" +
+	"\x18UpdateRoomOperatingHours\x12N.bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHoursRequest\x1a\x16.google.protobuf.EmptyB\x88\x03\n" +
 	"1com.bannote.studyroomservice.roomoperatinghour.v1B\fServiceProtoP\x01Zngithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/studyroom-service/room_operating_hour;roomoperatinghourv1\xa2\x02\x03BSR\xaa\x02-Bannote.Studyroomservice.Roomoperatinghour.V1\xca\x02-Bannote\\Studyroomservice\\Roomoperatinghour\\V1\xe2\x029Bannote\\Studyroomservice\\Roomoperatinghour\\V1\\GPBMetadata\xea\x020Bannote::Studyroomservice::Roomoperatinghour::V1b\x06proto3"
 
 var file_room_operating_hour_service_proto_goTypes = []any{
-	(*CreateRoomOperatingHourRequest)(nil),  // 0: bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourRequest
-	(*GetRoomOperatingHourRequest)(nil),     // 1: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourRequest
-	(*ListRoomOperatingHoursRequest)(nil),   // 2: bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursRequest
-	(*UpdateRoomOperatingHourRequest)(nil),  // 3: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourRequest
-	(*DeleteRoomOperatingHourRequest)(nil),  // 4: bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourRequest
-	(*CreateRoomOperatingHourResponse)(nil), // 5: bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourResponse
-	(*GetRoomOperatingHourResponse)(nil),    // 6: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourResponse
-	(*ListRoomOperatingHoursResponse)(nil),  // 7: bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursResponse
-	(*UpdateRoomOperatingHourResponse)(nil), // 8: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourResponse
-	(*DeleteRoomOperatingHourResponse)(nil), // 9: bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourResponse
+	(*GetRoomOperatingHoursRequest)(nil),    // 0: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursRequest
+	(*UpdateRoomOperatingHoursRequest)(nil), // 1: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHoursRequest
+	(*GetRoomOperatingHoursResponse)(nil),   // 2: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursResponse
+	(*emptypb.Empty)(nil),                   // 3: google.protobuf.Empty
 }
 var file_room_operating_hour_service_proto_depIdxs = []int32{
-	0, // 0: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.CreateRoomOperatingHour:input_type -> bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourRequest
-	1, // 1: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.GetRoomOperatingHour:input_type -> bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourRequest
-	2, // 2: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.ListRoomOperatingHours:input_type -> bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursRequest
-	3, // 3: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.UpdateRoomOperatingHour:input_type -> bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourRequest
-	4, // 4: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.DeleteRoomOperatingHour:input_type -> bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourRequest
-	5, // 5: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.CreateRoomOperatingHour:output_type -> bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourResponse
-	6, // 6: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.GetRoomOperatingHour:output_type -> bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourResponse
-	7, // 7: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.ListRoomOperatingHours:output_type -> bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursResponse
-	8, // 8: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.UpdateRoomOperatingHour:output_type -> bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourResponse
-	9, // 9: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.DeleteRoomOperatingHour:output_type -> bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourResponse
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	0, // 0: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.GetRoomOperatingHours:input_type -> bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursRequest
+	1, // 1: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.UpdateRoomOperatingHours:input_type -> bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHoursRequest
+	2, // 2: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.GetRoomOperatingHours:output_type -> bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursResponse
+	3, // 3: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService.UpdateRoomOperatingHours:output_type -> google.protobuf.Empty
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

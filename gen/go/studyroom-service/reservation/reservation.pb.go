@@ -83,10 +83,11 @@ func (ReservationPriority) EnumDescriptor() ([]byte, []int) {
 type ReservationStatus int32
 
 const (
-	ReservationStatus_RESERVATION_STATUS_UNSPECIFIED ReservationStatus = 0
-	ReservationStatus_RESERVATION_STATUS_CONFIRMED   ReservationStatus = 1
-	ReservationStatus_RESERVATION_STATUS_CANCELED    ReservationStatus = 2
-	ReservationStatus_RESERVATION_STATUS_COMPLETED   ReservationStatus = 3
+	ReservationStatus_RESERVATION_STATUS_UNSPECIFIED       ReservationStatus = 0
+	ReservationStatus_RESERVATION_STATUS_CONFIRMED         ReservationStatus = 1
+	ReservationStatus_RESERVATION_STATUS_CANCELED          ReservationStatus = 2
+	ReservationStatus_RESERVATION_STATUS_COMPLETED         ReservationStatus = 3
+	ReservationStatus_RESERVATION_STATUS_CANCELED_BY_OTHER ReservationStatus = 4
 )
 
 // Enum value maps for ReservationStatus.
@@ -96,12 +97,14 @@ var (
 		1: "RESERVATION_STATUS_CONFIRMED",
 		2: "RESERVATION_STATUS_CANCELED",
 		3: "RESERVATION_STATUS_COMPLETED",
+		4: "RESERVATION_STATUS_CANCELED_BY_OTHER",
 	}
 	ReservationStatus_value = map[string]int32{
-		"RESERVATION_STATUS_UNSPECIFIED": 0,
-		"RESERVATION_STATUS_CONFIRMED":   1,
-		"RESERVATION_STATUS_CANCELED":    2,
-		"RESERVATION_STATUS_COMPLETED":   3,
+		"RESERVATION_STATUS_UNSPECIFIED":       0,
+		"RESERVATION_STATUS_CONFIRMED":         1,
+		"RESERVATION_STATUS_CANCELED":          2,
+		"RESERVATION_STATUS_COMPLETED":         3,
+		"RESERVATION_STATUS_CANCELED_BY_OTHER": 4,
 	}
 )
 
@@ -136,12 +139,12 @@ func (ReservationStatus) EnumDescriptor() ([]byte, []int) {
 // 예약 정보 (core model)
 // ===============================================
 type Reservation struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"` // 외부 식별용 코드 (UUID 또는 short-uuid)
-	RoomId        int64                  `protobuf:"varint,3,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	GroupId       int64                  `protobuf:"varint,4,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
-	LinkId        int64                  `protobuf:"varint,5,opt,name=link_id,json=linkId,proto3" json:"link_id,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Id     int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Code   string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"` // 외부 식별용 코드 (UUID 또는 short-uuid)
+	RoomId int64                  `protobuf:"varint,3,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	// int64 link_id = 4;
+	// int64 groud_id = 5;
 	StartTime     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	EndTime       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	Purpose       string                 `protobuf:"bytes,8,opt,name=purpose,proto3" json:"purpose,omitempty"`
@@ -150,6 +153,7 @@ type Reservation struct {
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	UserCodes     []int64                `protobuf:"varint,14,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -201,20 +205,6 @@ func (x *Reservation) GetCode() string {
 func (x *Reservation) GetRoomId() int64 {
 	if x != nil {
 		return x.RoomId
-	}
-	return 0
-}
-
-func (x *Reservation) GetGroupId() int64 {
-	if x != nil {
-		return x.GroupId
-	}
-	return 0
-}
-
-func (x *Reservation) GetLinkId() int64 {
-	if x != nil {
-		return x.LinkId
 	}
 	return 0
 }
@@ -275,18 +265,26 @@ func (x *Reservation) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Reservation) GetUserCodes() []int64 {
+	if x != nil {
+		return x.UserCodes
+	}
+	return nil
+}
+
 // ===============================================
 // 1. 예약 생성
 // ===============================================
 type CreateReservationRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	GroupId       int64                  `protobuf:"varint,2,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
-	LinkId        int64                  `protobuf:"varint,3,opt,name=link_id,json=linkId,proto3" json:"link_id,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	RoomId int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	// int64 group_id = 2;
+	// int64 link_id = 3;
 	StartTime     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	EndTime       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	Purpose       string                 `protobuf:"bytes,6,opt,name=purpose,proto3" json:"purpose,omitempty"`
 	Priority      ReservationPriority    `protobuf:"varint,7,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
+	UserCodes     []int64                `protobuf:"varint,8,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"` // 예약자에 복수 입력 가능
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -328,20 +326,6 @@ func (x *CreateReservationRequest) GetRoomId() int64 {
 	return 0
 }
 
-func (x *CreateReservationRequest) GetGroupId() int64 {
-	if x != nil {
-		return x.GroupId
-	}
-	return 0
-}
-
-func (x *CreateReservationRequest) GetLinkId() int64 {
-	if x != nil {
-		return x.LinkId
-	}
-	return 0
-}
-
 func (x *CreateReservationRequest) GetStartTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.StartTime
@@ -368,6 +352,13 @@ func (x *CreateReservationRequest) GetPriority() ReservationPriority {
 		return x.Priority
 	}
 	return ReservationPriority_RESERVATION_PRIORITY_UNSPECIFIED
+}
+
+func (x *CreateReservationRequest) GetUserCodes() []int64 {
+	if x != nil {
+		return x.UserCodes
+	}
+	return nil
 }
 
 type CreateReservationResponse struct {
@@ -512,8 +503,7 @@ type ListReservationsRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	RoomId         int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
 	StartTimeAfter *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=start_time_after,json=startTimeAfter,proto3" json:"start_time_after,omitempty"`
-	EndTimeBefore  *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end_time_before,json=endTimeBefore,proto3" json:"end_time_before,omitempty"`
-	GroupId        int64                  `protobuf:"varint,4,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	EndTimeBefore  *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end_time_before,json=endTimeBefore,proto3" json:"end_time_before,omitempty"` // int64 group_id = 4;
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -569,13 +559,6 @@ func (x *ListReservationsRequest) GetEndTimeBefore() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *ListReservationsRequest) GetGroupId() int64 {
-	if x != nil {
-		return x.GroupId
-	}
-	return 0
-}
-
 type ListReservationsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Reservations  []*Reservation         `protobuf:"bytes,1,rep,name=reservations,proto3" json:"reservations,omitempty"`
@@ -624,16 +607,16 @@ func (x *ListReservationsResponse) GetReservations() []*Reservation {
 // 4. 예약 수정
 // ===============================================
 type UpdateReservationRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	RoomId        int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	GroupId       int64                  `protobuf:"varint,3,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
-	LinkId        int64                  `protobuf:"varint,4,opt,name=link_id,json=linkId,proto3" json:"link_id,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	Code   string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	RoomId int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	// int64 group_id = 3;
+	// int64 link_id = 4;
 	StartTime     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	EndTime       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	Purpose       string                 `protobuf:"bytes,7,opt,name=purpose,proto3" json:"purpose,omitempty"`
 	Priority      ReservationPriority    `protobuf:"varint,8,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
-	Status        ReservationStatus      `protobuf:"varint,9,opt,name=status,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationStatus" json:"status,omitempty"` // optional
+	UserCodes     []int64                `protobuf:"varint,9,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -682,20 +665,6 @@ func (x *UpdateReservationRequest) GetRoomId() int64 {
 	return 0
 }
 
-func (x *UpdateReservationRequest) GetGroupId() int64 {
-	if x != nil {
-		return x.GroupId
-	}
-	return 0
-}
-
-func (x *UpdateReservationRequest) GetLinkId() int64 {
-	if x != nil {
-		return x.LinkId
-	}
-	return 0
-}
-
 func (x *UpdateReservationRequest) GetStartTime() *timestamppb.Timestamp {
 	if x != nil {
 		return x.StartTime
@@ -724,11 +693,11 @@ func (x *UpdateReservationRequest) GetPriority() ReservationPriority {
 	return ReservationPriority_RESERVATION_PRIORITY_UNSPECIFIED
 }
 
-func (x *UpdateReservationRequest) GetStatus() ReservationStatus {
+func (x *UpdateReservationRequest) GetUserCodes() []int64 {
 	if x != nil {
-		return x.Status
+		return x.UserCodes
 	}
-	return ReservationStatus_RESERVATION_STATUS_UNSPECIFIED
+	return nil
 }
 
 type UpdateReservationResponse struct {
@@ -878,13 +847,11 @@ var File_reservation_reservation_proto protoreflect.FileDescriptor
 
 const file_reservation_reservation_proto_rawDesc = "" +
 	"\n" +
-	"\x1dreservation/reservation.proto\x12'bannote.studyroomservice.reservation.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xe9\x04\n" +
+	"\x1dreservation/reservation.proto\x12'bannote.studyroomservice.reservation.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd4\x04\n" +
 	"\vReservation\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x17\n" +
-	"\aroom_id\x18\x03 \x01(\x03R\x06roomId\x12\x19\n" +
-	"\bgroup_id\x18\x04 \x01(\x03R\agroupId\x12\x17\n" +
-	"\alink_id\x18\x05 \x01(\x03R\x06linkId\x129\n" +
+	"\aroom_id\x18\x03 \x01(\x03R\x06roomId\x129\n" +
 	"\n" +
 	"start_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
 	"\bend_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x18\n" +
@@ -897,40 +864,40 @@ const file_reservation_reservation_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
 	"\n" +
-	"deleted_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\"\xcd\x02\n" +
+	"deleted_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x1d\n" +
+	"\n" +
+	"user_codes\x18\x0e \x03(\x03R\tuserCodes\"\xb8\x02\n" +
 	"\x18CreateReservationRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12\x19\n" +
-	"\bgroup_id\x18\x02 \x01(\x03R\agroupId\x12\x17\n" +
-	"\alink_id\x18\x03 \x01(\x03R\x06linkId\x129\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x129\n" +
 	"\n" +
 	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
 	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x18\n" +
 	"\apurpose\x18\x06 \x01(\tR\apurpose\x12X\n" +
-	"\bpriority\x18\a \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\"s\n" +
+	"\bpriority\x18\a \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12\x1d\n" +
+	"\n" +
+	"user_codes\x18\b \x03(\x03R\tuserCodes\"s\n" +
 	"\x19CreateReservationResponse\x12V\n" +
 	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\"+\n" +
 	"\x15GetReservationRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\"p\n" +
 	"\x16GetReservationResponse\x12V\n" +
-	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\"\xd7\x01\n" +
+	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\"\xbc\x01\n" +
 	"\x17ListReservationsRequest\x12\x17\n" +
 	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12D\n" +
 	"\x10start_time_after\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0estartTimeAfter\x12B\n" +
-	"\x0fend_time_before\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rendTimeBefore\x12\x19\n" +
-	"\bgroup_id\x18\x04 \x01(\x03R\agroupId\"t\n" +
+	"\x0fend_time_before\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rendTimeBefore\"t\n" +
 	"\x18ListReservationsResponse\x12X\n" +
-	"\freservations\x18\x01 \x03(\v24.bannote.studyroomservice.reservation.v1.ReservationR\freservations\"\xb5\x03\n" +
+	"\freservations\x18\x01 \x03(\v24.bannote.studyroomservice.reservation.v1.ReservationR\freservations\"\xcc\x02\n" +
 	"\x18UpdateReservationRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x17\n" +
-	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x12\x19\n" +
-	"\bgroup_id\x18\x03 \x01(\x03R\agroupId\x12\x17\n" +
-	"\alink_id\x18\x04 \x01(\x03R\x06linkId\x129\n" +
+	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x129\n" +
 	"\n" +
 	"start_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
 	"\bend_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x18\n" +
 	"\apurpose\x18\a \x01(\tR\apurpose\x12X\n" +
-	"\bpriority\x18\b \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12R\n" +
-	"\x06status\x18\t \x01(\x0e2:.bannote.studyroomservice.reservation.v1.ReservationStatusR\x06status\"s\n" +
+	"\bpriority\x18\b \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12\x1d\n" +
+	"\n" +
+	"user_codes\x18\t \x03(\x03R\tuserCodes\"s\n" +
 	"\x19UpdateReservationResponse\x12V\n" +
 	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\".\n" +
 	"\x18DeleteReservationRequest\x12\x12\n" +
@@ -942,12 +909,13 @@ const file_reservation_reservation_proto_rawDesc = "" +
 	" RESERVATION_PRIORITY_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18RESERVATION_PRIORITY_LOW\x10\x01\x12\x1f\n" +
 	"\x1bRESERVATION_PRIORITY_MEDIUM\x10\x02\x12\x1d\n" +
-	"\x19RESERVATION_PRIORITY_HIGH\x10\x03*\x9c\x01\n" +
+	"\x19RESERVATION_PRIORITY_HIGH\x10\x03*\xc6\x01\n" +
 	"\x11ReservationStatus\x12\"\n" +
 	"\x1eRESERVATION_STATUS_UNSPECIFIED\x10\x00\x12 \n" +
 	"\x1cRESERVATION_STATUS_CONFIRMED\x10\x01\x12\x1f\n" +
 	"\x1bRESERVATION_STATUS_CANCELED\x10\x02\x12 \n" +
-	"\x1cRESERVATION_STATUS_COMPLETED\x10\x03B\xe0\x02\n" +
+	"\x1cRESERVATION_STATUS_COMPLETED\x10\x03\x12(\n" +
+	"$RESERVATION_STATUS_CANCELED_BY_OTHER\x10\x04B\xe0\x02\n" +
 	"+com.bannote.studyroomservice.reservation.v1B\x10ReservationProtoP\x01Z`github.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/studyroom-service/reservation;reservationv1\xa2\x02\x03BSR\xaa\x02'Bannote.Studyroomservice.Reservation.V1\xca\x02'Bannote\\Studyroomservice\\Reservation\\V1\xe2\x023Bannote\\Studyroomservice\\Reservation\\V1\\GPBMetadata\xea\x02*Bannote::Studyroomservice::Reservation::V1b\x06proto3"
 
 var (
@@ -999,13 +967,12 @@ var file_reservation_reservation_proto_depIdxs = []int32{
 	13, // 15: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.start_time:type_name -> google.protobuf.Timestamp
 	13, // 16: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.end_time:type_name -> google.protobuf.Timestamp
 	0,  // 17: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
-	1,  // 18: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.status:type_name -> bannote.studyroomservice.reservation.v1.ReservationStatus
-	2,  // 19: bannote.studyroomservice.reservation.v1.UpdateReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	2,  // 18: bannote.studyroomservice.reservation.v1.UpdateReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
+	19, // [19:19] is the sub-list for method output_type
+	19, // [19:19] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_reservation_reservation_proto_init() }

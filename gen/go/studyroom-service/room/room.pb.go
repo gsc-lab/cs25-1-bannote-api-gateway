@@ -194,7 +194,6 @@ type CreateRoomRequest struct {
 	DepartmentName string                 `protobuf:"bytes,2,opt,name=department_name,json=departmentName,proto3" json:"department_name,omitempty"`
 	Name           string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	MaximumMember  int32                  `protobuf:"varint,4,opt,name=maximum_member,json=maximumMember,proto3" json:"maximum_member,omitempty"`
-	Status         RoomStatus             `protobuf:"varint,5,opt,name=status,proto3,enum=bannote.studyroomservice.room.v1.RoomStatus" json:"status,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -255,13 +254,6 @@ func (x *CreateRoomRequest) GetMaximumMember() int32 {
 		return x.MaximumMember
 	}
 	return 0
-}
-
-func (x *CreateRoomRequest) GetStatus() RoomStatus {
-	if x != nil {
-		return x.Status
-	}
-	return RoomStatus_ROOM_STATUS_UNSPECIFIED
 }
 
 type CreateRoomResponse struct {
@@ -532,7 +524,6 @@ type UpdateRoomRequest struct {
 	DepartmentName string                 `protobuf:"bytes,3,opt,name=department_name,json=departmentName,proto3" json:"department_name,omitempty"`
 	Name           string                 `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`
 	MaximumMember  int32                  `protobuf:"varint,5,opt,name=maximum_member,json=maximumMember,proto3" json:"maximum_member,omitempty"`
-	Status         RoomStatus             `protobuf:"varint,6,opt,name=status,proto3,enum=bannote.studyroomservice.room.v1.RoomStatus" json:"status,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -600,13 +591,6 @@ func (x *UpdateRoomRequest) GetMaximumMember() int32 {
 		return x.MaximumMember
 	}
 	return 0
-}
-
-func (x *UpdateRoomRequest) GetStatus() RoomStatus {
-	if x != nil {
-		return x.Status
-	}
-	return RoomStatus_ROOM_STATUS_UNSPECIFIED
 }
 
 type UpdateRoomResponse struct {
@@ -753,13 +737,12 @@ const file_room_room_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12\x1d\n" +
 	"\n" +
-	"created_by\x18\t \x01(\x03R\tcreatedBy\"\xe6\x01\n" +
+	"created_by\x18\t \x01(\x03R\tcreatedBy\"\xa0\x01\n" +
 	"\x11CreateRoomRequest\x12'\n" +
 	"\x0fdepartment_code\x18\x01 \x01(\tR\x0edepartmentCode\x12'\n" +
 	"\x0fdepartment_name\x18\x02 \x01(\tR\x0edepartmentName\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12%\n" +
-	"\x0emaximum_member\x18\x04 \x01(\x05R\rmaximumMember\x12D\n" +
-	"\x06status\x18\x05 \x01(\x0e2,.bannote.studyroomservice.room.v1.RoomStatusR\x06status\"P\n" +
+	"\x0emaximum_member\x18\x04 \x01(\x05R\rmaximumMember\"P\n" +
 	"\x12CreateRoomResponse\x12:\n" +
 	"\x04room\x18\x01 \x01(\v2&.bannote.studyroomservice.room.v1.RoomR\x04room\" \n" +
 	"\x0eGetRoomRequest\x12\x0e\n" +
@@ -774,14 +757,13 @@ const file_room_room_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x03R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size\"\xf6\x01\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"\xb0\x01\n" +
 	"\x11UpdateRoomRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12'\n" +
 	"\x0fdepartment_code\x18\x02 \x01(\tR\x0edepartmentCode\x12'\n" +
 	"\x0fdepartment_name\x18\x03 \x01(\tR\x0edepartmentName\x12\x12\n" +
 	"\x04name\x18\x04 \x01(\tR\x04name\x12%\n" +
-	"\x0emaximum_member\x18\x05 \x01(\x05R\rmaximumMember\x12D\n" +
-	"\x06status\x18\x06 \x01(\x0e2,.bannote.studyroomservice.room.v1.RoomStatusR\x06status\"P\n" +
+	"\x0emaximum_member\x18\x05 \x01(\x05R\rmaximumMember\"P\n" +
 	"\x12UpdateRoomResponse\x12:\n" +
 	"\x04room\x18\x01 \x01(\v2&.bannote.studyroomservice.room.v1.RoomR\x04room\"#\n" +
 	"\x11DeleteRoomRequest\x12\x0e\n" +
@@ -827,17 +809,15 @@ var file_room_room_proto_depIdxs = []int32{
 	0,  // 0: bannote.studyroomservice.room.v1.Room.status:type_name -> bannote.studyroomservice.room.v1.RoomStatus
 	12, // 1: bannote.studyroomservice.room.v1.Room.created_at:type_name -> google.protobuf.Timestamp
 	12, // 2: bannote.studyroomservice.room.v1.Room.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 3: bannote.studyroomservice.room.v1.CreateRoomRequest.status:type_name -> bannote.studyroomservice.room.v1.RoomStatus
-	1,  // 4: bannote.studyroomservice.room.v1.CreateRoomResponse.room:type_name -> bannote.studyroomservice.room.v1.Room
-	1,  // 5: bannote.studyroomservice.room.v1.GetRoomResponse.room:type_name -> bannote.studyroomservice.room.v1.Room
-	1,  // 6: bannote.studyroomservice.room.v1.ListRoomsResponse.rooms:type_name -> bannote.studyroomservice.room.v1.Room
-	0,  // 7: bannote.studyroomservice.room.v1.UpdateRoomRequest.status:type_name -> bannote.studyroomservice.room.v1.RoomStatus
-	1,  // 8: bannote.studyroomservice.room.v1.UpdateRoomResponse.room:type_name -> bannote.studyroomservice.room.v1.Room
-	9,  // [9:9] is the sub-list for method output_type
-	9,  // [9:9] is the sub-list for method input_type
-	9,  // [9:9] is the sub-list for extension type_name
-	9,  // [9:9] is the sub-list for extension extendee
-	0,  // [0:9] is the sub-list for field type_name
+	1,  // 3: bannote.studyroomservice.room.v1.CreateRoomResponse.room:type_name -> bannote.studyroomservice.room.v1.Room
+	1,  // 4: bannote.studyroomservice.room.v1.GetRoomResponse.room:type_name -> bannote.studyroomservice.room.v1.Room
+	1,  // 5: bannote.studyroomservice.room.v1.ListRoomsResponse.rooms:type_name -> bannote.studyroomservice.room.v1.Room
+	1,  // 6: bannote.studyroomservice.room.v1.UpdateRoomResponse.room:type_name -> bannote.studyroomservice.room.v1.Room
+	7,  // [7:7] is the sub-list for method output_type
+	7,  // [7:7] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_room_room_proto_init() }

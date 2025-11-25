@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,32 +20,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RoomExceptionService_CreateRoomException_FullMethodName = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/CreateRoomException"
-	RoomExceptionService_GetRoomException_FullMethodName    = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/GetRoomException"
-	RoomExceptionService_ListRoomExceptions_FullMethodName  = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/ListRoomExceptions"
-	RoomExceptionService_UpdateRoomException_FullMethodName = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/UpdateRoomException"
-	RoomExceptionService_DeleteRoomException_FullMethodName = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/DeleteRoomException"
+	RoomExceptionService_GetRoomExceptions_FullMethodName    = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/GetRoomExceptions"
+	RoomExceptionService_UpdateRoomExceptions_FullMethodName = "/bannote.studyroomservice.roomexception.v1.RoomExceptionService/UpdateRoomExceptions"
 )
 
 // RoomExceptionServiceClient is the client API for RoomExceptionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// ================================
-// RoomException Service
-// - 스터디룸의 일회성 휴무/특별 운영시간(예외)을 관리하는 서비스
-// ================================
 type RoomExceptionServiceClient interface {
-	// 스터디룸 예외 생성
-	CreateRoomException(ctx context.Context, in *CreateRoomExceptionRequest, opts ...grpc.CallOption) (*CreateRoomExceptionResponse, error)
-	// 특정 스터디룸 예외 조회
-	GetRoomException(ctx context.Context, in *GetRoomExceptionRequest, opts ...grpc.CallOption) (*GetRoomExceptionResponse, error)
-	// 스터디룸 예외 목록 조회
-	ListRoomExceptions(ctx context.Context, in *ListRoomExceptionsRequest, opts ...grpc.CallOption) (*ListRoomExceptionsResponse, error)
-	// 스터디룸 예외 정보 업데이트
-	UpdateRoomException(ctx context.Context, in *UpdateRoomExceptionRequest, opts ...grpc.CallOption) (*UpdateRoomExceptionResponse, error)
-	// 스터디룸 예외 삭제 (소프트 삭제)
-	DeleteRoomException(ctx context.Context, in *DeleteRoomExceptionRequest, opts ...grpc.CallOption) (*DeleteRoomExceptionResponse, error)
+	// 전체 조회 (room_id 기준)
+	GetRoomExceptions(ctx context.Context, in *GetRoomExceptionsRequest, opts ...grpc.CallOption) (*GetRoomExceptionsResponse, error)
+	// 리스트 기반 전체 업데이트
+	UpdateRoomExceptions(ctx context.Context, in *UpdateRoomExceptionsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type roomExceptionServiceClient struct {
@@ -55,50 +42,20 @@ func NewRoomExceptionServiceClient(cc grpc.ClientConnInterface) RoomExceptionSer
 	return &roomExceptionServiceClient{cc}
 }
 
-func (c *roomExceptionServiceClient) CreateRoomException(ctx context.Context, in *CreateRoomExceptionRequest, opts ...grpc.CallOption) (*CreateRoomExceptionResponse, error) {
+func (c *roomExceptionServiceClient) GetRoomExceptions(ctx context.Context, in *GetRoomExceptionsRequest, opts ...grpc.CallOption) (*GetRoomExceptionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateRoomExceptionResponse)
-	err := c.cc.Invoke(ctx, RoomExceptionService_CreateRoomException_FullMethodName, in, out, cOpts...)
+	out := new(GetRoomExceptionsResponse)
+	err := c.cc.Invoke(ctx, RoomExceptionService_GetRoomExceptions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *roomExceptionServiceClient) GetRoomException(ctx context.Context, in *GetRoomExceptionRequest, opts ...grpc.CallOption) (*GetRoomExceptionResponse, error) {
+func (c *roomExceptionServiceClient) UpdateRoomExceptions(ctx context.Context, in *UpdateRoomExceptionsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetRoomExceptionResponse)
-	err := c.cc.Invoke(ctx, RoomExceptionService_GetRoomException_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *roomExceptionServiceClient) ListRoomExceptions(ctx context.Context, in *ListRoomExceptionsRequest, opts ...grpc.CallOption) (*ListRoomExceptionsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListRoomExceptionsResponse)
-	err := c.cc.Invoke(ctx, RoomExceptionService_ListRoomExceptions_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *roomExceptionServiceClient) UpdateRoomException(ctx context.Context, in *UpdateRoomExceptionRequest, opts ...grpc.CallOption) (*UpdateRoomExceptionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateRoomExceptionResponse)
-	err := c.cc.Invoke(ctx, RoomExceptionService_UpdateRoomException_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *roomExceptionServiceClient) DeleteRoomException(ctx context.Context, in *DeleteRoomExceptionRequest, opts ...grpc.CallOption) (*DeleteRoomExceptionResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteRoomExceptionResponse)
-	err := c.cc.Invoke(ctx, RoomExceptionService_DeleteRoomException_FullMethodName, in, out, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, RoomExceptionService_UpdateRoomExceptions_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -108,22 +65,11 @@ func (c *roomExceptionServiceClient) DeleteRoomException(ctx context.Context, in
 // RoomExceptionServiceServer is the server API for RoomExceptionService service.
 // All implementations must embed UnimplementedRoomExceptionServiceServer
 // for forward compatibility.
-//
-// ================================
-// RoomException Service
-// - 스터디룸의 일회성 휴무/특별 운영시간(예외)을 관리하는 서비스
-// ================================
 type RoomExceptionServiceServer interface {
-	// 스터디룸 예외 생성
-	CreateRoomException(context.Context, *CreateRoomExceptionRequest) (*CreateRoomExceptionResponse, error)
-	// 특정 스터디룸 예외 조회
-	GetRoomException(context.Context, *GetRoomExceptionRequest) (*GetRoomExceptionResponse, error)
-	// 스터디룸 예외 목록 조회
-	ListRoomExceptions(context.Context, *ListRoomExceptionsRequest) (*ListRoomExceptionsResponse, error)
-	// 스터디룸 예외 정보 업데이트
-	UpdateRoomException(context.Context, *UpdateRoomExceptionRequest) (*UpdateRoomExceptionResponse, error)
-	// 스터디룸 예외 삭제 (소프트 삭제)
-	DeleteRoomException(context.Context, *DeleteRoomExceptionRequest) (*DeleteRoomExceptionResponse, error)
+	// 전체 조회 (room_id 기준)
+	GetRoomExceptions(context.Context, *GetRoomExceptionsRequest) (*GetRoomExceptionsResponse, error)
+	// 리스트 기반 전체 업데이트
+	UpdateRoomExceptions(context.Context, *UpdateRoomExceptionsRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedRoomExceptionServiceServer()
 }
 
@@ -134,20 +80,11 @@ type RoomExceptionServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRoomExceptionServiceServer struct{}
 
-func (UnimplementedRoomExceptionServiceServer) CreateRoomException(context.Context, *CreateRoomExceptionRequest) (*CreateRoomExceptionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateRoomException not implemented")
+func (UnimplementedRoomExceptionServiceServer) GetRoomExceptions(context.Context, *GetRoomExceptionsRequest) (*GetRoomExceptionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoomExceptions not implemented")
 }
-func (UnimplementedRoomExceptionServiceServer) GetRoomException(context.Context, *GetRoomExceptionRequest) (*GetRoomExceptionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRoomException not implemented")
-}
-func (UnimplementedRoomExceptionServiceServer) ListRoomExceptions(context.Context, *ListRoomExceptionsRequest) (*ListRoomExceptionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRoomExceptions not implemented")
-}
-func (UnimplementedRoomExceptionServiceServer) UpdateRoomException(context.Context, *UpdateRoomExceptionRequest) (*UpdateRoomExceptionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateRoomException not implemented")
-}
-func (UnimplementedRoomExceptionServiceServer) DeleteRoomException(context.Context, *DeleteRoomExceptionRequest) (*DeleteRoomExceptionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteRoomException not implemented")
+func (UnimplementedRoomExceptionServiceServer) UpdateRoomExceptions(context.Context, *UpdateRoomExceptionsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRoomExceptions not implemented")
 }
 func (UnimplementedRoomExceptionServiceServer) mustEmbedUnimplementedRoomExceptionServiceServer() {}
 func (UnimplementedRoomExceptionServiceServer) testEmbeddedByValue()                              {}
@@ -170,92 +107,38 @@ func RegisterRoomExceptionServiceServer(s grpc.ServiceRegistrar, srv RoomExcepti
 	s.RegisterService(&RoomExceptionService_ServiceDesc, srv)
 }
 
-func _RoomExceptionService_CreateRoomException_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRoomExceptionRequest)
+func _RoomExceptionService_GetRoomExceptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRoomExceptionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoomExceptionServiceServer).CreateRoomException(ctx, in)
+		return srv.(RoomExceptionServiceServer).GetRoomExceptions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RoomExceptionService_CreateRoomException_FullMethodName,
+		FullMethod: RoomExceptionService_GetRoomExceptions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomExceptionServiceServer).CreateRoomException(ctx, req.(*CreateRoomExceptionRequest))
+		return srv.(RoomExceptionServiceServer).GetRoomExceptions(ctx, req.(*GetRoomExceptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RoomExceptionService_GetRoomException_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRoomExceptionRequest)
+func _RoomExceptionService_UpdateRoomExceptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRoomExceptionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoomExceptionServiceServer).GetRoomException(ctx, in)
+		return srv.(RoomExceptionServiceServer).UpdateRoomExceptions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RoomExceptionService_GetRoomException_FullMethodName,
+		FullMethod: RoomExceptionService_UpdateRoomExceptions_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomExceptionServiceServer).GetRoomException(ctx, req.(*GetRoomExceptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RoomExceptionService_ListRoomExceptions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListRoomExceptionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RoomExceptionServiceServer).ListRoomExceptions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RoomExceptionService_ListRoomExceptions_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomExceptionServiceServer).ListRoomExceptions(ctx, req.(*ListRoomExceptionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RoomExceptionService_UpdateRoomException_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateRoomExceptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RoomExceptionServiceServer).UpdateRoomException(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RoomExceptionService_UpdateRoomException_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomExceptionServiceServer).UpdateRoomException(ctx, req.(*UpdateRoomExceptionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RoomExceptionService_DeleteRoomException_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRoomExceptionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RoomExceptionServiceServer).DeleteRoomException(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RoomExceptionService_DeleteRoomException_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomExceptionServiceServer).DeleteRoomException(ctx, req.(*DeleteRoomExceptionRequest))
+		return srv.(RoomExceptionServiceServer).UpdateRoomExceptions(ctx, req.(*UpdateRoomExceptionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -268,24 +151,12 @@ var RoomExceptionService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RoomExceptionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateRoomException",
-			Handler:    _RoomExceptionService_CreateRoomException_Handler,
+			MethodName: "GetRoomExceptions",
+			Handler:    _RoomExceptionService_GetRoomExceptions_Handler,
 		},
 		{
-			MethodName: "GetRoomException",
-			Handler:    _RoomExceptionService_GetRoomException_Handler,
-		},
-		{
-			MethodName: "ListRoomExceptions",
-			Handler:    _RoomExceptionService_ListRoomExceptions_Handler,
-		},
-		{
-			MethodName: "UpdateRoomException",
-			Handler:    _RoomExceptionService_UpdateRoomException_Handler,
-		},
-		{
-			MethodName: "DeleteRoomException",
-			Handler:    _RoomExceptionService_DeleteRoomException_Handler,
+			MethodName: "UpdateRoomExceptions",
+			Handler:    _RoomExceptionService_UpdateRoomExceptions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
