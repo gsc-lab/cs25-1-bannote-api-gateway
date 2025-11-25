@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,11 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RoomOperatingHourService_CreateRoomOperatingHour_FullMethodName = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/CreateRoomOperatingHour"
-	RoomOperatingHourService_GetRoomOperatingHour_FullMethodName    = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/GetRoomOperatingHour"
-	RoomOperatingHourService_ListRoomOperatingHours_FullMethodName  = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/ListRoomOperatingHours"
-	RoomOperatingHourService_UpdateRoomOperatingHour_FullMethodName = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/UpdateRoomOperatingHour"
-	RoomOperatingHourService_DeleteRoomOperatingHour_FullMethodName = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/DeleteRoomOperatingHour"
+	RoomOperatingHourService_GetRoomOperatingHours_FullMethodName    = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/GetRoomOperatingHours"
+	RoomOperatingHourService_UpdateRoomOperatingHours_FullMethodName = "/bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourService/UpdateRoomOperatingHours"
 )
 
 // RoomOperatingHourServiceClient is the client API for RoomOperatingHourService service.
@@ -32,19 +30,13 @@ const (
 //
 // ================================
 // RoomOperatingHour Service
-// - 스터디룸의 요일별 운영 시간을 관리하는 서비스
+// 요일별 운영 시간 전체 조회 + 리스트 기반 업데이트
 // ================================
 type RoomOperatingHourServiceClient interface {
-	// 스터디룸 운영 시간 생성
-	CreateRoomOperatingHour(ctx context.Context, in *CreateRoomOperatingHourRequest, opts ...grpc.CallOption) (*CreateRoomOperatingHourResponse, error)
-	// 특정 스터디룸 운영 시간 조회
-	GetRoomOperatingHour(ctx context.Context, in *GetRoomOperatingHourRequest, opts ...grpc.CallOption) (*GetRoomOperatingHourResponse, error)
-	// 스터디룸 운영 시간 목록 조회
-	ListRoomOperatingHours(ctx context.Context, in *ListRoomOperatingHoursRequest, opts ...grpc.CallOption) (*ListRoomOperatingHoursResponse, error)
-	// 스터디룸 운영 시간 정보 업데이트
-	UpdateRoomOperatingHour(ctx context.Context, in *UpdateRoomOperatingHourRequest, opts ...grpc.CallOption) (*UpdateRoomOperatingHourResponse, error)
-	// 스터디룸 운영 시간 삭제 (소프트 삭제)
-	DeleteRoomOperatingHour(ctx context.Context, in *DeleteRoomOperatingHourRequest, opts ...grpc.CallOption) (*DeleteRoomOperatingHourResponse, error)
+	// 전체 조회 (room_id 기준)
+	GetRoomOperatingHours(ctx context.Context, in *GetRoomOperatingHoursRequest, opts ...grpc.CallOption) (*GetRoomOperatingHoursResponse, error)
+	// 리스트 기반 전체 업데이트
+	UpdateRoomOperatingHours(ctx context.Context, in *UpdateRoomOperatingHoursRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type roomOperatingHourServiceClient struct {
@@ -55,50 +47,20 @@ func NewRoomOperatingHourServiceClient(cc grpc.ClientConnInterface) RoomOperatin
 	return &roomOperatingHourServiceClient{cc}
 }
 
-func (c *roomOperatingHourServiceClient) CreateRoomOperatingHour(ctx context.Context, in *CreateRoomOperatingHourRequest, opts ...grpc.CallOption) (*CreateRoomOperatingHourResponse, error) {
+func (c *roomOperatingHourServiceClient) GetRoomOperatingHours(ctx context.Context, in *GetRoomOperatingHoursRequest, opts ...grpc.CallOption) (*GetRoomOperatingHoursResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateRoomOperatingHourResponse)
-	err := c.cc.Invoke(ctx, RoomOperatingHourService_CreateRoomOperatingHour_FullMethodName, in, out, cOpts...)
+	out := new(GetRoomOperatingHoursResponse)
+	err := c.cc.Invoke(ctx, RoomOperatingHourService_GetRoomOperatingHours_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *roomOperatingHourServiceClient) GetRoomOperatingHour(ctx context.Context, in *GetRoomOperatingHourRequest, opts ...grpc.CallOption) (*GetRoomOperatingHourResponse, error) {
+func (c *roomOperatingHourServiceClient) UpdateRoomOperatingHours(ctx context.Context, in *UpdateRoomOperatingHoursRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetRoomOperatingHourResponse)
-	err := c.cc.Invoke(ctx, RoomOperatingHourService_GetRoomOperatingHour_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *roomOperatingHourServiceClient) ListRoomOperatingHours(ctx context.Context, in *ListRoomOperatingHoursRequest, opts ...grpc.CallOption) (*ListRoomOperatingHoursResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListRoomOperatingHoursResponse)
-	err := c.cc.Invoke(ctx, RoomOperatingHourService_ListRoomOperatingHours_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *roomOperatingHourServiceClient) UpdateRoomOperatingHour(ctx context.Context, in *UpdateRoomOperatingHourRequest, opts ...grpc.CallOption) (*UpdateRoomOperatingHourResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(UpdateRoomOperatingHourResponse)
-	err := c.cc.Invoke(ctx, RoomOperatingHourService_UpdateRoomOperatingHour_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *roomOperatingHourServiceClient) DeleteRoomOperatingHour(ctx context.Context, in *DeleteRoomOperatingHourRequest, opts ...grpc.CallOption) (*DeleteRoomOperatingHourResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteRoomOperatingHourResponse)
-	err := c.cc.Invoke(ctx, RoomOperatingHourService_DeleteRoomOperatingHour_FullMethodName, in, out, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, RoomOperatingHourService_UpdateRoomOperatingHours_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -111,19 +73,13 @@ func (c *roomOperatingHourServiceClient) DeleteRoomOperatingHour(ctx context.Con
 //
 // ================================
 // RoomOperatingHour Service
-// - 스터디룸의 요일별 운영 시간을 관리하는 서비스
+// 요일별 운영 시간 전체 조회 + 리스트 기반 업데이트
 // ================================
 type RoomOperatingHourServiceServer interface {
-	// 스터디룸 운영 시간 생성
-	CreateRoomOperatingHour(context.Context, *CreateRoomOperatingHourRequest) (*CreateRoomOperatingHourResponse, error)
-	// 특정 스터디룸 운영 시간 조회
-	GetRoomOperatingHour(context.Context, *GetRoomOperatingHourRequest) (*GetRoomOperatingHourResponse, error)
-	// 스터디룸 운영 시간 목록 조회
-	ListRoomOperatingHours(context.Context, *ListRoomOperatingHoursRequest) (*ListRoomOperatingHoursResponse, error)
-	// 스터디룸 운영 시간 정보 업데이트
-	UpdateRoomOperatingHour(context.Context, *UpdateRoomOperatingHourRequest) (*UpdateRoomOperatingHourResponse, error)
-	// 스터디룸 운영 시간 삭제 (소프트 삭제)
-	DeleteRoomOperatingHour(context.Context, *DeleteRoomOperatingHourRequest) (*DeleteRoomOperatingHourResponse, error)
+	// 전체 조회 (room_id 기준)
+	GetRoomOperatingHours(context.Context, *GetRoomOperatingHoursRequest) (*GetRoomOperatingHoursResponse, error)
+	// 리스트 기반 전체 업데이트
+	UpdateRoomOperatingHours(context.Context, *UpdateRoomOperatingHoursRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedRoomOperatingHourServiceServer()
 }
 
@@ -134,20 +90,11 @@ type RoomOperatingHourServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRoomOperatingHourServiceServer struct{}
 
-func (UnimplementedRoomOperatingHourServiceServer) CreateRoomOperatingHour(context.Context, *CreateRoomOperatingHourRequest) (*CreateRoomOperatingHourResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateRoomOperatingHour not implemented")
+func (UnimplementedRoomOperatingHourServiceServer) GetRoomOperatingHours(context.Context, *GetRoomOperatingHoursRequest) (*GetRoomOperatingHoursResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoomOperatingHours not implemented")
 }
-func (UnimplementedRoomOperatingHourServiceServer) GetRoomOperatingHour(context.Context, *GetRoomOperatingHourRequest) (*GetRoomOperatingHourResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRoomOperatingHour not implemented")
-}
-func (UnimplementedRoomOperatingHourServiceServer) ListRoomOperatingHours(context.Context, *ListRoomOperatingHoursRequest) (*ListRoomOperatingHoursResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRoomOperatingHours not implemented")
-}
-func (UnimplementedRoomOperatingHourServiceServer) UpdateRoomOperatingHour(context.Context, *UpdateRoomOperatingHourRequest) (*UpdateRoomOperatingHourResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateRoomOperatingHour not implemented")
-}
-func (UnimplementedRoomOperatingHourServiceServer) DeleteRoomOperatingHour(context.Context, *DeleteRoomOperatingHourRequest) (*DeleteRoomOperatingHourResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteRoomOperatingHour not implemented")
+func (UnimplementedRoomOperatingHourServiceServer) UpdateRoomOperatingHours(context.Context, *UpdateRoomOperatingHoursRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRoomOperatingHours not implemented")
 }
 func (UnimplementedRoomOperatingHourServiceServer) mustEmbedUnimplementedRoomOperatingHourServiceServer() {
 }
@@ -171,92 +118,38 @@ func RegisterRoomOperatingHourServiceServer(s grpc.ServiceRegistrar, srv RoomOpe
 	s.RegisterService(&RoomOperatingHourService_ServiceDesc, srv)
 }
 
-func _RoomOperatingHourService_CreateRoomOperatingHour_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRoomOperatingHourRequest)
+func _RoomOperatingHourService_GetRoomOperatingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRoomOperatingHoursRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoomOperatingHourServiceServer).CreateRoomOperatingHour(ctx, in)
+		return srv.(RoomOperatingHourServiceServer).GetRoomOperatingHours(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RoomOperatingHourService_CreateRoomOperatingHour_FullMethodName,
+		FullMethod: RoomOperatingHourService_GetRoomOperatingHours_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomOperatingHourServiceServer).CreateRoomOperatingHour(ctx, req.(*CreateRoomOperatingHourRequest))
+		return srv.(RoomOperatingHourServiceServer).GetRoomOperatingHours(ctx, req.(*GetRoomOperatingHoursRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RoomOperatingHourService_GetRoomOperatingHour_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRoomOperatingHourRequest)
+func _RoomOperatingHourService_UpdateRoomOperatingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRoomOperatingHoursRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RoomOperatingHourServiceServer).GetRoomOperatingHour(ctx, in)
+		return srv.(RoomOperatingHourServiceServer).UpdateRoomOperatingHours(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RoomOperatingHourService_GetRoomOperatingHour_FullMethodName,
+		FullMethod: RoomOperatingHourService_UpdateRoomOperatingHours_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomOperatingHourServiceServer).GetRoomOperatingHour(ctx, req.(*GetRoomOperatingHourRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RoomOperatingHourService_ListRoomOperatingHours_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListRoomOperatingHoursRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RoomOperatingHourServiceServer).ListRoomOperatingHours(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RoomOperatingHourService_ListRoomOperatingHours_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomOperatingHourServiceServer).ListRoomOperatingHours(ctx, req.(*ListRoomOperatingHoursRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RoomOperatingHourService_UpdateRoomOperatingHour_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateRoomOperatingHourRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RoomOperatingHourServiceServer).UpdateRoomOperatingHour(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RoomOperatingHourService_UpdateRoomOperatingHour_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomOperatingHourServiceServer).UpdateRoomOperatingHour(ctx, req.(*UpdateRoomOperatingHourRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RoomOperatingHourService_DeleteRoomOperatingHour_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRoomOperatingHourRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RoomOperatingHourServiceServer).DeleteRoomOperatingHour(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RoomOperatingHourService_DeleteRoomOperatingHour_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RoomOperatingHourServiceServer).DeleteRoomOperatingHour(ctx, req.(*DeleteRoomOperatingHourRequest))
+		return srv.(RoomOperatingHourServiceServer).UpdateRoomOperatingHours(ctx, req.(*UpdateRoomOperatingHoursRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -269,24 +162,12 @@ var RoomOperatingHourService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*RoomOperatingHourServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateRoomOperatingHour",
-			Handler:    _RoomOperatingHourService_CreateRoomOperatingHour_Handler,
+			MethodName: "GetRoomOperatingHours",
+			Handler:    _RoomOperatingHourService_GetRoomOperatingHours_Handler,
 		},
 		{
-			MethodName: "GetRoomOperatingHour",
-			Handler:    _RoomOperatingHourService_GetRoomOperatingHour_Handler,
-		},
-		{
-			MethodName: "ListRoomOperatingHours",
-			Handler:    _RoomOperatingHourService_ListRoomOperatingHours_Handler,
-		},
-		{
-			MethodName: "UpdateRoomOperatingHour",
-			Handler:    _RoomOperatingHourService_UpdateRoomOperatingHour_Handler,
-		},
-		{
-			MethodName: "DeleteRoomOperatingHour",
-			Handler:    _RoomOperatingHourService_DeleteRoomOperatingHour_Handler,
+			MethodName: "UpdateRoomOperatingHours",
+			Handler:    _RoomOperatingHourService_UpdateRoomOperatingHours_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

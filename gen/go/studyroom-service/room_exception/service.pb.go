@@ -9,6 +9,7 @@ package roomexceptionv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	unsafe "unsafe"
 )
@@ -24,40 +25,25 @@ var File_room_exception_service_proto protoreflect.FileDescriptor
 
 const file_room_exception_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1croom_exception/service.proto\x12)bannote.studyroomservice.roomexception.v1\x1a#room_exception/room_exception.proto2\xcd\x06\n" +
-	"\x14RoomExceptionService\x12\xa4\x01\n" +
-	"\x13CreateRoomException\x12E.bannote.studyroomservice.roomexception.v1.CreateRoomExceptionRequest\x1aF.bannote.studyroomservice.roomexception.v1.CreateRoomExceptionResponse\x12\x9b\x01\n" +
-	"\x10GetRoomException\x12B.bannote.studyroomservice.roomexception.v1.GetRoomExceptionRequest\x1aC.bannote.studyroomservice.roomexception.v1.GetRoomExceptionResponse\x12\xa1\x01\n" +
-	"\x12ListRoomExceptions\x12D.bannote.studyroomservice.roomexception.v1.ListRoomExceptionsRequest\x1aE.bannote.studyroomservice.roomexception.v1.ListRoomExceptionsResponse\x12\xa4\x01\n" +
-	"\x13UpdateRoomException\x12E.bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionRequest\x1aF.bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionResponse\x12\xa4\x01\n" +
-	"\x13DeleteRoomException\x12E.bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionRequest\x1aF.bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionResponseB\xeb\x02\n" +
+	"\x1croom_exception/service.proto\x12)bannote.studyroomservice.roomexception.v1\x1a\x1bgoogle/protobuf/empty.proto\x1a#room_exception/room_exception.proto2\xaf\x02\n" +
+	"\x14RoomExceptionService\x12\x9e\x01\n" +
+	"\x11GetRoomExceptions\x12C.bannote.studyroomservice.roomexception.v1.GetRoomExceptionsRequest\x1aD.bannote.studyroomservice.roomexception.v1.GetRoomExceptionsResponse\x12v\n" +
+	"\x14UpdateRoomExceptions\x12F.bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionsRequest\x1a\x16.google.protobuf.EmptyB\xeb\x02\n" +
 	"-com.bannote.studyroomservice.roomexception.v1B\fServiceProtoP\x01Zegithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/studyroom-service/room_exception;roomexceptionv1\xa2\x02\x03BSR\xaa\x02)Bannote.Studyroomservice.Roomexception.V1\xca\x02)Bannote\\Studyroomservice\\Roomexception\\V1\xe2\x025Bannote\\Studyroomservice\\Roomexception\\V1\\GPBMetadata\xea\x02,Bannote::Studyroomservice::Roomexception::V1b\x06proto3"
 
 var file_room_exception_service_proto_goTypes = []any{
-	(*CreateRoomExceptionRequest)(nil),  // 0: bannote.studyroomservice.roomexception.v1.CreateRoomExceptionRequest
-	(*GetRoomExceptionRequest)(nil),     // 1: bannote.studyroomservice.roomexception.v1.GetRoomExceptionRequest
-	(*ListRoomExceptionsRequest)(nil),   // 2: bannote.studyroomservice.roomexception.v1.ListRoomExceptionsRequest
-	(*UpdateRoomExceptionRequest)(nil),  // 3: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionRequest
-	(*DeleteRoomExceptionRequest)(nil),  // 4: bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionRequest
-	(*CreateRoomExceptionResponse)(nil), // 5: bannote.studyroomservice.roomexception.v1.CreateRoomExceptionResponse
-	(*GetRoomExceptionResponse)(nil),    // 6: bannote.studyroomservice.roomexception.v1.GetRoomExceptionResponse
-	(*ListRoomExceptionsResponse)(nil),  // 7: bannote.studyroomservice.roomexception.v1.ListRoomExceptionsResponse
-	(*UpdateRoomExceptionResponse)(nil), // 8: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionResponse
-	(*DeleteRoomExceptionResponse)(nil), // 9: bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionResponse
+	(*GetRoomExceptionsRequest)(nil),    // 0: bannote.studyroomservice.roomexception.v1.GetRoomExceptionsRequest
+	(*UpdateRoomExceptionsRequest)(nil), // 1: bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionsRequest
+	(*GetRoomExceptionsResponse)(nil),   // 2: bannote.studyroomservice.roomexception.v1.GetRoomExceptionsResponse
+	(*emptypb.Empty)(nil),               // 3: google.protobuf.Empty
 }
 var file_room_exception_service_proto_depIdxs = []int32{
-	0, // 0: bannote.studyroomservice.roomexception.v1.RoomExceptionService.CreateRoomException:input_type -> bannote.studyroomservice.roomexception.v1.CreateRoomExceptionRequest
-	1, // 1: bannote.studyroomservice.roomexception.v1.RoomExceptionService.GetRoomException:input_type -> bannote.studyroomservice.roomexception.v1.GetRoomExceptionRequest
-	2, // 2: bannote.studyroomservice.roomexception.v1.RoomExceptionService.ListRoomExceptions:input_type -> bannote.studyroomservice.roomexception.v1.ListRoomExceptionsRequest
-	3, // 3: bannote.studyroomservice.roomexception.v1.RoomExceptionService.UpdateRoomException:input_type -> bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionRequest
-	4, // 4: bannote.studyroomservice.roomexception.v1.RoomExceptionService.DeleteRoomException:input_type -> bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionRequest
-	5, // 5: bannote.studyroomservice.roomexception.v1.RoomExceptionService.CreateRoomException:output_type -> bannote.studyroomservice.roomexception.v1.CreateRoomExceptionResponse
-	6, // 6: bannote.studyroomservice.roomexception.v1.RoomExceptionService.GetRoomException:output_type -> bannote.studyroomservice.roomexception.v1.GetRoomExceptionResponse
-	7, // 7: bannote.studyroomservice.roomexception.v1.RoomExceptionService.ListRoomExceptions:output_type -> bannote.studyroomservice.roomexception.v1.ListRoomExceptionsResponse
-	8, // 8: bannote.studyroomservice.roomexception.v1.RoomExceptionService.UpdateRoomException:output_type -> bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionResponse
-	9, // 9: bannote.studyroomservice.roomexception.v1.RoomExceptionService.DeleteRoomException:output_type -> bannote.studyroomservice.roomexception.v1.DeleteRoomExceptionResponse
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	0, // 0: bannote.studyroomservice.roomexception.v1.RoomExceptionService.GetRoomExceptions:input_type -> bannote.studyroomservice.roomexception.v1.GetRoomExceptionsRequest
+	1, // 1: bannote.studyroomservice.roomexception.v1.RoomExceptionService.UpdateRoomExceptions:input_type -> bannote.studyroomservice.roomexception.v1.UpdateRoomExceptionsRequest
+	2, // 2: bannote.studyroomservice.roomexception.v1.RoomExceptionService.GetRoomExceptions:output_type -> bannote.studyroomservice.roomexception.v1.GetRoomExceptionsResponse
+	3, // 3: bannote.studyroomservice.roomexception.v1.RoomExceptionService.UpdateRoomExceptions:output_type -> google.protobuf.Empty
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name

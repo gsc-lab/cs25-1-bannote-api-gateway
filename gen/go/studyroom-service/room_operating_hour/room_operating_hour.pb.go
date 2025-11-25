@@ -9,6 +9,7 @@ package roomoperatinghourv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	_ "google.golang.org/protobuf/types/known/emptypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -22,18 +23,20 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 스터디룸 운영 시간 메시지 구조
+// ------------------------------------
+// RoomOperatingHour
+// ------------------------------------
 type RoomOperatingHour struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`                                                // 운영 시간 ID
-	RoomId         int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`                          // 스터디룸 ID
-	DayOfWeek      int32                  `protobuf:"varint,3,opt,name=day_of_week,json=dayOfWeek,proto3" json:"day_of_week,omitempty"`               // 요일 (0:일요일 ~ 6:토요일)
-	OpeningTime    string                 `protobuf:"bytes,4,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`            // 여는 시간 (HH:MM)
-	ClosingTime    string                 `protobuf:"bytes,5,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`            // 닫는 시간 (HH:MM)
-	DayMaximumTime string                 `protobuf:"bytes,6,opt,name=day_maximum_time,json=dayMaximumTime,proto3" json:"day_maximum_time,omitempty"` // 하루 최대 예약 가능 시간 (HH:MM)
-	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`                  // 생성 시각
-	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`                  // 수정 시각
-	DeletedAt      *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`                  // 삭제 시각 (소프트 삭제)
+	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	RoomId         int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	DayOfWeek      int32                  `protobuf:"varint,3,opt,name=day_of_week,json=dayOfWeek,proto3" json:"day_of_week,omitempty"`
+	OpeningTime    string                 `protobuf:"bytes,4,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
+	ClosingTime    string                 `protobuf:"bytes,5,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
+	DayMaximumTime string                 `protobuf:"bytes,6,opt,name=day_maximum_time,json=dayMaximumTime,proto3" json:"day_maximum_time,omitempty"`
+	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	DeletedAt      *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -131,10 +134,157 @@ func (x *RoomOperatingHour) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-// 생성 요청 / 응답
-type CreateRoomOperatingHourRequest struct {
+// ------------------------------------
+// 전체 조회 요청 / 응답
+// ------------------------------------
+type GetRoomOperatingHoursRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"` // 특정 스터디룸의 운영시간 전체 조회
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRoomOperatingHoursRequest) Reset() {
+	*x = GetRoomOperatingHoursRequest{}
+	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRoomOperatingHoursRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRoomOperatingHoursRequest) ProtoMessage() {}
+
+func (x *GetRoomOperatingHoursRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRoomOperatingHoursRequest.ProtoReflect.Descriptor instead.
+func (*GetRoomOperatingHoursRequest) Descriptor() ([]byte, []int) {
+	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetRoomOperatingHoursRequest) GetRoomId() int64 {
+	if x != nil {
+		return x.RoomId
+	}
+	return 0
+}
+
+type GetRoomOperatingHoursResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	RoomOperatingHours []*RoomOperatingHour   `protobuf:"bytes,1,rep,name=room_operating_hours,json=roomOperatingHours,proto3" json:"room_operating_hours,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *GetRoomOperatingHoursResponse) Reset() {
+	*x = GetRoomOperatingHoursResponse{}
+	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRoomOperatingHoursResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRoomOperatingHoursResponse) ProtoMessage() {}
+
+func (x *GetRoomOperatingHoursResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRoomOperatingHoursResponse.ProtoReflect.Descriptor instead.
+func (*GetRoomOperatingHoursResponse) Descriptor() ([]byte, []int) {
+	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetRoomOperatingHoursResponse) GetRoomOperatingHours() []*RoomOperatingHour {
+	if x != nil {
+		return x.RoomOperatingHours
+	}
+	return nil
+}
+
+// ------------------------------------
+// 리스트 기반 전체 업데이트 요청
+// ------------------------------------
+type UpdateRoomOperatingHoursRequest struct {
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	RoomId int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	// 리스트 기반 업데이트
+	OperatingHours []*RoomOperatingHourUpdateItem `protobuf:"bytes,2,rep,name=operating_hours,json=operatingHours,proto3" json:"operating_hours,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *UpdateRoomOperatingHoursRequest) Reset() {
+	*x = UpdateRoomOperatingHoursRequest{}
+	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRoomOperatingHoursRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRoomOperatingHoursRequest) ProtoMessage() {}
+
+func (x *UpdateRoomOperatingHoursRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRoomOperatingHoursRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRoomOperatingHoursRequest) Descriptor() ([]byte, []int) {
+	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UpdateRoomOperatingHoursRequest) GetRoomId() int64 {
+	if x != nil {
+		return x.RoomId
+	}
+	return 0
+}
+
+func (x *UpdateRoomOperatingHoursRequest) GetOperatingHours() []*RoomOperatingHourUpdateItem {
+	if x != nil {
+		return x.OperatingHours
+	}
+	return nil
+}
+
+// 업데이트용 item (id optional)
+type RoomOperatingHourUpdateItem struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	RoomId         int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	DayOfWeek      int32                  `protobuf:"varint,2,opt,name=day_of_week,json=dayOfWeek,proto3" json:"day_of_week,omitempty"`
 	OpeningTime    string                 `protobuf:"bytes,3,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
 	ClosingTime    string                 `protobuf:"bytes,4,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
@@ -143,181 +293,20 @@ type CreateRoomOperatingHourRequest struct {
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *CreateRoomOperatingHourRequest) Reset() {
-	*x = CreateRoomOperatingHourRequest{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateRoomOperatingHourRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateRoomOperatingHourRequest) ProtoMessage() {}
-
-func (x *CreateRoomOperatingHourRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateRoomOperatingHourRequest.ProtoReflect.Descriptor instead.
-func (*CreateRoomOperatingHourRequest) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *CreateRoomOperatingHourRequest) GetRoomId() int64 {
-	if x != nil {
-		return x.RoomId
-	}
-	return 0
-}
-
-func (x *CreateRoomOperatingHourRequest) GetDayOfWeek() int32 {
-	if x != nil {
-		return x.DayOfWeek
-	}
-	return 0
-}
-
-func (x *CreateRoomOperatingHourRequest) GetOpeningTime() string {
-	if x != nil {
-		return x.OpeningTime
-	}
-	return ""
-}
-
-func (x *CreateRoomOperatingHourRequest) GetClosingTime() string {
-	if x != nil {
-		return x.ClosingTime
-	}
-	return ""
-}
-
-func (x *CreateRoomOperatingHourRequest) GetDayMaximumTime() string {
-	if x != nil {
-		return x.DayMaximumTime
-	}
-	return ""
-}
-
-type CreateRoomOperatingHourResponse struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	RoomOperatingHour *RoomOperatingHour     `protobuf:"bytes,1,opt,name=room_operating_hour,json=roomOperatingHour,proto3" json:"room_operating_hour,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *CreateRoomOperatingHourResponse) Reset() {
-	*x = CreateRoomOperatingHourResponse{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateRoomOperatingHourResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateRoomOperatingHourResponse) ProtoMessage() {}
-
-func (x *CreateRoomOperatingHourResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateRoomOperatingHourResponse.ProtoReflect.Descriptor instead.
-func (*CreateRoomOperatingHourResponse) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *CreateRoomOperatingHourResponse) GetRoomOperatingHour() *RoomOperatingHour {
-	if x != nil {
-		return x.RoomOperatingHour
-	}
-	return nil
-}
-
-// 단건 조회 요청 / 응답
-type GetRoomOperatingHourRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRoomOperatingHourRequest) Reset() {
-	*x = GetRoomOperatingHourRequest{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRoomOperatingHourRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRoomOperatingHourRequest) ProtoMessage() {}
-
-func (x *GetRoomOperatingHourRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRoomOperatingHourRequest.ProtoReflect.Descriptor instead.
-func (*GetRoomOperatingHourRequest) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *GetRoomOperatingHourRequest) GetId() int64 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
-type GetRoomOperatingHourResponse struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	RoomOperatingHour *RoomOperatingHour     `protobuf:"bytes,1,opt,name=room_operating_hour,json=roomOperatingHour,proto3" json:"room_operating_hour,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *GetRoomOperatingHourResponse) Reset() {
-	*x = GetRoomOperatingHourResponse{}
+func (x *RoomOperatingHourUpdateItem) Reset() {
+	*x = RoomOperatingHourUpdateItem{}
 	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetRoomOperatingHourResponse) String() string {
+func (x *RoomOperatingHourUpdateItem) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRoomOperatingHourResponse) ProtoMessage() {}
+func (*RoomOperatingHourUpdateItem) ProtoMessage() {}
 
-func (x *GetRoomOperatingHourResponse) ProtoReflect() protoreflect.Message {
+func (x *RoomOperatingHourUpdateItem) ProtoReflect() protoreflect.Message {
 	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -329,337 +318,42 @@ func (x *GetRoomOperatingHourResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRoomOperatingHourResponse.ProtoReflect.Descriptor instead.
-func (*GetRoomOperatingHourResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use RoomOperatingHourUpdateItem.ProtoReflect.Descriptor instead.
+func (*RoomOperatingHourUpdateItem) Descriptor() ([]byte, []int) {
 	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *GetRoomOperatingHourResponse) GetRoomOperatingHour() *RoomOperatingHour {
-	if x != nil {
-		return x.RoomOperatingHour
-	}
-	return nil
-}
-
-// 목록 조회 요청 / 응답
-type ListRoomOperatingHoursRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`            // 스터디룸 ID 필터
-	DayOfWeek     int32                  `protobuf:"varint,2,opt,name=day_of_week,json=dayOfWeek,proto3" json:"day_of_week,omitempty"` // 요일 필터
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListRoomOperatingHoursRequest) Reset() {
-	*x = ListRoomOperatingHoursRequest{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListRoomOperatingHoursRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListRoomOperatingHoursRequest) ProtoMessage() {}
-
-func (x *ListRoomOperatingHoursRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListRoomOperatingHoursRequest.ProtoReflect.Descriptor instead.
-func (*ListRoomOperatingHoursRequest) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ListRoomOperatingHoursRequest) GetRoomId() int64 {
-	if x != nil {
-		return x.RoomId
-	}
-	return 0
-}
-
-func (x *ListRoomOperatingHoursRequest) GetDayOfWeek() int32 {
-	if x != nil {
-		return x.DayOfWeek
-	}
-	return 0
-}
-
-type ListRoomOperatingHoursResponse struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	RoomOperatingHours []*RoomOperatingHour   `protobuf:"bytes,1,rep,name=room_operating_hours,json=roomOperatingHours,proto3" json:"room_operating_hours,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *ListRoomOperatingHoursResponse) Reset() {
-	*x = ListRoomOperatingHoursResponse{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListRoomOperatingHoursResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListRoomOperatingHoursResponse) ProtoMessage() {}
-
-func (x *ListRoomOperatingHoursResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListRoomOperatingHoursResponse.ProtoReflect.Descriptor instead.
-func (*ListRoomOperatingHoursResponse) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ListRoomOperatingHoursResponse) GetRoomOperatingHours() []*RoomOperatingHour {
-	if x != nil {
-		return x.RoomOperatingHours
-	}
-	return nil
-}
-
-// 수정 요청 / 응답
-type UpdateRoomOperatingHourRequest struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Id             int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	RoomId         int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	DayOfWeek      int32                  `protobuf:"varint,3,opt,name=day_of_week,json=dayOfWeek,proto3" json:"day_of_week,omitempty"`
-	OpeningTime    string                 `protobuf:"bytes,4,opt,name=opening_time,json=openingTime,proto3" json:"opening_time,omitempty"`
-	ClosingTime    string                 `protobuf:"bytes,5,opt,name=closing_time,json=closingTime,proto3" json:"closing_time,omitempty"`
-	DayMaximumTime string                 `protobuf:"bytes,6,opt,name=day_maximum_time,json=dayMaximumTime,proto3" json:"day_maximum_time,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *UpdateRoomOperatingHourRequest) Reset() {
-	*x = UpdateRoomOperatingHourRequest{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateRoomOperatingHourRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateRoomOperatingHourRequest) ProtoMessage() {}
-
-func (x *UpdateRoomOperatingHourRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateRoomOperatingHourRequest.ProtoReflect.Descriptor instead.
-func (*UpdateRoomOperatingHourRequest) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *UpdateRoomOperatingHourRequest) GetId() int64 {
+func (x *RoomOperatingHourUpdateItem) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
 	return 0
 }
 
-func (x *UpdateRoomOperatingHourRequest) GetRoomId() int64 {
-	if x != nil {
-		return x.RoomId
-	}
-	return 0
-}
-
-func (x *UpdateRoomOperatingHourRequest) GetDayOfWeek() int32 {
+func (x *RoomOperatingHourUpdateItem) GetDayOfWeek() int32 {
 	if x != nil {
 		return x.DayOfWeek
 	}
 	return 0
 }
 
-func (x *UpdateRoomOperatingHourRequest) GetOpeningTime() string {
+func (x *RoomOperatingHourUpdateItem) GetOpeningTime() string {
 	if x != nil {
 		return x.OpeningTime
 	}
 	return ""
 }
 
-func (x *UpdateRoomOperatingHourRequest) GetClosingTime() string {
+func (x *RoomOperatingHourUpdateItem) GetClosingTime() string {
 	if x != nil {
 		return x.ClosingTime
 	}
 	return ""
 }
 
-func (x *UpdateRoomOperatingHourRequest) GetDayMaximumTime() string {
+func (x *RoomOperatingHourUpdateItem) GetDayMaximumTime() string {
 	if x != nil {
 		return x.DayMaximumTime
-	}
-	return ""
-}
-
-type UpdateRoomOperatingHourResponse struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	RoomOperatingHour *RoomOperatingHour     `protobuf:"bytes,1,opt,name=room_operating_hour,json=roomOperatingHour,proto3" json:"room_operating_hour,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
-}
-
-func (x *UpdateRoomOperatingHourResponse) Reset() {
-	*x = UpdateRoomOperatingHourResponse{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UpdateRoomOperatingHourResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UpdateRoomOperatingHourResponse) ProtoMessage() {}
-
-func (x *UpdateRoomOperatingHourResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UpdateRoomOperatingHourResponse.ProtoReflect.Descriptor instead.
-func (*UpdateRoomOperatingHourResponse) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *UpdateRoomOperatingHourResponse) GetRoomOperatingHour() *RoomOperatingHour {
-	if x != nil {
-		return x.RoomOperatingHour
-	}
-	return nil
-}
-
-// 삭제 요청 / 응답
-type DeleteRoomOperatingHourRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRoomOperatingHourRequest) Reset() {
-	*x = DeleteRoomOperatingHourRequest{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[9]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRoomOperatingHourRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRoomOperatingHourRequest) ProtoMessage() {}
-
-func (x *DeleteRoomOperatingHourRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[9]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRoomOperatingHourRequest.ProtoReflect.Descriptor instead.
-func (*DeleteRoomOperatingHourRequest) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{9}
-}
-
-func (x *DeleteRoomOperatingHourRequest) GetId() int64 {
-	if x != nil {
-		return x.Id
-	}
-	return 0
-}
-
-type DeleteRoomOperatingHourResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteRoomOperatingHourResponse) Reset() {
-	*x = DeleteRoomOperatingHourResponse{}
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[10]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteRoomOperatingHourResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteRoomOperatingHourResponse) ProtoMessage() {}
-
-func (x *DeleteRoomOperatingHourResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_room_operating_hour_room_operating_hour_proto_msgTypes[10]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteRoomOperatingHourResponse.ProtoReflect.Descriptor instead.
-func (*DeleteRoomOperatingHourResponse) Descriptor() ([]byte, []int) {
-	return file_room_operating_hour_room_operating_hour_proto_rawDescGZIP(), []int{10}
-}
-
-func (x *DeleteRoomOperatingHourResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
-func (x *DeleteRoomOperatingHourResponse) GetMessage() string {
-	if x != nil {
-		return x.Message
 	}
 	return ""
 }
@@ -668,7 +362,7 @@ var File_room_operating_hour_room_operating_hour_proto protoreflect.FileDescript
 
 const file_room_operating_hour_room_operating_hour_proto_rawDesc = "" +
 	"\n" +
-	"-room_operating_hour/room_operating_hour.proto\x12-bannote.studyroomservice.roomoperatinghour.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfd\x02\n" +
+	"-room_operating_hour/room_operating_hour.proto\x12-bannote.studyroomservice.roomoperatinghour.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xfd\x02\n" +
 	"\x11RoomOperatingHour\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
 	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x12\x1e\n" +
@@ -681,38 +375,20 @@ const file_room_operating_hour_room_operating_hour_proto_rawDesc = "" +
 	"\n" +
 	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
 	"\n" +
-	"deleted_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\"\xc9\x01\n" +
-	"\x1eCreateRoomOperatingHourRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12\x1e\n" +
+	"deleted_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\"7\n" +
+	"\x1cGetRoomOperatingHoursRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\"\x93\x01\n" +
+	"\x1dGetRoomOperatingHoursResponse\x12r\n" +
+	"\x14room_operating_hours\x18\x01 \x03(\v2@.bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourR\x12roomOperatingHours\"\xaf\x01\n" +
+	"\x1fUpdateRoomOperatingHoursRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12s\n" +
+	"\x0foperating_hours\x18\x02 \x03(\v2J.bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourUpdateItemR\x0eoperatingHours\"\xbd\x01\n" +
+	"\x1bRoomOperatingHourUpdateItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x1e\n" +
 	"\vday_of_week\x18\x02 \x01(\x05R\tdayOfWeek\x12!\n" +
 	"\fopening_time\x18\x03 \x01(\tR\vopeningTime\x12!\n" +
 	"\fclosing_time\x18\x04 \x01(\tR\vclosingTime\x12(\n" +
-	"\x10day_maximum_time\x18\x05 \x01(\tR\x0edayMaximumTime\"\x93\x01\n" +
-	"\x1fCreateRoomOperatingHourResponse\x12p\n" +
-	"\x13room_operating_hour\x18\x01 \x01(\v2@.bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourR\x11roomOperatingHour\"-\n" +
-	"\x1bGetRoomOperatingHourRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"\x90\x01\n" +
-	"\x1cGetRoomOperatingHourResponse\x12p\n" +
-	"\x13room_operating_hour\x18\x01 \x01(\v2@.bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourR\x11roomOperatingHour\"X\n" +
-	"\x1dListRoomOperatingHoursRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12\x1e\n" +
-	"\vday_of_week\x18\x02 \x01(\x05R\tdayOfWeek\"\x94\x01\n" +
-	"\x1eListRoomOperatingHoursResponse\x12r\n" +
-	"\x14room_operating_hours\x18\x01 \x03(\v2@.bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourR\x12roomOperatingHours\"\xd9\x01\n" +
-	"\x1eUpdateRoomOperatingHourRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x17\n" +
-	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x12\x1e\n" +
-	"\vday_of_week\x18\x03 \x01(\x05R\tdayOfWeek\x12!\n" +
-	"\fopening_time\x18\x04 \x01(\tR\vopeningTime\x12!\n" +
-	"\fclosing_time\x18\x05 \x01(\tR\vclosingTime\x12(\n" +
-	"\x10day_maximum_time\x18\x06 \x01(\tR\x0edayMaximumTime\"\x93\x01\n" +
-	"\x1fUpdateRoomOperatingHourResponse\x12p\n" +
-	"\x13room_operating_hour\x18\x01 \x01(\v2@.bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourR\x11roomOperatingHour\"0\n" +
-	"\x1eDeleteRoomOperatingHourRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"U\n" +
-	"\x1fDeleteRoomOperatingHourResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessageB\x92\x03\n" +
+	"\x10day_maximum_time\x18\x05 \x01(\tR\x0edayMaximumTimeB\x92\x03\n" +
 	"1com.bannote.studyroomservice.roomoperatinghour.v1B\x16RoomOperatingHourProtoP\x01Zngithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/studyroom-service/room_operating_hour;roomoperatinghourv1\xa2\x02\x03BSR\xaa\x02-Bannote.Studyroomservice.Roomoperatinghour.V1\xca\x02-Bannote\\Studyroomservice\\Roomoperatinghour\\V1\xe2\x029Bannote\\Studyroomservice\\Roomoperatinghour\\V1\\GPBMetadata\xea\x020Bannote::Studyroomservice::Roomoperatinghour::V1b\x06proto3"
 
 var (
@@ -727,34 +403,26 @@ func file_room_operating_hour_room_operating_hour_proto_rawDescGZIP() []byte {
 	return file_room_operating_hour_room_operating_hour_proto_rawDescData
 }
 
-var file_room_operating_hour_room_operating_hour_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_room_operating_hour_room_operating_hour_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_room_operating_hour_room_operating_hour_proto_goTypes = []any{
 	(*RoomOperatingHour)(nil),               // 0: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour
-	(*CreateRoomOperatingHourRequest)(nil),  // 1: bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourRequest
-	(*CreateRoomOperatingHourResponse)(nil), // 2: bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourResponse
-	(*GetRoomOperatingHourRequest)(nil),     // 3: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourRequest
-	(*GetRoomOperatingHourResponse)(nil),    // 4: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourResponse
-	(*ListRoomOperatingHoursRequest)(nil),   // 5: bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursRequest
-	(*ListRoomOperatingHoursResponse)(nil),  // 6: bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursResponse
-	(*UpdateRoomOperatingHourRequest)(nil),  // 7: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourRequest
-	(*UpdateRoomOperatingHourResponse)(nil), // 8: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourResponse
-	(*DeleteRoomOperatingHourRequest)(nil),  // 9: bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourRequest
-	(*DeleteRoomOperatingHourResponse)(nil), // 10: bannote.studyroomservice.roomoperatinghour.v1.DeleteRoomOperatingHourResponse
-	(*timestamppb.Timestamp)(nil),           // 11: google.protobuf.Timestamp
+	(*GetRoomOperatingHoursRequest)(nil),    // 1: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursRequest
+	(*GetRoomOperatingHoursResponse)(nil),   // 2: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursResponse
+	(*UpdateRoomOperatingHoursRequest)(nil), // 3: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHoursRequest
+	(*RoomOperatingHourUpdateItem)(nil),     // 4: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourUpdateItem
+	(*timestamppb.Timestamp)(nil),           // 5: google.protobuf.Timestamp
 }
 var file_room_operating_hour_room_operating_hour_proto_depIdxs = []int32{
-	11, // 0: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour.created_at:type_name -> google.protobuf.Timestamp
-	11, // 1: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour.updated_at:type_name -> google.protobuf.Timestamp
-	11, // 2: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour.deleted_at:type_name -> google.protobuf.Timestamp
-	0,  // 3: bannote.studyroomservice.roomoperatinghour.v1.CreateRoomOperatingHourResponse.room_operating_hour:type_name -> bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour
-	0,  // 4: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHourResponse.room_operating_hour:type_name -> bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour
-	0,  // 5: bannote.studyroomservice.roomoperatinghour.v1.ListRoomOperatingHoursResponse.room_operating_hours:type_name -> bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour
-	0,  // 6: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHourResponse.room_operating_hour:type_name -> bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour
-	7,  // [7:7] is the sub-list for method output_type
-	7,  // [7:7] is the sub-list for method input_type
-	7,  // [7:7] is the sub-list for extension type_name
-	7,  // [7:7] is the sub-list for extension extendee
-	0,  // [0:7] is the sub-list for field type_name
+	5, // 0: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour.created_at:type_name -> google.protobuf.Timestamp
+	5, // 1: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour.updated_at:type_name -> google.protobuf.Timestamp
+	5, // 2: bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour.deleted_at:type_name -> google.protobuf.Timestamp
+	0, // 3: bannote.studyroomservice.roomoperatinghour.v1.GetRoomOperatingHoursResponse.room_operating_hours:type_name -> bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHour
+	4, // 4: bannote.studyroomservice.roomoperatinghour.v1.UpdateRoomOperatingHoursRequest.operating_hours:type_name -> bannote.studyroomservice.roomoperatinghour.v1.RoomOperatingHourUpdateItem
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_room_operating_hour_room_operating_hour_proto_init() }
@@ -768,7 +436,7 @@ func file_room_operating_hour_room_operating_hour_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_room_operating_hour_room_operating_hour_proto_rawDesc), len(file_room_operating_hour_room_operating_hour_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
