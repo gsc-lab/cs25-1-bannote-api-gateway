@@ -21,6 +21,7 @@ func SetupRoutes(router *gin.RouterGroup) {
 	user_service.RegisterAllowedDomainRoutes(router)
 
 	studyroom_service.RegisterRoomRoutes(router)
+	studyroom_service.RegisterRoomOperatingRoutes(router)
 
 	schedule_service.RegisterTagsRoutes(router)
 	schedule_service.RegisterGroupRoutes(router)
