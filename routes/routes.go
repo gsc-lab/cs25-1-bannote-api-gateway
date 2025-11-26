@@ -23,6 +23,7 @@ func SetupRoutes(router *gin.RouterGroup) {
 	studyroom_service.RegisterRoomRoutes(router)
 	studyroom_service.RegisterRoomOperatingRoutes(router)
 	studyroom_service.RegisterRoomExceptionRoutes(router)
+	studyroom_service.RegisterReservationRoutes(router)
 
 	schedule_service.RegisterTagsRoutes(router)
 	schedule_service.RegisterGroupRoutes(router)
