@@ -78,7 +78,7 @@ func (ReservationPriority) EnumDescriptor() ([]byte, []int) {
 }
 
 // ===============================================
-// 예약 상태 (optional, 향후 확장용)
+// 예약 상태
 // ===============================================
 type ReservationStatus int32
 
@@ -136,31 +136,94 @@ func (ReservationStatus) EnumDescriptor() ([]byte, []int) {
 }
 
 // ===============================================
-// 예약 정보 (core model)
+// User 정보 (유저 서비스 연동용)
+// ===============================================
+type User struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserCode      int64                  `protobuf:"varint,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Department    string                 `protobuf:"bytes,3,opt,name=department,proto3" json:"department,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *User) Reset() {
+	*x = User{}
+	mi := &file_reservation_reservation_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *User) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*User) ProtoMessage() {}
+
+func (x *User) ProtoReflect() protoreflect.Message {
+	mi := &file_reservation_reservation_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use User.ProtoReflect.Descriptor instead.
+func (*User) Descriptor() ([]byte, []int) {
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *User) GetUserCode() int64 {
+	if x != nil {
+		return x.UserCode
+	}
+	return 0
+}
+
+func (x *User) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *User) GetDepartment() string {
+	if x != nil {
+		return x.Department
+	}
+	return ""
+}
+
+// ===============================================
+// 예약 정보
 // ===============================================
 type Reservation struct {
 	state  protoimpl.MessageState `protogen:"open.v1"`
 	Id     int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Code   string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"` // 외부 식별용 코드 (UUID 또는 short-uuid)
+	Code   string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
 	RoomId int64                  `protobuf:"varint,3,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	// int64 link_id = 4;
-	// int64 groud_id = 5;
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	Purpose       string                 `protobuf:"bytes,8,opt,name=purpose,proto3" json:"purpose,omitempty"`
-	Priority      ReservationPriority    `protobuf:"varint,9,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
-	Status        ReservationStatus      `protobuf:"varint,10,opt,name=status,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationStatus" json:"status,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
-	UserCodes     []int64                `protobuf:"varint,14,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
+	// string datetime
+	StartTime     string                 `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       string                 `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	Purpose       string                 `protobuf:"bytes,6,opt,name=purpose,proto3" json:"purpose,omitempty"`
+	Priority      ReservationPriority    `protobuf:"varint,7,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
+	Status        ReservationStatus      `protobuf:"varint,8,opt,name=status,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationStatus" json:"status,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
+	UserCodes     []int64                `protobuf:"varint,12,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
+	Users         []*User                `protobuf:"bytes,13,rep,name=users,proto3" json:"users,omitempty"` // ← 추가됨
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Reservation) Reset() {
 	*x = Reservation{}
-	mi := &file_reservation_reservation_proto_msgTypes[0]
+	mi := &file_reservation_reservation_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -172,7 +235,7 @@ func (x *Reservation) String() string {
 func (*Reservation) ProtoMessage() {}
 
 func (x *Reservation) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[0]
+	mi := &file_reservation_reservation_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -185,7 +248,7 @@ func (x *Reservation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Reservation.ProtoReflect.Descriptor instead.
 func (*Reservation) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{0}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Reservation) GetId() int64 {
@@ -209,18 +272,18 @@ func (x *Reservation) GetRoomId() int64 {
 	return 0
 }
 
-func (x *Reservation) GetStartTime() *timestamppb.Timestamp {
+func (x *Reservation) GetStartTime() string {
 	if x != nil {
 		return x.StartTime
 	}
-	return nil
+	return ""
 }
 
-func (x *Reservation) GetEndTime() *timestamppb.Timestamp {
+func (x *Reservation) GetEndTime() string {
 	if x != nil {
 		return x.EndTime
 	}
-	return nil
+	return ""
 }
 
 func (x *Reservation) GetPurpose() string {
@@ -272,26 +335,31 @@ func (x *Reservation) GetUserCodes() []int64 {
 	return nil
 }
 
+func (x *Reservation) GetUsers() []*User {
+	if x != nil {
+		return x.Users
+	}
+	return nil
+}
+
 // ===============================================
 // 1. 예약 생성
 // ===============================================
 type CreateReservationRequest struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	RoomId int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	// int64 group_id = 2;
-	// int64 link_id = 3;
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	Purpose       string                 `protobuf:"bytes,6,opt,name=purpose,proto3" json:"purpose,omitempty"`
-	Priority      ReservationPriority    `protobuf:"varint,7,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
-	UserCodes     []int64                `protobuf:"varint,8,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"` // 예약자에 복수 입력 가능
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RoomId        int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	StartTime     string                 `protobuf:"bytes,2,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       string                 `protobuf:"bytes,3,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	Purpose       string                 `protobuf:"bytes,4,opt,name=purpose,proto3" json:"purpose,omitempty"`
+	Priority      ReservationPriority    `protobuf:"varint,5,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
+	UserCodes     []int64                `protobuf:"varint,6,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateReservationRequest) Reset() {
 	*x = CreateReservationRequest{}
-	mi := &file_reservation_reservation_proto_msgTypes[1]
+	mi := &file_reservation_reservation_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -303,7 +371,7 @@ func (x *CreateReservationRequest) String() string {
 func (*CreateReservationRequest) ProtoMessage() {}
 
 func (x *CreateReservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[1]
+	mi := &file_reservation_reservation_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -316,7 +384,7 @@ func (x *CreateReservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateReservationRequest.ProtoReflect.Descriptor instead.
 func (*CreateReservationRequest) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{1}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *CreateReservationRequest) GetRoomId() int64 {
@@ -326,18 +394,18 @@ func (x *CreateReservationRequest) GetRoomId() int64 {
 	return 0
 }
 
-func (x *CreateReservationRequest) GetStartTime() *timestamppb.Timestamp {
+func (x *CreateReservationRequest) GetStartTime() string {
 	if x != nil {
 		return x.StartTime
 	}
-	return nil
+	return ""
 }
 
-func (x *CreateReservationRequest) GetEndTime() *timestamppb.Timestamp {
+func (x *CreateReservationRequest) GetEndTime() string {
 	if x != nil {
 		return x.EndTime
 	}
-	return nil
+	return ""
 }
 
 func (x *CreateReservationRequest) GetPurpose() string {
@@ -370,7 +438,7 @@ type CreateReservationResponse struct {
 
 func (x *CreateReservationResponse) Reset() {
 	*x = CreateReservationResponse{}
-	mi := &file_reservation_reservation_proto_msgTypes[2]
+	mi := &file_reservation_reservation_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -382,7 +450,7 @@ func (x *CreateReservationResponse) String() string {
 func (*CreateReservationResponse) ProtoMessage() {}
 
 func (x *CreateReservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[2]
+	mi := &file_reservation_reservation_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -395,7 +463,7 @@ func (x *CreateReservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateReservationResponse.ProtoReflect.Descriptor instead.
 func (*CreateReservationResponse) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{2}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *CreateReservationResponse) GetReservation() *Reservation {
@@ -410,14 +478,14 @@ func (x *CreateReservationResponse) GetReservation() *Reservation {
 // ===============================================
 type GetReservationRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"` // 예약 식별용 코드(UUID)
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetReservationRequest) Reset() {
 	*x = GetReservationRequest{}
-	mi := &file_reservation_reservation_proto_msgTypes[3]
+	mi := &file_reservation_reservation_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -429,7 +497,7 @@ func (x *GetReservationRequest) String() string {
 func (*GetReservationRequest) ProtoMessage() {}
 
 func (x *GetReservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[3]
+	mi := &file_reservation_reservation_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -442,7 +510,7 @@ func (x *GetReservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReservationRequest.ProtoReflect.Descriptor instead.
 func (*GetReservationRequest) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{3}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetReservationRequest) GetCode() string {
@@ -461,7 +529,7 @@ type GetReservationResponse struct {
 
 func (x *GetReservationResponse) Reset() {
 	*x = GetReservationResponse{}
-	mi := &file_reservation_reservation_proto_msgTypes[4]
+	mi := &file_reservation_reservation_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -473,7 +541,7 @@ func (x *GetReservationResponse) String() string {
 func (*GetReservationResponse) ProtoMessage() {}
 
 func (x *GetReservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[4]
+	mi := &file_reservation_reservation_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -486,7 +554,7 @@ func (x *GetReservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetReservationResponse.ProtoReflect.Descriptor instead.
 func (*GetReservationResponse) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{4}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetReservationResponse) GetReservation() *Reservation {
@@ -497,20 +565,20 @@ func (x *GetReservationResponse) GetReservation() *Reservation {
 }
 
 // ===============================================
-// 3. 예약 목록 조회
+// 3. 예약 목록 조회 (여러 방 ID + 시간 범위)
 // ===============================================
 type ListReservationsRequest struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	RoomId         int64                  `protobuf:"varint,1,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	StartTimeAfter *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=start_time_after,json=startTimeAfter,proto3" json:"start_time_after,omitempty"`
-	EndTimeBefore  *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end_time_before,json=endTimeBefore,proto3" json:"end_time_before,omitempty"` // int64 group_id = 4;
+	RoomIds        []int64                `protobuf:"varint,1,rep,packed,name=room_ids,json=roomIds,proto3" json:"room_ids,omitempty"`
+	StartTimeAfter string                 `protobuf:"bytes,2,opt,name=start_time_after,json=startTimeAfter,proto3" json:"start_time_after,omitempty"`
+	EndTimeBefore  string                 `protobuf:"bytes,3,opt,name=end_time_before,json=endTimeBefore,proto3" json:"end_time_before,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListReservationsRequest) Reset() {
 	*x = ListReservationsRequest{}
-	mi := &file_reservation_reservation_proto_msgTypes[5]
+	mi := &file_reservation_reservation_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -522,7 +590,7 @@ func (x *ListReservationsRequest) String() string {
 func (*ListReservationsRequest) ProtoMessage() {}
 
 func (x *ListReservationsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[5]
+	mi := &file_reservation_reservation_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -535,28 +603,28 @@ func (x *ListReservationsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListReservationsRequest.ProtoReflect.Descriptor instead.
 func (*ListReservationsRequest) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{5}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ListReservationsRequest) GetRoomId() int64 {
+func (x *ListReservationsRequest) GetRoomIds() []int64 {
 	if x != nil {
-		return x.RoomId
+		return x.RoomIds
 	}
-	return 0
+	return nil
 }
 
-func (x *ListReservationsRequest) GetStartTimeAfter() *timestamppb.Timestamp {
+func (x *ListReservationsRequest) GetStartTimeAfter() string {
 	if x != nil {
 		return x.StartTimeAfter
 	}
-	return nil
+	return ""
 }
 
-func (x *ListReservationsRequest) GetEndTimeBefore() *timestamppb.Timestamp {
+func (x *ListReservationsRequest) GetEndTimeBefore() string {
 	if x != nil {
 		return x.EndTimeBefore
 	}
-	return nil
+	return ""
 }
 
 type ListReservationsResponse struct {
@@ -568,7 +636,7 @@ type ListReservationsResponse struct {
 
 func (x *ListReservationsResponse) Reset() {
 	*x = ListReservationsResponse{}
-	mi := &file_reservation_reservation_proto_msgTypes[6]
+	mi := &file_reservation_reservation_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -580,7 +648,7 @@ func (x *ListReservationsResponse) String() string {
 func (*ListReservationsResponse) ProtoMessage() {}
 
 func (x *ListReservationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[6]
+	mi := &file_reservation_reservation_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -593,7 +661,7 @@ func (x *ListReservationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListReservationsResponse.ProtoReflect.Descriptor instead.
 func (*ListReservationsResponse) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{6}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListReservationsResponse) GetReservations() []*Reservation {
@@ -607,23 +675,21 @@ func (x *ListReservationsResponse) GetReservations() []*Reservation {
 // 4. 예약 수정
 // ===============================================
 type UpdateReservationRequest struct {
-	state  protoimpl.MessageState `protogen:"open.v1"`
-	Code   string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	RoomId int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
-	// int64 group_id = 3;
-	// int64 link_id = 4;
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	Purpose       string                 `protobuf:"bytes,7,opt,name=purpose,proto3" json:"purpose,omitempty"`
-	Priority      ReservationPriority    `protobuf:"varint,8,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
-	UserCodes     []int64                `protobuf:"varint,9,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Code          string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	RoomId        int64                  `protobuf:"varint,2,opt,name=room_id,json=roomId,proto3" json:"room_id,omitempty"`
+	StartTime     string                 `protobuf:"bytes,3,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       string                 `protobuf:"bytes,4,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	Purpose       string                 `protobuf:"bytes,5,opt,name=purpose,proto3" json:"purpose,omitempty"`
+	Priority      ReservationPriority    `protobuf:"varint,6,opt,name=priority,proto3,enum=bannote.studyroomservice.reservation.v1.ReservationPriority" json:"priority,omitempty"`
+	UserCodes     []int64                `protobuf:"varint,7,rep,packed,name=user_codes,json=userCodes,proto3" json:"user_codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateReservationRequest) Reset() {
 	*x = UpdateReservationRequest{}
-	mi := &file_reservation_reservation_proto_msgTypes[7]
+	mi := &file_reservation_reservation_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -635,7 +701,7 @@ func (x *UpdateReservationRequest) String() string {
 func (*UpdateReservationRequest) ProtoMessage() {}
 
 func (x *UpdateReservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[7]
+	mi := &file_reservation_reservation_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -648,7 +714,7 @@ func (x *UpdateReservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateReservationRequest.ProtoReflect.Descriptor instead.
 func (*UpdateReservationRequest) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{7}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UpdateReservationRequest) GetCode() string {
@@ -665,18 +731,18 @@ func (x *UpdateReservationRequest) GetRoomId() int64 {
 	return 0
 }
 
-func (x *UpdateReservationRequest) GetStartTime() *timestamppb.Timestamp {
+func (x *UpdateReservationRequest) GetStartTime() string {
 	if x != nil {
 		return x.StartTime
 	}
-	return nil
+	return ""
 }
 
-func (x *UpdateReservationRequest) GetEndTime() *timestamppb.Timestamp {
+func (x *UpdateReservationRequest) GetEndTime() string {
 	if x != nil {
 		return x.EndTime
 	}
-	return nil
+	return ""
 }
 
 func (x *UpdateReservationRequest) GetPurpose() string {
@@ -709,7 +775,7 @@ type UpdateReservationResponse struct {
 
 func (x *UpdateReservationResponse) Reset() {
 	*x = UpdateReservationResponse{}
-	mi := &file_reservation_reservation_proto_msgTypes[8]
+	mi := &file_reservation_reservation_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -721,7 +787,7 @@ func (x *UpdateReservationResponse) String() string {
 func (*UpdateReservationResponse) ProtoMessage() {}
 
 func (x *UpdateReservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[8]
+	mi := &file_reservation_reservation_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -734,7 +800,7 @@ func (x *UpdateReservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateReservationResponse.ProtoReflect.Descriptor instead.
 func (*UpdateReservationResponse) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{8}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *UpdateReservationResponse) GetReservation() *Reservation {
@@ -756,7 +822,7 @@ type DeleteReservationRequest struct {
 
 func (x *DeleteReservationRequest) Reset() {
 	*x = DeleteReservationRequest{}
-	mi := &file_reservation_reservation_proto_msgTypes[9]
+	mi := &file_reservation_reservation_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -768,7 +834,7 @@ func (x *DeleteReservationRequest) String() string {
 func (*DeleteReservationRequest) ProtoMessage() {}
 
 func (x *DeleteReservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[9]
+	mi := &file_reservation_reservation_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -781,7 +847,7 @@ func (x *DeleteReservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteReservationRequest.ProtoReflect.Descriptor instead.
 func (*DeleteReservationRequest) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{9}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DeleteReservationRequest) GetCode() string {
@@ -801,7 +867,7 @@ type DeleteReservationResponse struct {
 
 func (x *DeleteReservationResponse) Reset() {
 	*x = DeleteReservationResponse{}
-	mi := &file_reservation_reservation_proto_msgTypes[10]
+	mi := &file_reservation_reservation_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -813,7 +879,7 @@ func (x *DeleteReservationResponse) String() string {
 func (*DeleteReservationResponse) ProtoMessage() {}
 
 func (x *DeleteReservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_reservation_reservation_proto_msgTypes[10]
+	mi := &file_reservation_reservation_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -826,7 +892,7 @@ func (x *DeleteReservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteReservationResponse.ProtoReflect.Descriptor instead.
 func (*DeleteReservationResponse) Descriptor() ([]byte, []int) {
-	return file_reservation_reservation_proto_rawDescGZIP(), []int{10}
+	return file_reservation_reservation_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *DeleteReservationResponse) GetSuccess() bool {
@@ -847,57 +913,64 @@ var File_reservation_reservation_proto protoreflect.FileDescriptor
 
 const file_reservation_reservation_proto_rawDesc = "" +
 	"\n" +
-	"\x1dreservation/reservation.proto\x12'bannote.studyroomservice.reservation.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd4\x04\n" +
+	"\x1dreservation/reservation.proto\x12'bannote.studyroomservice.reservation.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"W\n" +
+	"\x04User\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\x03R\buserCode\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1e\n" +
+	"\n" +
+	"department\x18\x03 \x01(\tR\n" +
+	"department\"\xe1\x04\n" +
 	"\vReservation\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\tR\x04code\x12\x17\n" +
-	"\aroom_id\x18\x03 \x01(\x03R\x06roomId\x129\n" +
+	"\aroom_id\x18\x03 \x01(\x03R\x06roomId\x12\x1d\n" +
 	"\n" +
-	"start_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x18\n" +
-	"\apurpose\x18\b \x01(\tR\apurpose\x12X\n" +
-	"\bpriority\x18\t \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12R\n" +
-	"\x06status\x18\n" +
-	" \x01(\x0e2:.bannote.studyroomservice.reservation.v1.ReservationStatusR\x06status\x129\n" +
-	"\n" +
-	"created_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
-	"\n" +
-	"updated_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
-	"\n" +
-	"deleted_at\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x1d\n" +
-	"\n" +
-	"user_codes\x18\x0e \x03(\x03R\tuserCodes\"\xb8\x02\n" +
-	"\x18CreateReservationRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x129\n" +
-	"\n" +
-	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x18\n" +
+	"start_time\x18\x04 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x05 \x01(\tR\aendTime\x12\x18\n" +
 	"\apurpose\x18\x06 \x01(\tR\apurpose\x12X\n" +
-	"\bpriority\x18\a \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12\x1d\n" +
+	"\bpriority\x18\a \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12R\n" +
+	"\x06status\x18\b \x01(\x0e2:.bannote.studyroomservice.reservation.v1.ReservationStatusR\x06status\x129\n" +
 	"\n" +
-	"user_codes\x18\b \x03(\x03R\tuserCodes\"s\n" +
+	"created_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
+	"\n" +
+	"deleted_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x1d\n" +
+	"\n" +
+	"user_codes\x18\f \x03(\x03R\tuserCodes\x12C\n" +
+	"\x05users\x18\r \x03(\v2-.bannote.studyroomservice.reservation.v1.UserR\x05users\"\x80\x02\n" +
+	"\x18CreateReservationRequest\x12\x17\n" +
+	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12\x1d\n" +
+	"\n" +
+	"start_time\x18\x02 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x03 \x01(\tR\aendTime\x12\x18\n" +
+	"\apurpose\x18\x04 \x01(\tR\apurpose\x12X\n" +
+	"\bpriority\x18\x05 \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12\x1d\n" +
+	"\n" +
+	"user_codes\x18\x06 \x03(\x03R\tuserCodes\"s\n" +
 	"\x19CreateReservationResponse\x12V\n" +
 	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\"+\n" +
 	"\x15GetReservationRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\"p\n" +
 	"\x16GetReservationResponse\x12V\n" +
-	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\"\xbc\x01\n" +
-	"\x17ListReservationsRequest\x12\x17\n" +
-	"\aroom_id\x18\x01 \x01(\x03R\x06roomId\x12D\n" +
-	"\x10start_time_after\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x0estartTimeAfter\x12B\n" +
-	"\x0fend_time_before\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\rendTimeBefore\"t\n" +
+	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\"\x86\x01\n" +
+	"\x17ListReservationsRequest\x12\x19\n" +
+	"\broom_ids\x18\x01 \x03(\x03R\aroomIds\x12(\n" +
+	"\x10start_time_after\x18\x02 \x01(\tR\x0estartTimeAfter\x12&\n" +
+	"\x0fend_time_before\x18\x03 \x01(\tR\rendTimeBefore\"t\n" +
 	"\x18ListReservationsResponse\x12X\n" +
-	"\freservations\x18\x01 \x03(\v24.bannote.studyroomservice.reservation.v1.ReservationR\freservations\"\xcc\x02\n" +
+	"\freservations\x18\x01 \x03(\v24.bannote.studyroomservice.reservation.v1.ReservationR\freservations\"\x94\x02\n" +
 	"\x18UpdateReservationRequest\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12\x17\n" +
-	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x129\n" +
+	"\aroom_id\x18\x02 \x01(\x03R\x06roomId\x12\x1d\n" +
 	"\n" +
-	"start_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x18\n" +
-	"\apurpose\x18\a \x01(\tR\apurpose\x12X\n" +
-	"\bpriority\x18\b \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12\x1d\n" +
+	"start_time\x18\x03 \x01(\tR\tstartTime\x12\x19\n" +
+	"\bend_time\x18\x04 \x01(\tR\aendTime\x12\x18\n" +
+	"\apurpose\x18\x05 \x01(\tR\apurpose\x12X\n" +
+	"\bpriority\x18\x06 \x01(\x0e2<.bannote.studyroomservice.reservation.v1.ReservationPriorityR\bpriority\x12\x1d\n" +
 	"\n" +
-	"user_codes\x18\t \x03(\x03R\tuserCodes\"s\n" +
+	"user_codes\x18\a \x03(\x03R\tuserCodes\"s\n" +
 	"\x19UpdateReservationResponse\x12V\n" +
 	"\vreservation\x18\x01 \x01(\v24.bannote.studyroomservice.reservation.v1.ReservationR\vreservation\".\n" +
 	"\x18DeleteReservationRequest\x12\x12\n" +
@@ -931,48 +1004,42 @@ func file_reservation_reservation_proto_rawDescGZIP() []byte {
 }
 
 var file_reservation_reservation_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_reservation_reservation_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_reservation_reservation_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_reservation_reservation_proto_goTypes = []any{
 	(ReservationPriority)(0),          // 0: bannote.studyroomservice.reservation.v1.ReservationPriority
 	(ReservationStatus)(0),            // 1: bannote.studyroomservice.reservation.v1.ReservationStatus
-	(*Reservation)(nil),               // 2: bannote.studyroomservice.reservation.v1.Reservation
-	(*CreateReservationRequest)(nil),  // 3: bannote.studyroomservice.reservation.v1.CreateReservationRequest
-	(*CreateReservationResponse)(nil), // 4: bannote.studyroomservice.reservation.v1.CreateReservationResponse
-	(*GetReservationRequest)(nil),     // 5: bannote.studyroomservice.reservation.v1.GetReservationRequest
-	(*GetReservationResponse)(nil),    // 6: bannote.studyroomservice.reservation.v1.GetReservationResponse
-	(*ListReservationsRequest)(nil),   // 7: bannote.studyroomservice.reservation.v1.ListReservationsRequest
-	(*ListReservationsResponse)(nil),  // 8: bannote.studyroomservice.reservation.v1.ListReservationsResponse
-	(*UpdateReservationRequest)(nil),  // 9: bannote.studyroomservice.reservation.v1.UpdateReservationRequest
-	(*UpdateReservationResponse)(nil), // 10: bannote.studyroomservice.reservation.v1.UpdateReservationResponse
-	(*DeleteReservationRequest)(nil),  // 11: bannote.studyroomservice.reservation.v1.DeleteReservationRequest
-	(*DeleteReservationResponse)(nil), // 12: bannote.studyroomservice.reservation.v1.DeleteReservationResponse
-	(*timestamppb.Timestamp)(nil),     // 13: google.protobuf.Timestamp
+	(*User)(nil),                      // 2: bannote.studyroomservice.reservation.v1.User
+	(*Reservation)(nil),               // 3: bannote.studyroomservice.reservation.v1.Reservation
+	(*CreateReservationRequest)(nil),  // 4: bannote.studyroomservice.reservation.v1.CreateReservationRequest
+	(*CreateReservationResponse)(nil), // 5: bannote.studyroomservice.reservation.v1.CreateReservationResponse
+	(*GetReservationRequest)(nil),     // 6: bannote.studyroomservice.reservation.v1.GetReservationRequest
+	(*GetReservationResponse)(nil),    // 7: bannote.studyroomservice.reservation.v1.GetReservationResponse
+	(*ListReservationsRequest)(nil),   // 8: bannote.studyroomservice.reservation.v1.ListReservationsRequest
+	(*ListReservationsResponse)(nil),  // 9: bannote.studyroomservice.reservation.v1.ListReservationsResponse
+	(*UpdateReservationRequest)(nil),  // 10: bannote.studyroomservice.reservation.v1.UpdateReservationRequest
+	(*UpdateReservationResponse)(nil), // 11: bannote.studyroomservice.reservation.v1.UpdateReservationResponse
+	(*DeleteReservationRequest)(nil),  // 12: bannote.studyroomservice.reservation.v1.DeleteReservationRequest
+	(*DeleteReservationResponse)(nil), // 13: bannote.studyroomservice.reservation.v1.DeleteReservationResponse
+	(*timestamppb.Timestamp)(nil),     // 14: google.protobuf.Timestamp
 }
 var file_reservation_reservation_proto_depIdxs = []int32{
-	13, // 0: bannote.studyroomservice.reservation.v1.Reservation.start_time:type_name -> google.protobuf.Timestamp
-	13, // 1: bannote.studyroomservice.reservation.v1.Reservation.end_time:type_name -> google.protobuf.Timestamp
-	0,  // 2: bannote.studyroomservice.reservation.v1.Reservation.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
-	1,  // 3: bannote.studyroomservice.reservation.v1.Reservation.status:type_name -> bannote.studyroomservice.reservation.v1.ReservationStatus
-	13, // 4: bannote.studyroomservice.reservation.v1.Reservation.created_at:type_name -> google.protobuf.Timestamp
-	13, // 5: bannote.studyroomservice.reservation.v1.Reservation.updated_at:type_name -> google.protobuf.Timestamp
-	13, // 6: bannote.studyroomservice.reservation.v1.Reservation.deleted_at:type_name -> google.protobuf.Timestamp
-	13, // 7: bannote.studyroomservice.reservation.v1.CreateReservationRequest.start_time:type_name -> google.protobuf.Timestamp
-	13, // 8: bannote.studyroomservice.reservation.v1.CreateReservationRequest.end_time:type_name -> google.protobuf.Timestamp
-	0,  // 9: bannote.studyroomservice.reservation.v1.CreateReservationRequest.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
-	2,  // 10: bannote.studyroomservice.reservation.v1.CreateReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
-	2,  // 11: bannote.studyroomservice.reservation.v1.GetReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
-	13, // 12: bannote.studyroomservice.reservation.v1.ListReservationsRequest.start_time_after:type_name -> google.protobuf.Timestamp
-	13, // 13: bannote.studyroomservice.reservation.v1.ListReservationsRequest.end_time_before:type_name -> google.protobuf.Timestamp
-	2,  // 14: bannote.studyroomservice.reservation.v1.ListReservationsResponse.reservations:type_name -> bannote.studyroomservice.reservation.v1.Reservation
-	13, // 15: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.start_time:type_name -> google.protobuf.Timestamp
-	13, // 16: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.end_time:type_name -> google.protobuf.Timestamp
-	0,  // 17: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
-	2,  // 18: bannote.studyroomservice.reservation.v1.UpdateReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
-	19, // [19:19] is the sub-list for method output_type
-	19, // [19:19] is the sub-list for method input_type
-	19, // [19:19] is the sub-list for extension type_name
-	19, // [19:19] is the sub-list for extension extendee
-	0,  // [0:19] is the sub-list for field type_name
+	0,  // 0: bannote.studyroomservice.reservation.v1.Reservation.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
+	1,  // 1: bannote.studyroomservice.reservation.v1.Reservation.status:type_name -> bannote.studyroomservice.reservation.v1.ReservationStatus
+	14, // 2: bannote.studyroomservice.reservation.v1.Reservation.created_at:type_name -> google.protobuf.Timestamp
+	14, // 3: bannote.studyroomservice.reservation.v1.Reservation.updated_at:type_name -> google.protobuf.Timestamp
+	14, // 4: bannote.studyroomservice.reservation.v1.Reservation.deleted_at:type_name -> google.protobuf.Timestamp
+	2,  // 5: bannote.studyroomservice.reservation.v1.Reservation.users:type_name -> bannote.studyroomservice.reservation.v1.User
+	0,  // 6: bannote.studyroomservice.reservation.v1.CreateReservationRequest.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
+	3,  // 7: bannote.studyroomservice.reservation.v1.CreateReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
+	3,  // 8: bannote.studyroomservice.reservation.v1.GetReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
+	3,  // 9: bannote.studyroomservice.reservation.v1.ListReservationsResponse.reservations:type_name -> bannote.studyroomservice.reservation.v1.Reservation
+	0,  // 10: bannote.studyroomservice.reservation.v1.UpdateReservationRequest.priority:type_name -> bannote.studyroomservice.reservation.v1.ReservationPriority
+	3,  // 11: bannote.studyroomservice.reservation.v1.UpdateReservationResponse.reservation:type_name -> bannote.studyroomservice.reservation.v1.Reservation
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_reservation_reservation_proto_init() }
@@ -986,7 +1053,7 @@ func file_reservation_reservation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_reservation_reservation_proto_rawDesc), len(file_reservation_reservation_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   11,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
