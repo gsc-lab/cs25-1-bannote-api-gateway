@@ -1,6 +1,7 @@
 package schedule_service
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -9,6 +10,23 @@ import (
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/grpc/client"
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/utils"
 )
+
+func convertTag(tag *tagpb.Tag) map[string]interface{} {
+	return map[string]interface{}{
+		"id":         tag.GetTagId(),
+		"name":       tag.GetName(),
+		"created_by": tag.GetCreatedBy(),
+		"created_at": tag.GetCreatedAt(),
+	}
+}
+
+func convertTags(tags []*tagpb.Tag) []map[string]interface{} {
+	result := make([]map[string]interface{}, len(tags))
+	for i, tag := range tags {
+		result[i] = convertTag(tag)
+	}
+	return result
+}
 
 type listTagsRequest struct {
 	Page int32 `form:"page"`
@@ -36,7 +54,7 @@ func ListTags(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"data":  resp.TagListResponse.Tags,
+		"data":  convertTags(resp.TagListResponse.Tags),
 		"total": resp.TagListResponse.TotalCount,
 		"page":  request.Page,
 		"size":  request.Size,
@@ -67,7 +85,7 @@ func CreateTag(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"data": resp.Tag,
+		"data": convertTag(resp.Tag),
 		"id":   resp.Tag.TagId,
 	})
 }
@@ -130,7 +148,39 @@ func GetTag(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"data": resp.Tag,
+		"data": convertTag(resp.Tag),
 		"id":   resp.Tag.TagId,
 	})
+}
+
+func GetManyTags(c *gin.Context) {
+	scheduleClient := client.GetScheduleService(c)
+
+	filterStr := c.Query("filter")
+
+	if filterStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "filter parameter is required"})
+		return
+	}
+
+	var filter struct {
+		ID []int64 `json:"id"`
+	}
+
+	if err := json.Unmarshal([]byte(filterStr), &filter); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid filter format"})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := scheduleClient.Tag.GetManyTags(ctx, &tagpb.GetManyTagsRequest{
+		TagIds: filter.ID,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, convertTags(resp.Tags))
 }
