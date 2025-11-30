@@ -299,6 +299,8 @@ func (x *GetTagResponse) GetTag() *Tag {
 type GetTagListRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TagName       string                 `protobuf:"bytes,1,opt,name=tag_name,json=tagName,proto3" json:"tag_name,omitempty"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,3,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -338,6 +340,20 @@ func (x *GetTagListRequest) GetTagName() string {
 		return x.TagName
 	}
 	return ""
+}
+
+func (x *GetTagListRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetTagListRequest) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
 }
 
 type GetTagListResponse struct {
@@ -401,9 +417,11 @@ const file_tag_tag_service_proto_rawDesc = "" +
 	"\x11CreateTagResponse\x125\n" +
 	"\x03tag\x18\x01 \x01(\v2#.bannote.scheduleservice.tag.v1.TagR\x03tag\"G\n" +
 	"\x0eGetTagResponse\x125\n" +
-	"\x03tag\x18\x01 \x01(\v2#.bannote.scheduleservice.tag.v1.TagR\x03tag\".\n" +
+	"\x03tag\x18\x01 \x01(\v2#.bannote.scheduleservice.tag.v1.TagR\x03tag\"]\n" +
 	"\x11GetTagListRequest\x12\x19\n" +
-	"\btag_name\x18\x01 \x01(\tR\atagName\"q\n" +
+	"\btag_name\x18\x01 \x01(\tR\atagName\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x19\n" +
+	"\bper_page\x18\x03 \x01(\x05R\aperPage\"q\n" +
 	"\x12GetTagListResponse\x12[\n" +
 	"\x11tag_list_response\x18\x01 \x01(\v2/.bannote.scheduleservice.tag.v1.TagListResponseR\x0ftagListResponse2\xce\x03\n" +
 	"\n" +

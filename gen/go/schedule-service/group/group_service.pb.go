@@ -134,10 +134,12 @@ func (x *CreateGroupRequest) GetGroupPermissionId() int64 {
 
 type GetGroupListRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GroupTypeId   *int64                 `protobuf:"varint,1,opt,name=group_type_id,json=groupTypeId,proto3,oneof" json:"group_type_id,omitempty"`
-	IsPublic      *bool                  `protobuf:"varint,2,opt,name=is_public,json=isPublic,proto3,oneof" json:"is_public,omitempty"`
-	IsPublished   *bool                  `protobuf:"varint,3,opt,name=is_published,json=isPublished,proto3,oneof" json:"is_published,omitempty"`
-	TagIds        []int64                `protobuf:"varint,4,rep,packed,name=tag_ids,json=tagIds,proto3" json:"tag_ids,omitempty"` //repeated ->배열형태
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,2,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	GroupTypeId   *int64                 `protobuf:"varint,3,opt,name=group_type_id,json=groupTypeId,proto3,oneof" json:"group_type_id,omitempty"`
+	IsPublic      *bool                  `protobuf:"varint,4,opt,name=is_public,json=isPublic,proto3,oneof" json:"is_public,omitempty"`
+	IsPublished   *bool                  `protobuf:"varint,5,opt,name=is_published,json=isPublished,proto3,oneof" json:"is_published,omitempty"`
+	TagIds        []int64                `protobuf:"varint,6,rep,packed,name=tag_ids,json=tagIds,proto3" json:"tag_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -170,6 +172,20 @@ func (x *GetGroupListRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use GetGroupListRequest.ProtoReflect.Descriptor instead.
 func (*GetGroupListRequest) Descriptor() ([]byte, []int) {
 	return file_group_group_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetGroupListRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetGroupListRequest) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
 }
 
 func (x *GetGroupListRequest) GetGroupTypeId() int64 {
@@ -624,12 +640,14 @@ const file_group_group_service_proto_rawDesc = "" +
 	"\rcolor_default\x18\x06 \x01(\tR\fcolorDefault\x12'\n" +
 	"\x0fcolor_highlight\x18\a \x01(\tR\x0ecolorHighlight\x12\x17\n" +
 	"\atag_ids\x18\b \x03(\x03R\x06tagIds\x12.\n" +
-	"\x13group_permission_id\x18\t \x01(\x03R\x11groupPermissionId\"\xd2\x01\n" +
-	"\x13GetGroupListRequest\x12'\n" +
-	"\rgroup_type_id\x18\x01 \x01(\x03H\x00R\vgroupTypeId\x88\x01\x01\x12 \n" +
-	"\tis_public\x18\x02 \x01(\bH\x01R\bisPublic\x88\x01\x01\x12&\n" +
-	"\fis_published\x18\x03 \x01(\bH\x02R\visPublished\x88\x01\x01\x12\x17\n" +
-	"\atag_ids\x18\x04 \x03(\x03R\x06tagIdsB\x10\n" +
+	"\x13group_permission_id\x18\t \x01(\x03R\x11groupPermissionId\"\x81\x02\n" +
+	"\x13GetGroupListRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x19\n" +
+	"\bper_page\x18\x02 \x01(\x05R\aperPage\x12'\n" +
+	"\rgroup_type_id\x18\x03 \x01(\x03H\x00R\vgroupTypeId\x88\x01\x01\x12 \n" +
+	"\tis_public\x18\x04 \x01(\bH\x01R\bisPublic\x88\x01\x01\x12&\n" +
+	"\fis_published\x18\x05 \x01(\bH\x02R\visPublished\x88\x01\x01\x12\x17\n" +
+	"\atag_ids\x18\x06 \x03(\x03R\x06tagIdsB\x10\n" +
 	"\x0e_group_type_idB\f\n" +
 	"\n" +
 	"_is_publicB\x0f\n" +
