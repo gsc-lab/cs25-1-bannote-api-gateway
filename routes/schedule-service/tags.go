@@ -12,6 +12,7 @@ func RegisterTagsRoutes(rg *gin.RouterGroup) {
 	{
 		tags.GET("", middleware.GRPCMetadata(), handlers.ListTags)
 		tags.GET(":id", middleware.GRPCMetadata(), handlers.GetTag)
+		tags.GET("/many", middleware.GRPCMetadata(), handlers.GetManyTags)
 
 		tags.POST("", middleware.GRPCMetadata(), handlers.CreateTag)
 		tags.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteTag)

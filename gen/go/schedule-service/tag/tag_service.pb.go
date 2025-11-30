@@ -71,7 +71,6 @@ func (x *CreateTagRequest) GetName() string {
 type GetTagRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TagId         int64                  `protobuf:"varint,1,opt,name=tag_id,json=tagId,proto3" json:"tag_id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -111,13 +110,6 @@ func (x *GetTagRequest) GetTagId() int64 {
 		return x.TagId
 	}
 	return 0
-}
-
-func (x *GetTagRequest) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
 }
 
 type DeleteTagRequest struct {
@@ -298,9 +290,8 @@ func (x *GetTagResponse) GetTag() *Tag {
 
 type GetTagListRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	TagName       string                 `protobuf:"bytes,1,opt,name=tag_name,json=tagName,proto3" json:"tag_name,omitempty"`
-	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
-	PerPage       int32                  `protobuf:"varint,3,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	Page          int32                  `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,2,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -333,13 +324,6 @@ func (x *GetTagListRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use GetTagListRequest.ProtoReflect.Descriptor instead.
 func (*GetTagListRequest) Descriptor() ([]byte, []int) {
 	return file_tag_tag_service_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *GetTagListRequest) GetTagName() string {
-	if x != nil {
-		return x.TagName
-	}
-	return ""
 }
 
 func (x *GetTagListRequest) GetPage() int32 {
@@ -400,16 +384,103 @@ func (x *GetTagListResponse) GetTagListResponse() *TagListResponse {
 	return nil
 }
 
+type GetManyTagsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TagIds        []int64                `protobuf:"varint,1,rep,packed,name=tag_ids,json=tagIds,proto3" json:"tag_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManyTagsRequest) Reset() {
+	*x = GetManyTagsRequest{}
+	mi := &file_tag_tag_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyTagsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyTagsRequest) ProtoMessage() {}
+
+func (x *GetManyTagsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_tag_tag_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyTagsRequest.ProtoReflect.Descriptor instead.
+func (*GetManyTagsRequest) Descriptor() ([]byte, []int) {
+	return file_tag_tag_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetManyTagsRequest) GetTagIds() []int64 {
+	if x != nil {
+		return x.TagIds
+	}
+	return nil
+}
+
+type GetManyTagsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tags          []*Tag                 `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManyTagsResponse) Reset() {
+	*x = GetManyTagsResponse{}
+	mi := &file_tag_tag_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyTagsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyTagsResponse) ProtoMessage() {}
+
+func (x *GetManyTagsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_tag_tag_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyTagsResponse.ProtoReflect.Descriptor instead.
+func (*GetManyTagsResponse) Descriptor() ([]byte, []int) {
+	return file_tag_tag_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *GetManyTagsResponse) GetTags() []*Tag {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
 var File_tag_tag_service_proto protoreflect.FileDescriptor
 
 const file_tag_tag_service_proto_rawDesc = "" +
 	"\n" +
 	"\x15tag/tag_service.proto\x12\x1ebannote.scheduleservice.tag.v1\x1a\rtag/tag.proto\"&\n" +
 	"\x10CreateTagRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\":\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"&\n" +
 	"\rGetTagRequest\x12\x15\n" +
-	"\x06tag_id\x18\x01 \x01(\x03R\x05tagId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\")\n" +
+	"\x06tag_id\x18\x01 \x01(\x03R\x05tagId\")\n" +
 	"\x10DeleteTagRequest\x12\x15\n" +
 	"\x06tag_id\x18\x01 \x01(\x03R\x05tagId\"-\n" +
 	"\x11DeleteTagResponse\x12\x18\n" +
@@ -417,20 +488,24 @@ const file_tag_tag_service_proto_rawDesc = "" +
 	"\x11CreateTagResponse\x125\n" +
 	"\x03tag\x18\x01 \x01(\v2#.bannote.scheduleservice.tag.v1.TagR\x03tag\"G\n" +
 	"\x0eGetTagResponse\x125\n" +
-	"\x03tag\x18\x01 \x01(\v2#.bannote.scheduleservice.tag.v1.TagR\x03tag\"]\n" +
-	"\x11GetTagListRequest\x12\x19\n" +
-	"\btag_name\x18\x01 \x01(\tR\atagName\x12\x12\n" +
-	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x19\n" +
-	"\bper_page\x18\x03 \x01(\x05R\aperPage\"q\n" +
+	"\x03tag\x18\x01 \x01(\v2#.bannote.scheduleservice.tag.v1.TagR\x03tag\"B\n" +
+	"\x11GetTagListRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x19\n" +
+	"\bper_page\x18\x02 \x01(\x05R\aperPage\"q\n" +
 	"\x12GetTagListResponse\x12[\n" +
-	"\x11tag_list_response\x18\x01 \x01(\v2/.bannote.scheduleservice.tag.v1.TagListResponseR\x0ftagListResponse2\xce\x03\n" +
+	"\x11tag_list_response\x18\x01 \x01(\v2/.bannote.scheduleservice.tag.v1.TagListResponseR\x0ftagListResponse\"-\n" +
+	"\x12GetManyTagsRequest\x12\x17\n" +
+	"\atag_ids\x18\x01 \x03(\x03R\x06tagIds\"N\n" +
+	"\x13GetManyTagsResponse\x127\n" +
+	"\x04tags\x18\x01 \x03(\v2#.bannote.scheduleservice.tag.v1.TagR\x04tags2\xc6\x04\n" +
 	"\n" +
 	"TagService\x12p\n" +
 	"\tCreateTag\x120.bannote.scheduleservice.tag.v1.CreateTagRequest\x1a1.bannote.scheduleservice.tag.v1.CreateTagResponse\x12g\n" +
 	"\x06GetTag\x12-.bannote.scheduleservice.tag.v1.GetTagRequest\x1a..bannote.scheduleservice.tag.v1.GetTagResponse\x12s\n" +
 	"\n" +
 	"GetTagList\x121.bannote.scheduleservice.tag.v1.GetTagListRequest\x1a2.bannote.scheduleservice.tag.v1.GetTagListResponse\x12p\n" +
-	"\tDeleteTag\x120.bannote.scheduleservice.tag.v1.DeleteTagRequest\x1a1.bannote.scheduleservice.tag.v1.DeleteTagResponseB\xa1\x02\n" +
+	"\tDeleteTag\x120.bannote.scheduleservice.tag.v1.DeleteTagRequest\x1a1.bannote.scheduleservice.tag.v1.DeleteTagResponse\x12v\n" +
+	"\vGetManyTags\x122.bannote.scheduleservice.tag.v1.GetManyTagsRequest\x1a3.bannote.scheduleservice.tag.v1.GetManyTagsResponseB\xa1\x02\n" +
 	"\"com.bannote.scheduleservice.tag.v1B\x0fTagServiceProtoP\x01ZOgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/schedule-service/tag;tagv1\xa2\x02\x03BST\xaa\x02\x1eBannote.Scheduleservice.Tag.V1\xca\x02\x1eBannote\\Scheduleservice\\Tag\\V1\xe2\x02*Bannote\\Scheduleservice\\Tag\\V1\\GPBMetadata\xea\x02!Bannote::Scheduleservice::Tag::V1b\x06proto3"
 
 var (
@@ -445,36 +520,41 @@ func file_tag_tag_service_proto_rawDescGZIP() []byte {
 	return file_tag_tag_service_proto_rawDescData
 }
 
-var file_tag_tag_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_tag_tag_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_tag_tag_service_proto_goTypes = []any{
-	(*CreateTagRequest)(nil),   // 0: bannote.scheduleservice.tag.v1.CreateTagRequest
-	(*GetTagRequest)(nil),      // 1: bannote.scheduleservice.tag.v1.GetTagRequest
-	(*DeleteTagRequest)(nil),   // 2: bannote.scheduleservice.tag.v1.DeleteTagRequest
-	(*DeleteTagResponse)(nil),  // 3: bannote.scheduleservice.tag.v1.DeleteTagResponse
-	(*CreateTagResponse)(nil),  // 4: bannote.scheduleservice.tag.v1.CreateTagResponse
-	(*GetTagResponse)(nil),     // 5: bannote.scheduleservice.tag.v1.GetTagResponse
-	(*GetTagListRequest)(nil),  // 6: bannote.scheduleservice.tag.v1.GetTagListRequest
-	(*GetTagListResponse)(nil), // 7: bannote.scheduleservice.tag.v1.GetTagListResponse
-	(*Tag)(nil),                // 8: bannote.scheduleservice.tag.v1.Tag
-	(*TagListResponse)(nil),    // 9: bannote.scheduleservice.tag.v1.TagListResponse
+	(*CreateTagRequest)(nil),    // 0: bannote.scheduleservice.tag.v1.CreateTagRequest
+	(*GetTagRequest)(nil),       // 1: bannote.scheduleservice.tag.v1.GetTagRequest
+	(*DeleteTagRequest)(nil),    // 2: bannote.scheduleservice.tag.v1.DeleteTagRequest
+	(*DeleteTagResponse)(nil),   // 3: bannote.scheduleservice.tag.v1.DeleteTagResponse
+	(*CreateTagResponse)(nil),   // 4: bannote.scheduleservice.tag.v1.CreateTagResponse
+	(*GetTagResponse)(nil),      // 5: bannote.scheduleservice.tag.v1.GetTagResponse
+	(*GetTagListRequest)(nil),   // 6: bannote.scheduleservice.tag.v1.GetTagListRequest
+	(*GetTagListResponse)(nil),  // 7: bannote.scheduleservice.tag.v1.GetTagListResponse
+	(*GetManyTagsRequest)(nil),  // 8: bannote.scheduleservice.tag.v1.GetManyTagsRequest
+	(*GetManyTagsResponse)(nil), // 9: bannote.scheduleservice.tag.v1.GetManyTagsResponse
+	(*Tag)(nil),                 // 10: bannote.scheduleservice.tag.v1.Tag
+	(*TagListResponse)(nil),     // 11: bannote.scheduleservice.tag.v1.TagListResponse
 }
 var file_tag_tag_service_proto_depIdxs = []int32{
-	8, // 0: bannote.scheduleservice.tag.v1.CreateTagResponse.tag:type_name -> bannote.scheduleservice.tag.v1.Tag
-	8, // 1: bannote.scheduleservice.tag.v1.GetTagResponse.tag:type_name -> bannote.scheduleservice.tag.v1.Tag
-	9, // 2: bannote.scheduleservice.tag.v1.GetTagListResponse.tag_list_response:type_name -> bannote.scheduleservice.tag.v1.TagListResponse
-	0, // 3: bannote.scheduleservice.tag.v1.TagService.CreateTag:input_type -> bannote.scheduleservice.tag.v1.CreateTagRequest
-	1, // 4: bannote.scheduleservice.tag.v1.TagService.GetTag:input_type -> bannote.scheduleservice.tag.v1.GetTagRequest
-	6, // 5: bannote.scheduleservice.tag.v1.TagService.GetTagList:input_type -> bannote.scheduleservice.tag.v1.GetTagListRequest
-	2, // 6: bannote.scheduleservice.tag.v1.TagService.DeleteTag:input_type -> bannote.scheduleservice.tag.v1.DeleteTagRequest
-	4, // 7: bannote.scheduleservice.tag.v1.TagService.CreateTag:output_type -> bannote.scheduleservice.tag.v1.CreateTagResponse
-	5, // 8: bannote.scheduleservice.tag.v1.TagService.GetTag:output_type -> bannote.scheduleservice.tag.v1.GetTagResponse
-	7, // 9: bannote.scheduleservice.tag.v1.TagService.GetTagList:output_type -> bannote.scheduleservice.tag.v1.GetTagListResponse
-	3, // 10: bannote.scheduleservice.tag.v1.TagService.DeleteTag:output_type -> bannote.scheduleservice.tag.v1.DeleteTagResponse
-	7, // [7:11] is the sub-list for method output_type
-	3, // [3:7] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	10, // 0: bannote.scheduleservice.tag.v1.CreateTagResponse.tag:type_name -> bannote.scheduleservice.tag.v1.Tag
+	10, // 1: bannote.scheduleservice.tag.v1.GetTagResponse.tag:type_name -> bannote.scheduleservice.tag.v1.Tag
+	11, // 2: bannote.scheduleservice.tag.v1.GetTagListResponse.tag_list_response:type_name -> bannote.scheduleservice.tag.v1.TagListResponse
+	10, // 3: bannote.scheduleservice.tag.v1.GetManyTagsResponse.tags:type_name -> bannote.scheduleservice.tag.v1.Tag
+	0,  // 4: bannote.scheduleservice.tag.v1.TagService.CreateTag:input_type -> bannote.scheduleservice.tag.v1.CreateTagRequest
+	1,  // 5: bannote.scheduleservice.tag.v1.TagService.GetTag:input_type -> bannote.scheduleservice.tag.v1.GetTagRequest
+	6,  // 6: bannote.scheduleservice.tag.v1.TagService.GetTagList:input_type -> bannote.scheduleservice.tag.v1.GetTagListRequest
+	2,  // 7: bannote.scheduleservice.tag.v1.TagService.DeleteTag:input_type -> bannote.scheduleservice.tag.v1.DeleteTagRequest
+	8,  // 8: bannote.scheduleservice.tag.v1.TagService.GetManyTags:input_type -> bannote.scheduleservice.tag.v1.GetManyTagsRequest
+	4,  // 9: bannote.scheduleservice.tag.v1.TagService.CreateTag:output_type -> bannote.scheduleservice.tag.v1.CreateTagResponse
+	5,  // 10: bannote.scheduleservice.tag.v1.TagService.GetTag:output_type -> bannote.scheduleservice.tag.v1.GetTagResponse
+	7,  // 11: bannote.scheduleservice.tag.v1.TagService.GetTagList:output_type -> bannote.scheduleservice.tag.v1.GetTagListResponse
+	3,  // 12: bannote.scheduleservice.tag.v1.TagService.DeleteTag:output_type -> bannote.scheduleservice.tag.v1.DeleteTagResponse
+	9,  // 13: bannote.scheduleservice.tag.v1.TagService.GetManyTags:output_type -> bannote.scheduleservice.tag.v1.GetManyTagsResponse
+	9,  // [9:14] is the sub-list for method output_type
+	4,  // [4:9] is the sub-list for method input_type
+	4,  // [4:4] is the sub-list for extension type_name
+	4,  // [4:4] is the sub-list for extension extendee
+	0,  // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_tag_tag_service_proto_init() }
@@ -489,7 +569,7 @@ func file_tag_tag_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_tag_tag_service_proto_rawDesc), len(file_tag_tag_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
