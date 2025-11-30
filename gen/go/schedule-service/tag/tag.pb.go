@@ -93,6 +93,10 @@ func (x *Tag) GetCreatedAt() *timestamppb.Timestamp {
 type TagListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Tags          []*Tag                 `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,3,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
+	TotalCount    int64                  `protobuf:"varint,4,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
+	TotalPages    int32                  `protobuf:"varint,5,opt,name=total_pages,json=totalPages,proto3" json:"total_pages,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -134,6 +138,34 @@ func (x *TagListResponse) GetTags() []*Tag {
 	return nil
 }
 
+func (x *TagListResponse) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *TagListResponse) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
+}
+
+func (x *TagListResponse) GetTotalCount() int64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *TagListResponse) GetTotalPages() int32 {
+	if x != nil {
+		return x.TotalPages
+	}
+	return 0
+}
+
 var File_tag_tag_proto protoreflect.FileDescriptor
 
 const file_tag_tag_proto_rawDesc = "" +
@@ -145,9 +177,15 @@ const file_tag_tag_proto_rawDesc = "" +
 	"\n" +
 	"created_by\x18\x03 \x01(\x03R\tcreatedBy\x129\n" +
 	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"J\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"\xbb\x01\n" +
 	"\x0fTagListResponse\x127\n" +
-	"\x04tags\x18\x01 \x03(\v2#.bannote.scheduleservice.tag.v1.TagR\x04tagsB\x9a\x02\n" +
+	"\x04tags\x18\x01 \x03(\v2#.bannote.scheduleservice.tag.v1.TagR\x04tags\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x19\n" +
+	"\bper_page\x18\x03 \x01(\x05R\aperPage\x12\x1f\n" +
+	"\vtotal_count\x18\x04 \x01(\x03R\n" +
+	"totalCount\x12\x1f\n" +
+	"\vtotal_pages\x18\x05 \x01(\x05R\n" +
+	"totalPagesB\x9a\x02\n" +
 	"\"com.bannote.scheduleservice.tag.v1B\bTagProtoP\x01ZOgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/schedule-service/tag;tagv1\xa2\x02\x03BST\xaa\x02\x1eBannote.Scheduleservice.Tag.V1\xca\x02\x1eBannote\\Scheduleservice\\Tag\\V1\xe2\x02*Bannote\\Scheduleservice\\Tag\\V1\\GPBMetadata\xea\x02!Bannote::Scheduleservice::Tag::V1b\x06proto3"
 
 var (

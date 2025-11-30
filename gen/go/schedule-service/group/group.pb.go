@@ -201,6 +201,10 @@ func (x *Group) GetBookmark() bool {
 type GroupListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Groups        []*Group               `protobuf:"bytes,1,rep,name=groups,proto3" json:"groups,omitempty"`
+	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`                               // 현재 페이지
+	PerPage       int32                  `protobuf:"varint,3,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`          // 한 페이지당 개수
+	TotalCount    int64                  `protobuf:"varint,4,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"` // 전체 그룹 개수
+	TotalPages    int32                  `protobuf:"varint,5,opt,name=total_pages,json=totalPages,proto3" json:"total_pages,omitempty"` // 전체 페이지 수
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -242,6 +246,34 @@ func (x *GroupListResponse) GetGroups() []*Group {
 	return nil
 }
 
+func (x *GroupListResponse) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GroupListResponse) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
+}
+
+func (x *GroupListResponse) GetTotalCount() int64 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
+}
+
+func (x *GroupListResponse) GetTotalPages() int32 {
+	if x != nil {
+		return x.TotalPages
+	}
+	return 0
+}
+
 var File_group_group_proto protoreflect.FileDescriptor
 
 const file_group_group_proto_rawDesc = "" +
@@ -273,9 +305,15 @@ const file_group_group_proto_rawDesc = "" +
 	"\n" +
 	"deleted_by\x18\x0f \x01(\x03R\tdeletedBy\x127\n" +
 	"\x04tags\x18\x10 \x03(\v2#.bannote.scheduleservice.tag.v1.TagR\x04tags\x12\x1a\n" +
-	"\bbookmark\x18\x11 \x01(\bR\bbookmark\"T\n" +
+	"\bbookmark\x18\x11 \x01(\bR\bbookmark\"\xc5\x01\n" +
 	"\x11GroupListResponse\x12?\n" +
-	"\x06groups\x18\x01 \x03(\v2'.bannote.scheduleservice.group.v1.GroupR\x06groupsB\xaa\x02\n" +
+	"\x06groups\x18\x01 \x03(\v2'.bannote.scheduleservice.group.v1.GroupR\x06groups\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x19\n" +
+	"\bper_page\x18\x03 \x01(\x05R\aperPage\x12\x1f\n" +
+	"\vtotal_count\x18\x04 \x01(\x03R\n" +
+	"totalCount\x12\x1f\n" +
+	"\vtotal_pages\x18\x05 \x01(\x05R\n" +
+	"totalPagesB\xaa\x02\n" +
 	"$com.bannote.scheduleservice.group.v1B\n" +
 	"GroupProtoP\x01ZSgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/schedule-service/group;groupv1\xa2\x02\x03BSG\xaa\x02 Bannote.Scheduleservice.Group.V1\xca\x02 Bannote\\Scheduleservice\\Group\\V1\xe2\x02,Bannote\\Scheduleservice\\Group\\V1\\GPBMetadata\xea\x02#Bannote::Scheduleservice::Group::V1b\x06proto3"
 
