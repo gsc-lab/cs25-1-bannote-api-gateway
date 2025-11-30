@@ -10,7 +10,6 @@ import (
 	"github.com/gsc-lab/cs25-1-bannote-api-gateway/utils"
 )
 
-// TODO: 백엔드 페이지네이션 구현 되면 수정 필요
 type listTagsRequest struct {
 	Page int32 `form:"page"`
 	Size int32 `form:"size"`
@@ -27,8 +26,8 @@ func ListTags(c *gin.Context) {
 
 	ctx := utils.ContextWithMetadata(c)
 	resp, err := scheduleClient.Tag.GetTagList(ctx, &tagpb.GetTagListRequest{
-		//Page: request.Page,
-		//Size: request.Size,
+		Page:    request.Page,
+		PerPage: request.Size,
 	})
 
 	if err != nil {
@@ -38,7 +37,7 @@ func ListTags(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"data":  resp.TagListResponse.Tags,
-		"total": 10,
+		"total": resp.TagListResponse.TotalCount,
 		"page":  request.Page,
 		"size":  request.Size,
 	})
