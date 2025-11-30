@@ -7,13 +7,13 @@ import (
 )
 
 func RegisterTagsRoutes(rg *gin.RouterGroup) {
-	rooms := rg.Group("/schedule-tags")
+	tags := rg.Group("/schedule-tags")
 
 	{
-		rooms.GET("", middleware.GRPCMetadata(), handlers.ListTags)
-		rooms.GET(":id", middleware.GRPCMetadata(), handlers.GetTag)
+		tags.GET("", middleware.GRPCMetadata(), handlers.ListTags)
+		tags.GET(":id", middleware.GRPCMetadata(), handlers.GetTag)
 
-		rooms.POST("", middleware.GRPCMetadata(), handlers.CreateTag)
-		rooms.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteTag)
+		tags.POST("", middleware.GRPCMetadata(), handlers.CreateTag)
+		tags.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteTag)
 	}
 }
