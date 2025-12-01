@@ -245,3 +245,57 @@ func UpdateUser(c *gin.Context) {
 	})
 
 }
+
+func SearchUser(c *gin.Context) {
+	userClient := client.GetUserService(c)
+
+	var request struct {
+		Name       string  `form:"q"`
+		Page       int32   `form:"page"`
+		Size       int32   `form:"size"`
+		UserType   *string `form:"user_type"`
+		UserStatus *string `form:"user_status"`
+	}
+
+	if err := c.ShouldBind(&request); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter", "details": err.Error()})
+		return
+	}
+
+	var userStatus *common.UserStatus
+	if request.UserStatus != nil {
+		userStatus = utils.ParseUserStatus(*request.UserStatus)
+		if userStatus == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user_status value"})
+			return
+		}
+	}
+
+	var userType *common.UserType
+	if request.UserType != nil {
+		userType = utils.ParseUserType(*request.UserType)
+		if userType == nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user_type value"})
+			return
+		}
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+	resp, err := userClient.User.SearchUsersByName(ctx, &userpb.SearchUsersByNameRequest{
+		Name:   request.Name,
+		Page:   request.Page,
+		Size:   request.Size,
+		Type:   userType,
+		Status: userStatus,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data":  resp.Users,
+		"total": resp.TotalCount,
+	})
+}
