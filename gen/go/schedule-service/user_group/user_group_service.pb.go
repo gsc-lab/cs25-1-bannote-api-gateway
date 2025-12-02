@@ -25,7 +25,7 @@ const (
 type AddUserToGroupRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
-	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -67,11 +67,11 @@ func (x *AddUserToGroupRequest) GetGroupId() int64 {
 	return 0
 }
 
-func (x *AddUserToGroupRequest) GetUserId() int64 {
+func (x *AddUserToGroupRequest) GetUserId() string {
 	if x != nil {
 		return x.UserId
 	}
-	return 0
+	return ""
 }
 
 // GetUsersInGroup
@@ -122,7 +122,7 @@ func (x *GetUsersInGroupRequest) GetGroupId() int64 {
 // GetGroupsOfUser
 type GetGroupsOfUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -157,18 +157,18 @@ func (*GetGroupsOfUserRequest) Descriptor() ([]byte, []int) {
 	return file_user_group_user_group_service_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetGroupsOfUserRequest) GetUserId() int64 {
+func (x *GetGroupsOfUserRequest) GetUserId() string {
 	if x != nil {
 		return x.UserId
 	}
-	return 0
+	return ""
 }
 
 // RemoveUserFromGroup
 type RemoveUserFromGroupRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
-	UserId        int64                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -210,11 +210,11 @@ func (x *RemoveUserFromGroupRequest) GetGroupId() int64 {
 	return 0
 }
 
-func (x *RemoveUserFromGroupRequest) GetUserId() int64 {
+func (x *RemoveUserFromGroupRequest) GetUserId() string {
 	if x != nil {
 		return x.UserId
 	}
-	return 0
+	return ""
 }
 
 type RemoveUserFromGroupResponse struct {
@@ -268,14 +268,14 @@ const file_user_group_user_group_service_proto_rawDesc = "" +
 	"#user_group/user_group_service.proto\x12\x1fbannote.scheduleservice.user.v1\x1a\x1buser_group/user_group.proto\"K\n" +
 	"\x15AddUserToGroupRequest\x12\x19\n" +
 	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\x03R\x06userId\"3\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"3\n" +
 	"\x16GetUsersInGroupRequest\x12\x19\n" +
 	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\"1\n" +
 	"\x16GetGroupsOfUserRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\"P\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"P\n" +
 	"\x1aRemoveUserFromGroupRequest\x12\x19\n" +
 	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\x12\x17\n" +
-	"\auser_id\x18\x02 \x01(\x03R\x06userId\"7\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"7\n" +
 	"\x1bRemoveUserFromGroupResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess2\xb7\x04\n" +
 	"\x10UserGroupService\x12\x81\x01\n" +
