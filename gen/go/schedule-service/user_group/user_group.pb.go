@@ -25,7 +25,7 @@ const (
 
 type AddUserToGroupResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        int64                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	GroupId       int64                  `protobuf:"varint,2,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -62,11 +62,11 @@ func (*AddUserToGroupResponse) Descriptor() ([]byte, []int) {
 	return file_user_group_user_group_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *AddUserToGroupResponse) GetUserId() int64 {
+func (x *AddUserToGroupResponse) GetUserId() string {
 	if x != nil {
 		return x.UserId
 	}
-	return 0
+	return ""
 }
 
 func (x *AddUserToGroupResponse) GetGroupId() int64 {
@@ -177,7 +177,7 @@ const file_user_group_user_group_proto_rawDesc = "" +
 	"\n" +
 	"\x1buser_group/user_group.proto\x12\x1fbannote.scheduleservice.user.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x11group/group.proto\"\x87\x01\n" +
 	"\x16AddUserToGroupResponse\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x03R\x06userId\x12\x19\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x19\n" +
 	"\bgroup_id\x18\x02 \x01(\x03R\agroupId\x129\n" +
 	"\n" +
 	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"h\n" +
