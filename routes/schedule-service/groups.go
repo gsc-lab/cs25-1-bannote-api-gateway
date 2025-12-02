@@ -7,13 +7,15 @@ import (
 )
 
 func RegisterGroupRoutes(rg *gin.RouterGroup) {
-	rooms := rg.Group("/schedule-groups")
+	groups := rg.Group("/schedule-groups")
 
 	{
-		rooms.GET("", middleware.GRPCMetadata(), handlers.ListTags)
-		rooms.GET(":id", middleware.GRPCMetadata(), handlers.GetGroup)
+		groups.GET("", middleware.GRPCMetadata(), handlers.ListGroups)
+		groups.GET(":id", middleware.GRPCMetadata(), handlers.GetGroup)
+		groups.GET("/many", middleware.GRPCMetadata(), handlers.GetManyGroups)
 
-		rooms.POST("", middleware.GRPCMetadata(), handlers.CreateGroup)
-		rooms.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteGroup)
+		groups.POST("", middleware.GRPCMetadata(), handlers.CreateGroup)
+		groups.PATCH(":id", middleware.GRPCMetadata(), handlers.UpdateGroup)
+		groups.DELETE(":id", middleware.GRPCMetadata(), handlers.DeleteGroup)
 	}
 }

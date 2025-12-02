@@ -22,7 +22,7 @@ const (
 )
 
 // ================================
-// Group 관련 요청 메시지 정의
+// 요청 메시지들
 // ================================
 type CreateGroupRequest struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
@@ -140,6 +140,7 @@ type GetGroupListRequest struct {
 	IsPublic      *bool                  `protobuf:"varint,4,opt,name=is_public,json=isPublic,proto3,oneof" json:"is_public,omitempty"`
 	IsPublished   *bool                  `protobuf:"varint,5,opt,name=is_published,json=isPublished,proto3,oneof" json:"is_published,omitempty"`
 	TagIds        []int64                `protobuf:"varint,6,rep,packed,name=tag_ids,json=tagIds,proto3" json:"tag_ids,omitempty"`
+	TagNames      []string               `protobuf:"bytes,7,rep,name=tag_names,json=tagNames,proto3" json:"tag_names,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -216,7 +217,13 @@ func (x *GetGroupListRequest) GetTagIds() []int64 {
 	return nil
 }
 
-// 그룹 상세보기 기능 추가 시
+func (x *GetGroupListRequest) GetTagNames() []string {
+	if x != nil {
+		return x.TagNames
+	}
+	return nil
+}
+
 type GetGroupRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
@@ -625,6 +632,377 @@ func (x *GetGroupListResponse) GetGroupListResponse() *GroupListResponse {
 	return nil
 }
 
+type GetManyGroupsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupIds      []int64                `protobuf:"varint,1,rep,packed,name=group_ids,json=groupIds,proto3" json:"group_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManyGroupsRequest) Reset() {
+	*x = GetManyGroupsRequest{}
+	mi := &file_group_group_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyGroupsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyGroupsRequest) ProtoMessage() {}
+
+func (x *GetManyGroupsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyGroupsRequest.ProtoReflect.Descriptor instead.
+func (*GetManyGroupsRequest) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetManyGroupsRequest) GetGroupIds() []int64 {
+	if x != nil {
+		return x.GroupIds
+	}
+	return nil
+}
+
+type GetManyGroupsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Groups        []*Group               `protobuf:"bytes,1,rep,name=groups,proto3" json:"groups,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetManyGroupsResponse) Reset() {
+	*x = GetManyGroupsResponse{}
+	mi := &file_group_group_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetManyGroupsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetManyGroupsResponse) ProtoMessage() {}
+
+func (x *GetManyGroupsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetManyGroupsResponse.ProtoReflect.Descriptor instead.
+func (*GetManyGroupsResponse) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetManyGroupsResponse) GetGroups() []*Group {
+	if x != nil {
+		return x.Groups
+	}
+	return nil
+}
+
+// ================================
+// 편집자 관리용
+// ================================
+type AddGroupEditorRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddGroupEditorRequest) Reset() {
+	*x = AddGroupEditorRequest{}
+	mi := &file_group_group_service_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddGroupEditorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddGroupEditorRequest) ProtoMessage() {}
+
+func (x *AddGroupEditorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddGroupEditorRequest.ProtoReflect.Descriptor instead.
+func (*AddGroupEditorRequest) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *AddGroupEditorRequest) GetGroupId() int64 {
+	if x != nil {
+		return x.GroupId
+	}
+	return 0
+}
+
+func (x *AddGroupEditorRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type AddGroupEditorResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddGroupEditorResponse) Reset() {
+	*x = AddGroupEditorResponse{}
+	mi := &file_group_group_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddGroupEditorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddGroupEditorResponse) ProtoMessage() {}
+
+func (x *AddGroupEditorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddGroupEditorResponse.ProtoReflect.Descriptor instead.
+func (*AddGroupEditorResponse) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AddGroupEditorResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+type RemoveGroupEditorRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveGroupEditorRequest) Reset() {
+	*x = RemoveGroupEditorRequest{}
+	mi := &file_group_group_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveGroupEditorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveGroupEditorRequest) ProtoMessage() {}
+
+func (x *RemoveGroupEditorRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveGroupEditorRequest.ProtoReflect.Descriptor instead.
+func (*RemoveGroupEditorRequest) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *RemoveGroupEditorRequest) GetGroupId() int64 {
+	if x != nil {
+		return x.GroupId
+	}
+	return 0
+}
+
+func (x *RemoveGroupEditorRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type RemoveGroupEditorResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveGroupEditorResponse) Reset() {
+	*x = RemoveGroupEditorResponse{}
+	mi := &file_group_group_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveGroupEditorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveGroupEditorResponse) ProtoMessage() {}
+
+func (x *RemoveGroupEditorResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveGroupEditorResponse.ProtoReflect.Descriptor instead.
+func (*RemoveGroupEditorResponse) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *RemoveGroupEditorResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+type ListGroupEditorsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGroupEditorsRequest) Reset() {
+	*x = ListGroupEditorsRequest{}
+	mi := &file_group_group_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGroupEditorsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGroupEditorsRequest) ProtoMessage() {}
+
+func (x *ListGroupEditorsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGroupEditorsRequest.ProtoReflect.Descriptor instead.
+func (*ListGroupEditorsRequest) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ListGroupEditorsRequest) GetGroupId() int64 {
+	if x != nil {
+		return x.GroupId
+	}
+	return 0
+}
+
+type ListGroupEditorsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	EditorIds     []string               `protobuf:"bytes,1,rep,name=editor_ids,json=editorIds,proto3" json:"editor_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListGroupEditorsResponse) Reset() {
+	*x = ListGroupEditorsResponse{}
+	mi := &file_group_group_service_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListGroupEditorsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListGroupEditorsResponse) ProtoMessage() {}
+
+func (x *ListGroupEditorsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_group_group_service_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListGroupEditorsResponse.ProtoReflect.Descriptor instead.
+func (*ListGroupEditorsResponse) Descriptor() ([]byte, []int) {
+	return file_group_group_service_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *ListGroupEditorsResponse) GetEditorIds() []string {
+	if x != nil {
+		return x.EditorIds
+	}
+	return nil
+}
+
 var File_group_group_service_proto protoreflect.FileDescriptor
 
 const file_group_group_service_proto_rawDesc = "" +
@@ -640,14 +1018,15 @@ const file_group_group_service_proto_rawDesc = "" +
 	"\rcolor_default\x18\x06 \x01(\tR\fcolorDefault\x12'\n" +
 	"\x0fcolor_highlight\x18\a \x01(\tR\x0ecolorHighlight\x12\x17\n" +
 	"\atag_ids\x18\b \x03(\x03R\x06tagIds\x12.\n" +
-	"\x13group_permission_id\x18\t \x01(\x03R\x11groupPermissionId\"\x81\x02\n" +
+	"\x13group_permission_id\x18\t \x01(\x03R\x11groupPermissionId\"\x9e\x02\n" +
 	"\x13GetGroupListRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x19\n" +
 	"\bper_page\x18\x02 \x01(\x05R\aperPage\x12'\n" +
 	"\rgroup_type_id\x18\x03 \x01(\x03H\x00R\vgroupTypeId\x88\x01\x01\x12 \n" +
 	"\tis_public\x18\x04 \x01(\bH\x01R\bisPublic\x88\x01\x01\x12&\n" +
 	"\fis_published\x18\x05 \x01(\bH\x02R\visPublished\x88\x01\x01\x12\x17\n" +
-	"\atag_ids\x18\x06 \x03(\x03R\x06tagIdsB\x10\n" +
+	"\atag_ids\x18\x06 \x03(\x03R\x06tagIds\x12\x1b\n" +
+	"\ttag_names\x18\a \x03(\tR\btagNamesB\x10\n" +
 	"\x0e_group_type_idB\f\n" +
 	"\n" +
 	"_is_publicB\x0f\n" +
@@ -682,13 +1061,36 @@ const file_group_group_service_proto_rawDesc = "" +
 	"\x13UpdateGroupResponse\x12=\n" +
 	"\x05group\x18\x01 \x01(\v2'.bannote.scheduleservice.group.v1.GroupR\x05group\"{\n" +
 	"\x14GetGroupListResponse\x12c\n" +
-	"\x13group_list_response\x18\x01 \x01(\v23.bannote.scheduleservice.group.v1.GroupListResponseR\x11groupListResponse2\xf4\x04\n" +
+	"\x13group_list_response\x18\x01 \x01(\v23.bannote.scheduleservice.group.v1.GroupListResponseR\x11groupListResponse\"3\n" +
+	"\x14GetManyGroupsRequest\x12\x1b\n" +
+	"\tgroup_ids\x18\x01 \x03(\x03R\bgroupIds\"X\n" +
+	"\x15GetManyGroupsResponse\x12?\n" +
+	"\x06groups\x18\x01 \x03(\v2'.bannote.scheduleservice.group.v1.GroupR\x06groups\"K\n" +
+	"\x15AddGroupEditorRequest\x12\x19\n" +
+	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"2\n" +
+	"\x16AddGroupEditorResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"N\n" +
+	"\x18RemoveGroupEditorRequest\x12\x19\n" +
+	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"5\n" +
+	"\x19RemoveGroupEditorResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"4\n" +
+	"\x17ListGroupEditorsRequest\x12\x19\n" +
+	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\"9\n" +
+	"\x18ListGroupEditorsResponse\x12\x1d\n" +
+	"\n" +
+	"editor_ids\x18\x01 \x03(\tR\teditorIds2\x98\t\n" +
 	"\fGroupService\x12z\n" +
 	"\vCreateGroup\x124.bannote.scheduleservice.group.v1.CreateGroupRequest\x1a5.bannote.scheduleservice.group.v1.CreateGroupResponse\x12}\n" +
 	"\fGetGroupList\x125.bannote.scheduleservice.group.v1.GetGroupListRequest\x1a6.bannote.scheduleservice.group.v1.GetGroupListResponse\x12q\n" +
 	"\bGetGroup\x121.bannote.scheduleservice.group.v1.GetGroupRequest\x1a2.bannote.scheduleservice.group.v1.GetGroupResponse\x12z\n" +
 	"\vUpdateGroup\x124.bannote.scheduleservice.group.v1.UpdateGroupRequest\x1a5.bannote.scheduleservice.group.v1.UpdateGroupResponse\x12z\n" +
-	"\vDeleteGroup\x124.bannote.scheduleservice.group.v1.DeleteGroupRequest\x1a5.bannote.scheduleservice.group.v1.DeleteGroupResponseB\xb1\x02\n" +
+	"\vDeleteGroup\x124.bannote.scheduleservice.group.v1.DeleteGroupRequest\x1a5.bannote.scheduleservice.group.v1.DeleteGroupResponse\x12\x80\x01\n" +
+	"\rGetManyGroups\x126.bannote.scheduleservice.group.v1.GetManyGroupsRequest\x1a7.bannote.scheduleservice.group.v1.GetManyGroupsResponse\x12\x83\x01\n" +
+	"\x0eAddGroupEditor\x127.bannote.scheduleservice.group.v1.AddGroupEditorRequest\x1a8.bannote.scheduleservice.group.v1.AddGroupEditorResponse\x12\x8c\x01\n" +
+	"\x11RemoveGroupEditor\x12:.bannote.scheduleservice.group.v1.RemoveGroupEditorRequest\x1a;.bannote.scheduleservice.group.v1.RemoveGroupEditorResponse\x12\x89\x01\n" +
+	"\x10ListGroupEditors\x129.bannote.scheduleservice.group.v1.ListGroupEditorsRequest\x1a:.bannote.scheduleservice.group.v1.ListGroupEditorsResponseB\xb1\x02\n" +
 	"$com.bannote.scheduleservice.group.v1B\x11GroupServiceProtoP\x01ZSgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/schedule-service/group;groupv1\xa2\x02\x03BSG\xaa\x02 Bannote.Scheduleservice.Group.V1\xca\x02 Bannote\\Scheduleservice\\Group\\V1\xe2\x02,Bannote\\Scheduleservice\\Group\\V1\\GPBMetadata\xea\x02#Bannote::Scheduleservice::Group::V1b\x06proto3"
 
 var (
@@ -703,41 +1105,58 @@ func file_group_group_service_proto_rawDescGZIP() []byte {
 	return file_group_group_service_proto_rawDescData
 }
 
-var file_group_group_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_group_group_service_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_group_group_service_proto_goTypes = []any{
-	(*CreateGroupRequest)(nil),   // 0: bannote.scheduleservice.group.v1.CreateGroupRequest
-	(*GetGroupListRequest)(nil),  // 1: bannote.scheduleservice.group.v1.GetGroupListRequest
-	(*GetGroupRequest)(nil),      // 2: bannote.scheduleservice.group.v1.GetGroupRequest
-	(*UpdateGroupRequest)(nil),   // 3: bannote.scheduleservice.group.v1.UpdateGroupRequest
-	(*DeleteGroupRequest)(nil),   // 4: bannote.scheduleservice.group.v1.DeleteGroupRequest
-	(*DeleteGroupResponse)(nil),  // 5: bannote.scheduleservice.group.v1.DeleteGroupResponse
-	(*CreateGroupResponse)(nil),  // 6: bannote.scheduleservice.group.v1.CreateGroupResponse
-	(*GetGroupResponse)(nil),     // 7: bannote.scheduleservice.group.v1.GetGroupResponse
-	(*UpdateGroupResponse)(nil),  // 8: bannote.scheduleservice.group.v1.UpdateGroupResponse
-	(*GetGroupListResponse)(nil), // 9: bannote.scheduleservice.group.v1.GetGroupListResponse
-	(*Group)(nil),                // 10: bannote.scheduleservice.group.v1.Group
-	(*GroupListResponse)(nil),    // 11: bannote.scheduleservice.group.v1.GroupListResponse
+	(*CreateGroupRequest)(nil),        // 0: bannote.scheduleservice.group.v1.CreateGroupRequest
+	(*GetGroupListRequest)(nil),       // 1: bannote.scheduleservice.group.v1.GetGroupListRequest
+	(*GetGroupRequest)(nil),           // 2: bannote.scheduleservice.group.v1.GetGroupRequest
+	(*UpdateGroupRequest)(nil),        // 3: bannote.scheduleservice.group.v1.UpdateGroupRequest
+	(*DeleteGroupRequest)(nil),        // 4: bannote.scheduleservice.group.v1.DeleteGroupRequest
+	(*DeleteGroupResponse)(nil),       // 5: bannote.scheduleservice.group.v1.DeleteGroupResponse
+	(*CreateGroupResponse)(nil),       // 6: bannote.scheduleservice.group.v1.CreateGroupResponse
+	(*GetGroupResponse)(nil),          // 7: bannote.scheduleservice.group.v1.GetGroupResponse
+	(*UpdateGroupResponse)(nil),       // 8: bannote.scheduleservice.group.v1.UpdateGroupResponse
+	(*GetGroupListResponse)(nil),      // 9: bannote.scheduleservice.group.v1.GetGroupListResponse
+	(*GetManyGroupsRequest)(nil),      // 10: bannote.scheduleservice.group.v1.GetManyGroupsRequest
+	(*GetManyGroupsResponse)(nil),     // 11: bannote.scheduleservice.group.v1.GetManyGroupsResponse
+	(*AddGroupEditorRequest)(nil),     // 12: bannote.scheduleservice.group.v1.AddGroupEditorRequest
+	(*AddGroupEditorResponse)(nil),    // 13: bannote.scheduleservice.group.v1.AddGroupEditorResponse
+	(*RemoveGroupEditorRequest)(nil),  // 14: bannote.scheduleservice.group.v1.RemoveGroupEditorRequest
+	(*RemoveGroupEditorResponse)(nil), // 15: bannote.scheduleservice.group.v1.RemoveGroupEditorResponse
+	(*ListGroupEditorsRequest)(nil),   // 16: bannote.scheduleservice.group.v1.ListGroupEditorsRequest
+	(*ListGroupEditorsResponse)(nil),  // 17: bannote.scheduleservice.group.v1.ListGroupEditorsResponse
+	(*Group)(nil),                     // 18: bannote.scheduleservice.group.v1.Group
+	(*GroupListResponse)(nil),         // 19: bannote.scheduleservice.group.v1.GroupListResponse
 }
 var file_group_group_service_proto_depIdxs = []int32{
-	10, // 0: bannote.scheduleservice.group.v1.CreateGroupResponse.group:type_name -> bannote.scheduleservice.group.v1.Group
-	10, // 1: bannote.scheduleservice.group.v1.GetGroupResponse.group:type_name -> bannote.scheduleservice.group.v1.Group
-	10, // 2: bannote.scheduleservice.group.v1.UpdateGroupResponse.group:type_name -> bannote.scheduleservice.group.v1.Group
-	11, // 3: bannote.scheduleservice.group.v1.GetGroupListResponse.group_list_response:type_name -> bannote.scheduleservice.group.v1.GroupListResponse
-	0,  // 4: bannote.scheduleservice.group.v1.GroupService.CreateGroup:input_type -> bannote.scheduleservice.group.v1.CreateGroupRequest
-	1,  // 5: bannote.scheduleservice.group.v1.GroupService.GetGroupList:input_type -> bannote.scheduleservice.group.v1.GetGroupListRequest
-	2,  // 6: bannote.scheduleservice.group.v1.GroupService.GetGroup:input_type -> bannote.scheduleservice.group.v1.GetGroupRequest
-	3,  // 7: bannote.scheduleservice.group.v1.GroupService.UpdateGroup:input_type -> bannote.scheduleservice.group.v1.UpdateGroupRequest
-	4,  // 8: bannote.scheduleservice.group.v1.GroupService.DeleteGroup:input_type -> bannote.scheduleservice.group.v1.DeleteGroupRequest
-	6,  // 9: bannote.scheduleservice.group.v1.GroupService.CreateGroup:output_type -> bannote.scheduleservice.group.v1.CreateGroupResponse
-	9,  // 10: bannote.scheduleservice.group.v1.GroupService.GetGroupList:output_type -> bannote.scheduleservice.group.v1.GetGroupListResponse
-	7,  // 11: bannote.scheduleservice.group.v1.GroupService.GetGroup:output_type -> bannote.scheduleservice.group.v1.GetGroupResponse
-	8,  // 12: bannote.scheduleservice.group.v1.GroupService.UpdateGroup:output_type -> bannote.scheduleservice.group.v1.UpdateGroupResponse
-	5,  // 13: bannote.scheduleservice.group.v1.GroupService.DeleteGroup:output_type -> bannote.scheduleservice.group.v1.DeleteGroupResponse
-	9,  // [9:14] is the sub-list for method output_type
-	4,  // [4:9] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	18, // 0: bannote.scheduleservice.group.v1.CreateGroupResponse.group:type_name -> bannote.scheduleservice.group.v1.Group
+	18, // 1: bannote.scheduleservice.group.v1.GetGroupResponse.group:type_name -> bannote.scheduleservice.group.v1.Group
+	18, // 2: bannote.scheduleservice.group.v1.UpdateGroupResponse.group:type_name -> bannote.scheduleservice.group.v1.Group
+	19, // 3: bannote.scheduleservice.group.v1.GetGroupListResponse.group_list_response:type_name -> bannote.scheduleservice.group.v1.GroupListResponse
+	18, // 4: bannote.scheduleservice.group.v1.GetManyGroupsResponse.groups:type_name -> bannote.scheduleservice.group.v1.Group
+	0,  // 5: bannote.scheduleservice.group.v1.GroupService.CreateGroup:input_type -> bannote.scheduleservice.group.v1.CreateGroupRequest
+	1,  // 6: bannote.scheduleservice.group.v1.GroupService.GetGroupList:input_type -> bannote.scheduleservice.group.v1.GetGroupListRequest
+	2,  // 7: bannote.scheduleservice.group.v1.GroupService.GetGroup:input_type -> bannote.scheduleservice.group.v1.GetGroupRequest
+	3,  // 8: bannote.scheduleservice.group.v1.GroupService.UpdateGroup:input_type -> bannote.scheduleservice.group.v1.UpdateGroupRequest
+	4,  // 9: bannote.scheduleservice.group.v1.GroupService.DeleteGroup:input_type -> bannote.scheduleservice.group.v1.DeleteGroupRequest
+	10, // 10: bannote.scheduleservice.group.v1.GroupService.GetManyGroups:input_type -> bannote.scheduleservice.group.v1.GetManyGroupsRequest
+	12, // 11: bannote.scheduleservice.group.v1.GroupService.AddGroupEditor:input_type -> bannote.scheduleservice.group.v1.AddGroupEditorRequest
+	14, // 12: bannote.scheduleservice.group.v1.GroupService.RemoveGroupEditor:input_type -> bannote.scheduleservice.group.v1.RemoveGroupEditorRequest
+	16, // 13: bannote.scheduleservice.group.v1.GroupService.ListGroupEditors:input_type -> bannote.scheduleservice.group.v1.ListGroupEditorsRequest
+	6,  // 14: bannote.scheduleservice.group.v1.GroupService.CreateGroup:output_type -> bannote.scheduleservice.group.v1.CreateGroupResponse
+	9,  // 15: bannote.scheduleservice.group.v1.GroupService.GetGroupList:output_type -> bannote.scheduleservice.group.v1.GetGroupListResponse
+	7,  // 16: bannote.scheduleservice.group.v1.GroupService.GetGroup:output_type -> bannote.scheduleservice.group.v1.GetGroupResponse
+	8,  // 17: bannote.scheduleservice.group.v1.GroupService.UpdateGroup:output_type -> bannote.scheduleservice.group.v1.UpdateGroupResponse
+	5,  // 18: bannote.scheduleservice.group.v1.GroupService.DeleteGroup:output_type -> bannote.scheduleservice.group.v1.DeleteGroupResponse
+	11, // 19: bannote.scheduleservice.group.v1.GroupService.GetManyGroups:output_type -> bannote.scheduleservice.group.v1.GetManyGroupsResponse
+	13, // 20: bannote.scheduleservice.group.v1.GroupService.AddGroupEditor:output_type -> bannote.scheduleservice.group.v1.AddGroupEditorResponse
+	15, // 21: bannote.scheduleservice.group.v1.GroupService.RemoveGroupEditor:output_type -> bannote.scheduleservice.group.v1.RemoveGroupEditorResponse
+	17, // 22: bannote.scheduleservice.group.v1.GroupService.ListGroupEditors:output_type -> bannote.scheduleservice.group.v1.ListGroupEditorsResponse
+	14, // [14:23] is the sub-list for method output_type
+	5,  // [5:14] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_group_group_service_proto_init() }
@@ -754,7 +1173,7 @@ func file_group_group_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_group_group_service_proto_rawDesc), len(file_group_group_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
