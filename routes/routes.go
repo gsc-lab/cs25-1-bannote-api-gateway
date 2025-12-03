@@ -27,4 +27,6 @@ func SetupRoutes(router *gin.RouterGroup) {
 
 	schedule_service.RegisterTagsRoutes(router)
 	schedule_service.RegisterGroupRoutes(router)
+	schedule_service.RegisterGroupMemberRoutes(router)
+	schedule_service.RegisterScheduleRoutes(router)
 }
