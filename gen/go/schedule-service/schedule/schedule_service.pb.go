@@ -9,7 +9,6 @@ package schedulev1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -30,10 +29,7 @@ type CreateScheduleRequest struct {
 	GroupId       int64                  `protobuf:"varint,1,opt,name=group_id,json=groupId,proto3" json:"group_id,omitempty"`
 	Comment       *string                `protobuf:"bytes,2,opt,name=comment,proto3,oneof" json:"comment,omitempty"`
 	IsHighlighted bool                   `protobuf:"varint,3,opt,name=is_highlighted,json=isHighlighted,proto3" json:"is_highlighted,omitempty"`
-	StartDate     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_date,json=startDate,proto3" json:"start_date,omitempty"`
-	EndDate       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
-	CreatedBy     int64                  `protobuf:"varint,6,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	Link          *ScheduleLinkData      `protobuf:"bytes,7,opt,name=link,proto3" json:"link,omitempty"`
+	Link          *ScheduleLinkData      `protobuf:"bytes,4,opt,name=link,proto3" json:"link,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -89,27 +85,6 @@ func (x *CreateScheduleRequest) GetIsHighlighted() bool {
 	return false
 }
 
-func (x *CreateScheduleRequest) GetStartDate() *timestamppb.Timestamp {
-	if x != nil {
-		return x.StartDate
-	}
-	return nil
-}
-
-func (x *CreateScheduleRequest) GetEndDate() *timestamppb.Timestamp {
-	if x != nil {
-		return x.EndDate
-	}
-	return nil
-}
-
-func (x *CreateScheduleRequest) GetCreatedBy() int64 {
-	if x != nil {
-		return x.CreatedBy
-	}
-	return 0
-}
-
 func (x *CreateScheduleRequest) GetLink() *ScheduleLinkData {
 	if x != nil {
 		return x.Link
@@ -123,8 +98,8 @@ type ScheduleLinkData struct {
 	PlaceId       *int64                 `protobuf:"varint,2,opt,name=place_id,json=placeId,proto3,oneof" json:"place_id,omitempty"`
 	PlaceText     *string                `protobuf:"bytes,3,opt,name=place_text,json=placeText,proto3,oneof" json:"place_text,omitempty"`
 	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	StartAt       string                 `protobuf:"bytes,5,opt,name=start_at,json=startAt,proto3" json:"start_at,omitempty"` // YYYY-MM-DDTHH:mm
+	EndAt         string                 `protobuf:"bytes,6,opt,name=end_at,json=endAt,proto3" json:"end_at,omitempty"`       // YYYY-MM-DDTHH:mm
 	IsAllday      bool                   `protobuf:"varint,7,opt,name=is_allday,json=isAllday,proto3" json:"is_allday,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -188,18 +163,18 @@ func (x *ScheduleLinkData) GetDescription() string {
 	return ""
 }
 
-func (x *ScheduleLinkData) GetStartTime() *timestamppb.Timestamp {
+func (x *ScheduleLinkData) GetStartAt() string {
 	if x != nil {
-		return x.StartTime
+		return x.StartAt
 	}
-	return nil
+	return ""
 }
 
-func (x *ScheduleLinkData) GetEndTime() *timestamppb.Timestamp {
+func (x *ScheduleLinkData) GetEndAt() string {
 	if x != nil {
-		return x.EndTime
+		return x.EndAt
 	}
-	return nil
+	return ""
 }
 
 func (x *ScheduleLinkData) GetIsAllday() bool {
@@ -212,8 +187,10 @@ func (x *ScheduleLinkData) GetIsAllday() bool {
 type GetScheduleListRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GroupIds      []int64                `protobuf:"varint,1,rep,packed,name=group_ids,json=groupIds,proto3" json:"group_ids,omitempty"`
-	StartDate     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=start_date,json=startDate,proto3,oneof" json:"start_date,omitempty"`
-	EndDate       *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end_date,json=endDate,proto3,oneof" json:"end_date,omitempty"`
+	StartAt       *string                `protobuf:"bytes,2,opt,name=start_at,json=startAt,proto3,oneof" json:"start_at,omitempty"`
+	EndAt         *string                `protobuf:"bytes,3,opt,name=end_at,json=endAt,proto3,oneof" json:"end_at,omitempty"`
+	Page          int32                  `protobuf:"varint,10,opt,name=page,proto3" json:"page,omitempty"`
+	PerPage       int32                  `protobuf:"varint,11,opt,name=per_page,json=perPage,proto3" json:"per_page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -255,18 +232,32 @@ func (x *GetScheduleListRequest) GetGroupIds() []int64 {
 	return nil
 }
 
-func (x *GetScheduleListRequest) GetStartDate() *timestamppb.Timestamp {
-	if x != nil {
-		return x.StartDate
+func (x *GetScheduleListRequest) GetStartAt() string {
+	if x != nil && x.StartAt != nil {
+		return *x.StartAt
 	}
-	return nil
+	return ""
 }
 
-func (x *GetScheduleListRequest) GetEndDate() *timestamppb.Timestamp {
-	if x != nil {
-		return x.EndDate
+func (x *GetScheduleListRequest) GetEndAt() string {
+	if x != nil && x.EndAt != nil {
+		return *x.EndAt
 	}
-	return nil
+	return ""
+}
+
+func (x *GetScheduleListRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetScheduleListRequest) GetPerPage() int32 {
+	if x != nil {
+		return x.PerPage
+	}
+	return 0
 }
 
 type GetScheduleRequest struct {
@@ -318,6 +309,7 @@ type UpdateScheduleRequest struct {
 	ScheduleId    int64                  `protobuf:"varint,1,opt,name=schedule_id,json=scheduleId,proto3" json:"schedule_id,omitempty"`
 	Comment       *string                `protobuf:"bytes,2,opt,name=comment,proto3,oneof" json:"comment,omitempty"`
 	IsHighlighted *bool                  `protobuf:"varint,3,opt,name=is_highlighted,json=isHighlighted,proto3,oneof" json:"is_highlighted,omitempty"`
+	Link          *ScheduleLinkData      `protobuf:"bytes,4,opt,name=link,proto3,oneof" json:"link,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -371,6 +363,13 @@ func (x *UpdateScheduleRequest) GetIsHighlighted() bool {
 		return *x.IsHighlighted
 	}
 	return false
+}
+
+func (x *UpdateScheduleRequest) GetLink() *ScheduleLinkData {
+	if x != nil {
+		return x.Link
+	}
+	return nil
 }
 
 type DeleteScheduleRequest struct {
@@ -729,49 +728,47 @@ var File_schedule_schedule_service_proto protoreflect.FileDescriptor
 
 const file_schedule_schedule_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1fschedule/schedule_service.proto\x12#bannote.scheduleservice.schedule.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17schedule/schedule.proto\"\xe0\x02\n" +
+	"\x1fschedule/schedule_service.proto\x12#bannote.scheduleservice.schedule.v1\x1a\x17schedule/schedule.proto\"\xcf\x01\n" +
 	"\x15CreateScheduleRequest\x12\x19\n" +
 	"\bgroup_id\x18\x01 \x01(\x03R\agroupId\x12\x1d\n" +
 	"\acomment\x18\x02 \x01(\tH\x00R\acomment\x88\x01\x01\x12%\n" +
-	"\x0eis_highlighted\x18\x03 \x01(\bR\risHighlighted\x129\n" +
+	"\x0eis_highlighted\x18\x03 \x01(\bR\risHighlighted\x12I\n" +
+	"\x04link\x18\x04 \x01(\v25.bannote.scheduleservice.schedule.v1.ScheduleLinkDataR\x04linkB\n" +
 	"\n" +
-	"start_date\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartDate\x125\n" +
-	"\bend_date\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendDate\x12\x1d\n" +
-	"\n" +
-	"created_by\x18\x06 \x01(\x03R\tcreatedBy\x12I\n" +
-	"\x04link\x18\a \x01(\v25.bannote.scheduleservice.schedule.v1.ScheduleLinkDataR\x04linkB\n" +
-	"\n" +
-	"\b_comment\"\xb9\x02\n" +
+	"\b_comment\"\xf9\x01\n" +
 	"\x10ScheduleLinkData\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x1e\n" +
 	"\bplace_id\x18\x02 \x01(\x03H\x00R\aplaceId\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"place_text\x18\x03 \x01(\tH\x01R\tplaceText\x88\x01\x01\x12 \n" +
-	"\vdescription\x18\x04 \x01(\tR\vdescription\x129\n" +
-	"\n" +
-	"start_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x1b\n" +
+	"\vdescription\x18\x04 \x01(\tR\vdescription\x12\x19\n" +
+	"\bstart_at\x18\x05 \x01(\tR\astartAt\x12\x15\n" +
+	"\x06end_at\x18\x06 \x01(\tR\x05endAt\x12\x1b\n" +
 	"\tis_allday\x18\a \x01(\bR\bisAlldayB\v\n" +
 	"\t_place_idB\r\n" +
-	"\v_place_text\"\xcd\x01\n" +
+	"\v_place_text\"\xb8\x01\n" +
 	"\x16GetScheduleListRequest\x12\x1b\n" +
-	"\tgroup_ids\x18\x01 \x03(\x03R\bgroupIds\x12>\n" +
-	"\n" +
-	"start_date\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tstartDate\x88\x01\x01\x12:\n" +
-	"\bend_date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\aendDate\x88\x01\x01B\r\n" +
-	"\v_start_dateB\v\n" +
-	"\t_end_date\"5\n" +
+	"\tgroup_ids\x18\x01 \x03(\x03R\bgroupIds\x12\x1e\n" +
+	"\bstart_at\x18\x02 \x01(\tH\x00R\astartAt\x88\x01\x01\x12\x1a\n" +
+	"\x06end_at\x18\x03 \x01(\tH\x01R\x05endAt\x88\x01\x01\x12\x12\n" +
+	"\x04page\x18\n" +
+	" \x01(\x05R\x04page\x12\x19\n" +
+	"\bper_page\x18\v \x01(\x05R\aperPageB\v\n" +
+	"\t_start_atB\t\n" +
+	"\a_end_at\"5\n" +
 	"\x12GetScheduleRequest\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\x03R\n" +
-	"scheduleId\"\xa2\x01\n" +
+	"scheduleId\"\xfb\x01\n" +
 	"\x15UpdateScheduleRequest\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\x03R\n" +
 	"scheduleId\x12\x1d\n" +
 	"\acomment\x18\x02 \x01(\tH\x00R\acomment\x88\x01\x01\x12*\n" +
-	"\x0eis_highlighted\x18\x03 \x01(\bH\x01R\risHighlighted\x88\x01\x01B\n" +
+	"\x0eis_highlighted\x18\x03 \x01(\bH\x01R\risHighlighted\x88\x01\x01\x12N\n" +
+	"\x04link\x18\x04 \x01(\v25.bannote.scheduleservice.schedule.v1.ScheduleLinkDataH\x02R\x04link\x88\x01\x01B\n" +
 	"\n" +
 	"\b_commentB\x11\n" +
-	"\x0f_is_highlighted\"8\n" +
+	"\x0f_is_highlightedB\a\n" +
+	"\x05_link\"8\n" +
 	"\x15DeleteScheduleRequest\x12\x1f\n" +
 	"\vschedule_id\x18\x01 \x01(\x03R\n" +
 	"scheduleId\"2\n" +
@@ -826,39 +823,33 @@ var file_schedule_schedule_service_proto_goTypes = []any{
 	(*GetScheduleResponse)(nil),        // 10: bannote.scheduleservice.schedule.v1.GetScheduleResponse
 	(*UpdateScheduleResponse)(nil),     // 11: bannote.scheduleservice.schedule.v1.UpdateScheduleResponse
 	(*GetScheduleListResponse)(nil),    // 12: bannote.scheduleservice.schedule.v1.GetScheduleListResponse
-	(*timestamppb.Timestamp)(nil),      // 13: google.protobuf.Timestamp
-	(*Schedule)(nil),                   // 14: bannote.scheduleservice.schedule.v1.Schedule
-	(*ScheduleListResponse)(nil),       // 15: bannote.scheduleservice.schedule.v1.ScheduleListResponse
+	(*Schedule)(nil),                   // 13: bannote.scheduleservice.schedule.v1.Schedule
+	(*ScheduleListResponse)(nil),       // 14: bannote.scheduleservice.schedule.v1.ScheduleListResponse
 }
 var file_schedule_schedule_service_proto_depIdxs = []int32{
-	13, // 0: bannote.scheduleservice.schedule.v1.CreateScheduleRequest.start_date:type_name -> google.protobuf.Timestamp
-	13, // 1: bannote.scheduleservice.schedule.v1.CreateScheduleRequest.end_date:type_name -> google.protobuf.Timestamp
-	1,  // 2: bannote.scheduleservice.schedule.v1.CreateScheduleRequest.link:type_name -> bannote.scheduleservice.schedule.v1.ScheduleLinkData
-	13, // 3: bannote.scheduleservice.schedule.v1.ScheduleLinkData.start_time:type_name -> google.protobuf.Timestamp
-	13, // 4: bannote.scheduleservice.schedule.v1.ScheduleLinkData.end_time:type_name -> google.protobuf.Timestamp
-	13, // 5: bannote.scheduleservice.schedule.v1.GetScheduleListRequest.start_date:type_name -> google.protobuf.Timestamp
-	13, // 6: bannote.scheduleservice.schedule.v1.GetScheduleListRequest.end_date:type_name -> google.protobuf.Timestamp
-	14, // 7: bannote.scheduleservice.schedule.v1.CreateScheduleResponse.schedule:type_name -> bannote.scheduleservice.schedule.v1.Schedule
-	14, // 8: bannote.scheduleservice.schedule.v1.GetScheduleResponse.schedule:type_name -> bannote.scheduleservice.schedule.v1.Schedule
-	14, // 9: bannote.scheduleservice.schedule.v1.UpdateScheduleResponse.schedule:type_name -> bannote.scheduleservice.schedule.v1.Schedule
-	15, // 10: bannote.scheduleservice.schedule.v1.GetScheduleListResponse.schedule_list_response:type_name -> bannote.scheduleservice.schedule.v1.ScheduleListResponse
-	0,  // 11: bannote.scheduleservice.schedule.v1.ScheduleService.CreateSchedule:input_type -> bannote.scheduleservice.schedule.v1.CreateScheduleRequest
-	2,  // 12: bannote.scheduleservice.schedule.v1.ScheduleService.GetScheduleList:input_type -> bannote.scheduleservice.schedule.v1.GetScheduleListRequest
-	3,  // 13: bannote.scheduleservice.schedule.v1.ScheduleService.GetSchedule:input_type -> bannote.scheduleservice.schedule.v1.GetScheduleRequest
-	4,  // 14: bannote.scheduleservice.schedule.v1.ScheduleService.UpdateSchedule:input_type -> bannote.scheduleservice.schedule.v1.UpdateScheduleRequest
-	5,  // 15: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteSchedule:input_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleRequest
-	7,  // 16: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteScheduleLink:input_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleLinkRequest
-	9,  // 17: bannote.scheduleservice.schedule.v1.ScheduleService.CreateSchedule:output_type -> bannote.scheduleservice.schedule.v1.CreateScheduleResponse
-	12, // 18: bannote.scheduleservice.schedule.v1.ScheduleService.GetScheduleList:output_type -> bannote.scheduleservice.schedule.v1.GetScheduleListResponse
-	10, // 19: bannote.scheduleservice.schedule.v1.ScheduleService.GetSchedule:output_type -> bannote.scheduleservice.schedule.v1.GetScheduleResponse
-	11, // 20: bannote.scheduleservice.schedule.v1.ScheduleService.UpdateSchedule:output_type -> bannote.scheduleservice.schedule.v1.UpdateScheduleResponse
-	6,  // 21: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteSchedule:output_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleResponse
-	8,  // 22: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteScheduleLink:output_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleLinkResponse
-	17, // [17:23] is the sub-list for method output_type
-	11, // [11:17] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	1,  // 0: bannote.scheduleservice.schedule.v1.CreateScheduleRequest.link:type_name -> bannote.scheduleservice.schedule.v1.ScheduleLinkData
+	1,  // 1: bannote.scheduleservice.schedule.v1.UpdateScheduleRequest.link:type_name -> bannote.scheduleservice.schedule.v1.ScheduleLinkData
+	13, // 2: bannote.scheduleservice.schedule.v1.CreateScheduleResponse.schedule:type_name -> bannote.scheduleservice.schedule.v1.Schedule
+	13, // 3: bannote.scheduleservice.schedule.v1.GetScheduleResponse.schedule:type_name -> bannote.scheduleservice.schedule.v1.Schedule
+	13, // 4: bannote.scheduleservice.schedule.v1.UpdateScheduleResponse.schedule:type_name -> bannote.scheduleservice.schedule.v1.Schedule
+	14, // 5: bannote.scheduleservice.schedule.v1.GetScheduleListResponse.schedule_list_response:type_name -> bannote.scheduleservice.schedule.v1.ScheduleListResponse
+	0,  // 6: bannote.scheduleservice.schedule.v1.ScheduleService.CreateSchedule:input_type -> bannote.scheduleservice.schedule.v1.CreateScheduleRequest
+	2,  // 7: bannote.scheduleservice.schedule.v1.ScheduleService.GetScheduleList:input_type -> bannote.scheduleservice.schedule.v1.GetScheduleListRequest
+	3,  // 8: bannote.scheduleservice.schedule.v1.ScheduleService.GetSchedule:input_type -> bannote.scheduleservice.schedule.v1.GetScheduleRequest
+	4,  // 9: bannote.scheduleservice.schedule.v1.ScheduleService.UpdateSchedule:input_type -> bannote.scheduleservice.schedule.v1.UpdateScheduleRequest
+	5,  // 10: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteSchedule:input_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleRequest
+	7,  // 11: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteScheduleLink:input_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleLinkRequest
+	9,  // 12: bannote.scheduleservice.schedule.v1.ScheduleService.CreateSchedule:output_type -> bannote.scheduleservice.schedule.v1.CreateScheduleResponse
+	12, // 13: bannote.scheduleservice.schedule.v1.ScheduleService.GetScheduleList:output_type -> bannote.scheduleservice.schedule.v1.GetScheduleListResponse
+	10, // 14: bannote.scheduleservice.schedule.v1.ScheduleService.GetSchedule:output_type -> bannote.scheduleservice.schedule.v1.GetScheduleResponse
+	11, // 15: bannote.scheduleservice.schedule.v1.ScheduleService.UpdateSchedule:output_type -> bannote.scheduleservice.schedule.v1.UpdateScheduleResponse
+	6,  // 16: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteSchedule:output_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleResponse
+	8,  // 17: bannote.scheduleservice.schedule.v1.ScheduleService.DeleteScheduleLink:output_type -> bannote.scheduleservice.schedule.v1.DeleteScheduleLinkResponse
+	12, // [12:18] is the sub-list for method output_type
+	6,  // [6:12] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_schedule_schedule_service_proto_init() }

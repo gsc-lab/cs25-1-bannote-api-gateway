@@ -36,7 +36,7 @@ type ScheduleServiceClient interface {
 	GetSchedule(ctx context.Context, in *GetScheduleRequest, opts ...grpc.CallOption) (*GetScheduleResponse, error)
 	UpdateSchedule(ctx context.Context, in *UpdateScheduleRequest, opts ...grpc.CallOption) (*UpdateScheduleResponse, error)
 	DeleteSchedule(ctx context.Context, in *DeleteScheduleRequest, opts ...grpc.CallOption) (*DeleteScheduleResponse, error)
-	//개인 그룹은 그룹만 가질 수 있고 스케줄은 없을 수 있기떄문에
+	// 개인 그룹은 그룹만 가질 수 있고 스케줄은 없을 수 있기떄문에
 	DeleteScheduleLink(ctx context.Context, in *DeleteScheduleLinkRequest, opts ...grpc.CallOption) (*DeleteScheduleLinkResponse, error)
 }
 
@@ -117,7 +117,7 @@ type ScheduleServiceServer interface {
 	GetSchedule(context.Context, *GetScheduleRequest) (*GetScheduleResponse, error)
 	UpdateSchedule(context.Context, *UpdateScheduleRequest) (*UpdateScheduleResponse, error)
 	DeleteSchedule(context.Context, *DeleteScheduleRequest) (*DeleteScheduleResponse, error)
-	//개인 그룹은 그룹만 가질 수 있고 스케줄은 없을 수 있기떄문에
+	// 개인 그룹은 그룹만 가질 수 있고 스케줄은 없을 수 있기떄문에
 	DeleteScheduleLink(context.Context, *DeleteScheduleLinkRequest) (*DeleteScheduleLinkResponse, error)
 	mustEmbedUnimplementedScheduleServiceServer()
 }

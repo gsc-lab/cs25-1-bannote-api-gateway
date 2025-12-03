@@ -37,9 +37,9 @@ type Group struct {
 	CreatedAt        *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt        *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	DeletedAt        *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`
-	CreatedBy        string                 `protobuf:"bytes,13,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	UpdatedBy        string                 `protobuf:"bytes,14,opt,name=updated_by,json=updatedBy,proto3" json:"updated_by,omitempty"`
-	DeletedBy        string                 `protobuf:"bytes,15,opt,name=deleted_by,json=deletedBy,proto3" json:"deleted_by,omitempty"`
+	CreatedBy        int64                  `protobuf:"varint,13,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
+	UpdatedBy        int64                  `protobuf:"varint,14,opt,name=updated_by,json=updatedBy,proto3" json:"updated_by,omitempty"`
+	DeletedBy        int64                  `protobuf:"varint,15,opt,name=deleted_by,json=deletedBy,proto3" json:"deleted_by,omitempty"`
 	Tags             []*tag.Tag             `protobuf:"bytes,16,rep,name=tags,proto3" json:"tags,omitempty"`
 	Bookmark         bool                   `protobuf:"varint,17,opt,name=bookmark,proto3" json:"bookmark,omitempty"`
 	unknownFields    protoimpl.UnknownFields
@@ -160,25 +160,25 @@ func (x *Group) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Group) GetCreatedBy() string {
+func (x *Group) GetCreatedBy() int64 {
 	if x != nil {
 		return x.CreatedBy
 	}
-	return ""
+	return 0
 }
 
-func (x *Group) GetUpdatedBy() string {
+func (x *Group) GetUpdatedBy() int64 {
 	if x != nil {
 		return x.UpdatedBy
 	}
-	return ""
+	return 0
 }
 
-func (x *Group) GetDeletedBy() string {
+func (x *Group) GetDeletedBy() int64 {
 	if x != nil {
 		return x.DeletedBy
 	}
-	return ""
+	return 0
 }
 
 func (x *Group) GetTags() []*tag.Tag {
@@ -296,11 +296,11 @@ const file_group_group_proto_rawDesc = "" +
 	"\n" +
 	"deleted_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\x12\x1d\n" +
 	"\n" +
-	"created_by\x18\r \x01(\tR\tcreatedBy\x12\x1d\n" +
+	"created_by\x18\r \x01(\x03R\tcreatedBy\x12\x1d\n" +
 	"\n" +
-	"updated_by\x18\x0e \x01(\tR\tupdatedBy\x12\x1d\n" +
+	"updated_by\x18\x0e \x01(\x03R\tupdatedBy\x12\x1d\n" +
 	"\n" +
-	"deleted_by\x18\x0f \x01(\tR\tdeletedBy\x127\n" +
+	"deleted_by\x18\x0f \x01(\x03R\tdeletedBy\x127\n" +
 	"\x04tags\x18\x10 \x03(\v2#.bannote.scheduleservice.tag.v1.TagR\x04tags\x12\x1a\n" +
 	"\bbookmark\x18\x11 \x01(\bR\bbookmark\"\xc5\x01\n" +
 	"\x11GroupListResponse\x12?\n" +
