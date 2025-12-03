@@ -30,8 +30,8 @@ type ScheduleLink struct {
 	PlaceId       *int64                 `protobuf:"varint,4,opt,name=place_id,json=placeId,proto3,oneof" json:"place_id,omitempty"`
 	PlaceText     *string                `protobuf:"bytes,5,opt,name=place_text,json=placeText,proto3,oneof" json:"place_text,omitempty"`
 	Description   string                 `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	StartTime     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	StartAt       string                 `protobuf:"bytes,7,opt,name=start_at,json=startAt,proto3" json:"start_at,omitempty"` // YYYY-MM-DDTHH:mm
+	EndAt         string                 `protobuf:"bytes,8,opt,name=end_at,json=endAt,proto3" json:"end_at,omitempty"`       // YYYY-MM-DDTHH:mm
 	IsAllday      bool                   `protobuf:"varint,9,opt,name=is_allday,json=isAllday,proto3" json:"is_allday,omitempty"`
 	CreatedBy     int64                  `protobuf:"varint,10,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -112,18 +112,18 @@ func (x *ScheduleLink) GetDescription() string {
 	return ""
 }
 
-func (x *ScheduleLink) GetStartTime() *timestamppb.Timestamp {
+func (x *ScheduleLink) GetStartAt() string {
 	if x != nil {
-		return x.StartTime
+		return x.StartAt
 	}
-	return nil
+	return ""
 }
 
-func (x *ScheduleLink) GetEndTime() *timestamppb.Timestamp {
+func (x *ScheduleLink) GetEndAt() string {
 	if x != nil {
-		return x.EndTime
+		return x.EndAt
 	}
-	return nil
+	return ""
 }
 
 func (x *ScheduleLink) GetIsAllday() bool {
@@ -158,7 +158,7 @@ var File_schedule_link_schedule_link_proto protoreflect.FileDescriptor
 
 const file_schedule_link_schedule_link_proto_rawDesc = "" +
 	"\n" +
-	"!schedule_link/schedule_link.proto\x12(bannote.scheduleservice.schedule_link.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x98\x04\n" +
+	"!schedule_link/schedule_link.proto\x12(bannote.scheduleservice.schedule_link.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd8\x03\n" +
 	"\fScheduleLink\x12\x17\n" +
 	"\alink_id\x18\x01 \x01(\x03R\x06linkId\x12\x1f\n" +
 	"\vschedule_id\x18\x02 \x01(\x03R\n" +
@@ -167,10 +167,9 @@ const file_schedule_link_schedule_link_proto_rawDesc = "" +
 	"\bplace_id\x18\x04 \x01(\x03H\x00R\aplaceId\x88\x01\x01\x12\"\n" +
 	"\n" +
 	"place_text\x18\x05 \x01(\tH\x01R\tplaceText\x88\x01\x01\x12 \n" +
-	"\vdescription\x18\x06 \x01(\tR\vdescription\x129\n" +
-	"\n" +
-	"start_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12\x1b\n" +
+	"\vdescription\x18\x06 \x01(\tR\vdescription\x12\x19\n" +
+	"\bstart_at\x18\a \x01(\tR\astartAt\x12\x15\n" +
+	"\x06end_at\x18\b \x01(\tR\x05endAt\x12\x1b\n" +
 	"\tis_allday\x18\t \x01(\bR\bisAllday\x12\x1d\n" +
 	"\n" +
 	"created_by\x18\n" +
@@ -202,15 +201,13 @@ var file_schedule_link_schedule_link_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
 }
 var file_schedule_link_schedule_link_proto_depIdxs = []int32{
-	1, // 0: bannote.scheduleservice.schedule_link.v1.ScheduleLink.start_time:type_name -> google.protobuf.Timestamp
-	1, // 1: bannote.scheduleservice.schedule_link.v1.ScheduleLink.end_time:type_name -> google.protobuf.Timestamp
-	1, // 2: bannote.scheduleservice.schedule_link.v1.ScheduleLink.created_at:type_name -> google.protobuf.Timestamp
-	1, // 3: bannote.scheduleservice.schedule_link.v1.ScheduleLink.updated_at:type_name -> google.protobuf.Timestamp
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	1, // 0: bannote.scheduleservice.schedule_link.v1.ScheduleLink.created_at:type_name -> google.protobuf.Timestamp
+	1, // 1: bannote.scheduleservice.schedule_link.v1.ScheduleLink.updated_at:type_name -> google.protobuf.Timestamp
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_schedule_link_schedule_link_proto_init() }
