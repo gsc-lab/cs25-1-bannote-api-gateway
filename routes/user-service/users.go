@@ -11,6 +11,7 @@ func RegisterUserRoute(rg *gin.RouterGroup) {
 
 	{
 		user.GET("", middleware.GRPCMetadata(), handlers.ListUsers)
+		user.GET(":user_code", middleware.GRPCMetadata(), handlers.GetUser)
 		user.GET("search", middleware.GRPCMetadata(), handlers.SearchUser)
 		user.POST("register", handlers.CreateUser)
 		user.PATCH(":user_code", middleware.GRPCMetadata(), handlers.UpdateUser)
