@@ -213,6 +213,11 @@ func UpdateUser(c *gin.Context) {
 	userClient := client.GetUserService(c)
 	userCode := c.Param("user_code")
 
+	if userCode == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter"})
+		return
+	}
+
 	var body struct {
 		FamilyName      *string `json:"family_name"`
 		GivenName       *string `json:"given_name"`
@@ -298,4 +303,30 @@ func SearchUser(c *gin.Context) {
 		"data":  resp.Users,
 		"total": resp.TotalCount,
 	})
+}
+
+func GetUser(c *gin.Context) {
+	userClient := client.GetUserService(c)
+	userCode := c.Param("user_code")
+
+	if userCode == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Required parameter"})
+		return
+	}
+
+	ctx := utils.ContextWithMetadata(c)
+
+	resp, err := userClient.User.GetUser(ctx, &userpb.GetUserRequest{
+		UserCode: userCode,
+	})
+
+	if err != nil {
+		utils.HandleGRPCError(c, err)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": convertUser(resp.User),
+	})
+
 }
