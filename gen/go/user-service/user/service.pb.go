@@ -4,8 +4,6 @@
 // 	protoc        (unknown)
 // source: user/service.proto
 
-// TODO pagenation 수정 필요
-
 package userv1
 
 import (
@@ -740,6 +738,96 @@ func (x *ListUsersResponse) GetSize() int32 {
 	return 0
 }
 
+// 유저 조회 요청
+type GetUserRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserCode      string                 `protobuf:"bytes,1,opt,name=user_code,json=userCode,proto3" json:"user_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserRequest) Reset() {
+	*x = GetUserRequest{}
+	mi := &file_user_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserRequest) ProtoMessage() {}
+
+func (x *GetUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserRequest.ProtoReflect.Descriptor instead.
+func (*GetUserRequest) Descriptor() ([]byte, []int) {
+	return file_user_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *GetUserRequest) GetUserCode() string {
+	if x != nil {
+		return x.UserCode
+	}
+	return ""
+}
+
+// 유저 조회 응답
+type GetUserResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	User          *UserDetail            `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetUserResponse) Reset() {
+	*x = GetUserResponse{}
+	mi := &file_user_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetUserResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetUserResponse) ProtoMessage() {}
+
+func (x *GetUserResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_user_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetUserResponse.ProtoReflect.Descriptor instead.
+func (*GetUserResponse) Descriptor() ([]byte, []int) {
+	return file_user_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GetUserResponse) GetUser() *UserDetail {
+	if x != nil {
+		return x.User
+	}
+	return nil
+}
+
 var File_user_service_proto protoreflect.FileDescriptor
 
 const file_user_service_proto_rawDesc = "" +
@@ -821,7 +909,11 @@ const file_user_service_proto_rawDesc = "" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
 	"totalCount\x12\x12\n" +
 	"\x04page\x18\x03 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x04 \x01(\x05R\x04size2\xd2\x04\n" +
+	"\x04size\x18\x04 \x01(\x05R\x04size\"-\n" +
+	"\x0eGetUserRequest\x12\x1b\n" +
+	"\tuser_code\x18\x01 \x01(\tR\buserCode\"N\n" +
+	"\x0fGetUserResponse\x12;\n" +
+	"\x04user\x18\x01 \x01(\v2'.bannote.userservice.user.v1.UserDetailR\x04user2\xba\x05\n" +
 	"\vUserService\x12l\n" +
 	"\tUserLogin\x12-.bannote.userservice.user.v1.UserLoginRequest\x1a..bannote.userservice.user.v1.UserLoginResponse\"\x00\x12o\n" +
 	"\n" +
@@ -829,7 +921,8 @@ const file_user_service_proto_rawDesc = "" +
 	"\n" +
 	"UpdateUser\x12..bannote.userservice.user.v1.UpdateUserRequest\x1a/.bannote.userservice.user.v1.UpdateUserResponse\"\x00\x12\x84\x01\n" +
 	"\x11SearchUsersByName\x125.bannote.userservice.user.v1.SearchUsersByNameRequest\x1a6.bannote.userservice.user.v1.SearchUsersByNameResponse\"\x00\x12l\n" +
-	"\tListUsers\x12-.bannote.userservice.user.v1.ListUsersRequest\x1a..bannote.userservice.user.v1.ListUsersResponse\"\x00B\x8d\x02\n" +
+	"\tListUsers\x12-.bannote.userservice.user.v1.ListUsersRequest\x1a..bannote.userservice.user.v1.ListUsersResponse\"\x00\x12f\n" +
+	"\aGetUser\x12+.bannote.userservice.user.v1.GetUserRequest\x1a,.bannote.userservice.user.v1.GetUserResponse\"\x00B\x8d\x02\n" +
 	"\x1fcom.bannote.userservice.user.v1B\fServiceProtoP\x01ZMgithub.com/gsc-lab/cs25-1-bannote-api-gateway/gen/go/user-service/user;userv1\xa2\x02\x03BUU\xaa\x02\x1bBannote.Userservice.User.V1\xca\x02\x1bBannote\\Userservice\\User\\V1\xe2\x02'Bannote\\Userservice\\User\\V1\\GPBMetadata\xea\x02\x1eBannote::Userservice::User::V1b\x06proto3"
 
 var (
@@ -844,7 +937,7 @@ func file_user_service_proto_rawDescGZIP() []byte {
 	return file_user_service_proto_rawDescData
 }
 
-var file_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_user_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_user_service_proto_goTypes = []any{
 	(*UserLoginRequest)(nil),          // 0: bannote.userservice.user.v1.UserLoginRequest
 	(*UserLoginResponse)(nil),         // 1: bannote.userservice.user.v1.UserLoginResponse
@@ -856,37 +949,42 @@ var file_user_service_proto_goTypes = []any{
 	(*SearchUsersByNameResponse)(nil), // 7: bannote.userservice.user.v1.SearchUsersByNameResponse
 	(*ListUsersRequest)(nil),          // 8: bannote.userservice.user.v1.ListUsersRequest
 	(*ListUsersResponse)(nil),         // 9: bannote.userservice.user.v1.ListUsersResponse
-	(*UserDetail)(nil),                // 10: bannote.userservice.user.v1.UserDetail
-	(common.UserType)(0),              // 11: bannote.userservice.common.v1.UserType
-	(common.UserStatus)(0),            // 12: bannote.userservice.common.v1.UserStatus
-	(*UserBasic)(nil),                 // 13: bannote.userservice.user.v1.UserBasic
+	(*GetUserRequest)(nil),            // 10: bannote.userservice.user.v1.GetUserRequest
+	(*GetUserResponse)(nil),           // 11: bannote.userservice.user.v1.GetUserResponse
+	(*UserDetail)(nil),                // 12: bannote.userservice.user.v1.UserDetail
+	(common.UserType)(0),              // 13: bannote.userservice.common.v1.UserType
+	(common.UserStatus)(0),            // 14: bannote.userservice.common.v1.UserStatus
+	(*UserBasic)(nil),                 // 15: bannote.userservice.user.v1.UserBasic
 }
 var file_user_service_proto_depIdxs = []int32{
-	10, // 0: bannote.userservice.user.v1.UserLoginResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	11, // 1: bannote.userservice.user.v1.CreateUserRequest.user_type:type_name -> bannote.userservice.common.v1.UserType
-	10, // 2: bannote.userservice.user.v1.CreateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	10, // 3: bannote.userservice.user.v1.UpdateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
-	11, // 4: bannote.userservice.user.v1.SearchUsersByNameRequest.type:type_name -> bannote.userservice.common.v1.UserType
-	12, // 5: bannote.userservice.user.v1.SearchUsersByNameRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
-	13, // 6: bannote.userservice.user.v1.SearchUsersByNameResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
-	11, // 7: bannote.userservice.user.v1.ListUsersRequest.type:type_name -> bannote.userservice.common.v1.UserType
-	12, // 8: bannote.userservice.user.v1.ListUsersRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
-	10, // 9: bannote.userservice.user.v1.ListUsersResponse.users:type_name -> bannote.userservice.user.v1.UserDetail
-	0,  // 10: bannote.userservice.user.v1.UserService.UserLogin:input_type -> bannote.userservice.user.v1.UserLoginRequest
-	2,  // 11: bannote.userservice.user.v1.UserService.CreateUser:input_type -> bannote.userservice.user.v1.CreateUserRequest
-	4,  // 12: bannote.userservice.user.v1.UserService.UpdateUser:input_type -> bannote.userservice.user.v1.UpdateUserRequest
-	6,  // 13: bannote.userservice.user.v1.UserService.SearchUsersByName:input_type -> bannote.userservice.user.v1.SearchUsersByNameRequest
-	8,  // 14: bannote.userservice.user.v1.UserService.ListUsers:input_type -> bannote.userservice.user.v1.ListUsersRequest
-	1,  // 15: bannote.userservice.user.v1.UserService.UserLogin:output_type -> bannote.userservice.user.v1.UserLoginResponse
-	3,  // 16: bannote.userservice.user.v1.UserService.CreateUser:output_type -> bannote.userservice.user.v1.CreateUserResponse
-	5,  // 17: bannote.userservice.user.v1.UserService.UpdateUser:output_type -> bannote.userservice.user.v1.UpdateUserResponse
-	7,  // 18: bannote.userservice.user.v1.UserService.SearchUsersByName:output_type -> bannote.userservice.user.v1.SearchUsersByNameResponse
-	9,  // 19: bannote.userservice.user.v1.UserService.ListUsers:output_type -> bannote.userservice.user.v1.ListUsersResponse
-	15, // [15:20] is the sub-list for method output_type
-	10, // [10:15] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	12, // 0: bannote.userservice.user.v1.UserLoginResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	13, // 1: bannote.userservice.user.v1.CreateUserRequest.user_type:type_name -> bannote.userservice.common.v1.UserType
+	12, // 2: bannote.userservice.user.v1.CreateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	12, // 3: bannote.userservice.user.v1.UpdateUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	13, // 4: bannote.userservice.user.v1.SearchUsersByNameRequest.type:type_name -> bannote.userservice.common.v1.UserType
+	14, // 5: bannote.userservice.user.v1.SearchUsersByNameRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
+	15, // 6: bannote.userservice.user.v1.SearchUsersByNameResponse.users:type_name -> bannote.userservice.user.v1.UserBasic
+	13, // 7: bannote.userservice.user.v1.ListUsersRequest.type:type_name -> bannote.userservice.common.v1.UserType
+	14, // 8: bannote.userservice.user.v1.ListUsersRequest.status:type_name -> bannote.userservice.common.v1.UserStatus
+	12, // 9: bannote.userservice.user.v1.ListUsersResponse.users:type_name -> bannote.userservice.user.v1.UserDetail
+	12, // 10: bannote.userservice.user.v1.GetUserResponse.user:type_name -> bannote.userservice.user.v1.UserDetail
+	0,  // 11: bannote.userservice.user.v1.UserService.UserLogin:input_type -> bannote.userservice.user.v1.UserLoginRequest
+	2,  // 12: bannote.userservice.user.v1.UserService.CreateUser:input_type -> bannote.userservice.user.v1.CreateUserRequest
+	4,  // 13: bannote.userservice.user.v1.UserService.UpdateUser:input_type -> bannote.userservice.user.v1.UpdateUserRequest
+	6,  // 14: bannote.userservice.user.v1.UserService.SearchUsersByName:input_type -> bannote.userservice.user.v1.SearchUsersByNameRequest
+	8,  // 15: bannote.userservice.user.v1.UserService.ListUsers:input_type -> bannote.userservice.user.v1.ListUsersRequest
+	10, // 16: bannote.userservice.user.v1.UserService.GetUser:input_type -> bannote.userservice.user.v1.GetUserRequest
+	1,  // 17: bannote.userservice.user.v1.UserService.UserLogin:output_type -> bannote.userservice.user.v1.UserLoginResponse
+	3,  // 18: bannote.userservice.user.v1.UserService.CreateUser:output_type -> bannote.userservice.user.v1.CreateUserResponse
+	5,  // 19: bannote.userservice.user.v1.UserService.UpdateUser:output_type -> bannote.userservice.user.v1.UpdateUserResponse
+	7,  // 20: bannote.userservice.user.v1.UserService.SearchUsersByName:output_type -> bannote.userservice.user.v1.SearchUsersByNameResponse
+	9,  // 21: bannote.userservice.user.v1.UserService.ListUsers:output_type -> bannote.userservice.user.v1.ListUsersResponse
+	11, // 22: bannote.userservice.user.v1.UserService.GetUser:output_type -> bannote.userservice.user.v1.GetUserResponse
+	17, // [17:23] is the sub-list for method output_type
+	11, // [11:17] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_user_service_proto_init() }
@@ -907,7 +1005,7 @@ func file_user_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_service_proto_rawDesc), len(file_user_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
